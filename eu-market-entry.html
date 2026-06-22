@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #F7F4EE; color: #1A1A1A; font-family: 'Inter', system-ui, -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: #1946BD; color: #F7F4EE; }
+  @keyframes euOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes euModalIn { from { opacity: 0; transform: scale(.94) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  @keyframes euFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  [data-qr-overlay] { animation: euOverlayIn 200ms ease forwards; }
+  [data-qr-overlay] > div { animation: euModalIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  [data-lang-dropdown] [role="listbox"] { animation: euFadeUp 180ms ease forwards; }
+  .eu-faq-ans { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .eu-faq-item[data-open="1"] .eu-faq-ans { max-height: 320px; }
+  .eu-faq-item[data-open="1"] .eu-faq-chev { transform: rotate(180deg); }
+</style>
+</helmet>
+
+<main data-screen-label="EU Market Entry" style="min-width: 1280px; background: #F7F4EE; color: #1A1A1A;">
+
+<!-- ============ NAV ============ -->
+<nav style="position: sticky; top: 0; z-index: 100; background: rgba(247,244,238,0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(26,26,26,0.06);">
+  <div style="max-width: 1440px; margin: 0 auto; padding: 12px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 88px;">
+    <a href="index.html" style="display: flex; align-items: center; gap: 14px; line-height: 1;">
+      <span aria-hidden="true" style="display: block; height: 84px; flex-shrink: 0; line-height: 0;">
+        <img src="assets/images/pari-jazz-logo-cropped.png" alt="Pari Jazz" style="height: 100%; width: auto; display: block; mix-blend-mode: multiply;">
+      </span>
+      <span style="font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.36em; color: #C9A96E;">COMMERCE</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <a href="index.html" data-i18n="nav.home" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">Startseite</a>
+      <a href="e-commerce.html" data-i18n="nav.ecommerce" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">E-Commerce</a>
+      <a href="sourcing.html" data-i18n="nav.sourcing" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">Sourcing</a>
+      <a href="eu-market-entry.html" data-i18n="nav.eu" style="font-size: 15px; font-weight: 600; color: #1946BD; white-space: nowrap;">EU-Markteintritt</a>
+      <a href="contact.html" data-i18n="nav.contact" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">Kontakt</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      {{ langSwitcher }}
+      <button data-qr-trigger data-i18n="nav.cta" style="background: #1946BD; color: #F7F4EE; padding: 12px 22px; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: transform .2s ease, background .2s ease; box-shadow: 0 8px 24px rgba(25, 70, 189, 0.18); white-space: nowrap;" style-hover="background: #15378A; transform: translateY(-1px);">Jetzt kontaktieren</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section style="position: relative; overflow: hidden;">
+  <div style="position: absolute; top: -120px; left: -120px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(201,169,110,0.18), transparent 70%); pointer-events: none;"></div>
+  <div style="max-width: 1320px; margin: 0 auto; padding: 96px 48px 100px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 72px; align-items: center; position: relative;">
+    <div>
+      <h1 data-i18n-html="eu.hero.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(44px, 4.4vw, 68px); line-height: 1.02; letter-spacing: -0.02em; color: #1946BD; margin: 0; text-wrap: balance;">Sie produzieren Weltklasse-Produkte. Zeit, dass <em style="font-style: italic;">Europa</em> sie entdeckt.</h1>
+      <p data-i18n="eu.hero.body" style="margin: 28px 0 0; font-size: 17px; line-height: 1.7; color: #475569; max-width: 560px;">Wir begleiten chinesische Hersteller beim erfolgreichen Markteintritt in Europa. Mit unserer Multi-Channel-Expertise platzieren wir Ihre Produkte auf Plattformen wie Amazon, Kaufland und Otto, bauen leistungsstarke Onlineshops, implementieren EU-konforme Qualitätsprüfungen und liefern Full-Service-Fulfillment für nachhaltige Expansion.</p>
+      <div style="margin-top: 32px; display: flex; flex-direction: column; gap: 18px;">
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px; background: #1946BD; color: #fff; display: flex; align-items: center; justify-content: center; margin-top: 2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span data-i18n-html="eu.hero.b1" style="font-size: 15.5px; line-height: 1.6; color: #1A1A1A;"><strong>Jahrelange E-Commerce-Expertise:</strong> Unser Team skaliert seit Jahren Marken auf allen relevanten europäischen Plattformen — von Amazon und Kaufland bis Otto und hochperformanten eigenen Onlineshops.</span>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px; background: #1946BD; color: #fff; display: flex; align-items: center; justify-content: center; margin-top: 2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span data-i18n-html="eu.hero.b2" style="font-size: 15.5px; line-height: 1.6; color: #1A1A1A;"><strong>Vertrauen durch Transparenz:</strong> Wir produzieren hochprofessionelle Produkt- und Unternehmensvideos, die Ihre hohen Standards für europäische Händler und Endkunden greifbar machen.</span>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start;">
+          <span style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px; background: #1946BD; color: #fff; display: flex; align-items: center; justify-content: center; margin-top: 2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span data-i18n-html="eu.hero.b3" style="font-size: 15.5px; line-height: 1.6; color: #1A1A1A;"><strong>Full-Service Logistik-Backend:</strong> Sie erhalten sofortigen Zugang zu einem schlüsselfertigen europäischen Fulfillment-Netzwerk inklusive strenger Qualitätsprüfung nach EU-Normen.</span>
+        </div>
+      </div>
+      <button data-qr-trigger data-i18n="eu.hero.cta" style="margin-top: 38px; background: #1946BD; color: #F7F4EE; padding: 18px 40px; border: 0; border-radius: 14px; font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 18px 40px -12px rgba(25,70,189,0.5);" style-hover="transform: translateY(-2px); box-shadow: 0 24px 50px -12px rgba(25,70,189,0.55);">Jetzt kontaktieren</button>
+    </div>
+    <div style="position: relative;">
+      <img src="assets/images/b94837d8-fc47-48ca-a218-e878c6fa7bd5.png" alt="Pari Jazz" style="width: 100%; height: auto; border-radius: 22px; box-shadow: 0 40px 90px -30px rgba(10,22,40,0.45); display: block;">
+    </div>
+  </div>
+</section>
+
+<!-- ============ REALITY ============ -->
+<section style="background: #FBFAF7; padding: 110px 48px;">
+  <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+    <span data-i18n="eu.reality.eyebrow" style="display: inline-block; padding: 9px 22px; border: 1.5px solid #FFD21E; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.22em; color: #1A1A1A;">DIE REALITÄT</span>
+    <h2 data-i18n="eu.reality.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(38px, 4vw, 58px); line-height: 1.08; letter-spacing: -0.02em; color: #1946BD; margin: 28px auto 0; max-width: 900px; text-wrap: balance;">Der europäische Markt ist lukrativ — aber voller Fallstricke.</h2>
+    <p data-i18n="eu.reality.sub" style="margin: 22px auto 0; font-size: 17px; color: #475569; max-width: 640px;">Als chinesischer Hersteller stehen Sie vor Hürden, die lokale Verkäufer nicht haben:</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; text-align: center;">
+      <div style="background: #fff; border: 1.5px solid #E7B7B0; border-radius: 18px; padding: 40px 32px;">
+        <div style="width: 60px; height: 60px; border-radius: 14px; background: #F1EFEC; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: #C81E1E;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <h3 data-i18n="eu.reality.c1t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 21px; color: #0A1628; margin: 0 0 14px;">Kein Vertrauen</h3>
+        <p data-i18n="eu.reality.c1b" style="font-size: 15.5px; line-height: 1.65; color: #475569; margin: 0;">Europäische Käufer zögern bei Marken ohne lokale Präsenz. Ohne Partner vor Ort wird Ihre Qualität oft gar nicht erst wahrgenommen.</p>
+      </div>
+      <div style="background: #fff; border: 1.5px solid #E7B7B0; border-radius: 18px; padding: 40px 32px;">
+        <div style="width: 60px; height: 60px; border-radius: 14px; background: #F1EFEC; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: #C81E1E;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
+        <h3 data-i18n="eu.reality.c2t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 21px; color: #0A1628; margin: 0 0 14px;">Falscher Kompass</h3>
+        <p data-i18n="eu.reality.c2b" style="font-size: 15.5px; line-height: 1.65; color: #475569; margin: 0;">Andere Keywords, Preise und Wettbewerber: Was in China funktioniert, scheitert in der EU oft an mangelnder Marktanpassung.</p>
+      </div>
+      <div style="background: #fff; border: 1.5px solid #E7B7B0; border-radius: 18px; padding: 40px 32px;">
+        <div style="width: 60px; height: 60px; border-radius: 14px; background: #F1EFEC; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: #C81E1E;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect x="6" y="10" width="12" height="12"/></svg></div>
+        <h3 data-i18n="eu.reality.c3t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 21px; color: #0A1628; margin: 0 0 14px;">Logistik-Chaos</h3>
+        <p data-i18n="eu.reality.c3b" style="font-size: 15.5px; line-height: 1.65; color: #475569; margin: 0;">Zoll, FBA-Anforderungen und EU-weiter Versand sind ohne eingespielte Infrastruktur vor Ort ein operativer Albtraum.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section style="background: #F7F4EE; padding: 110px 48px;">
+  <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+    <span data-i18n="eu.solution.eyebrow" style="display: inline-block; padding: 9px 22px; border: 1.5px solid #FFD21E; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.22em; color: #1A1A1A;">DIE LÖSUNG</span>
+    <h2 data-i18n="eu.solution.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(38px, 4vw, 58px); line-height: 1.08; letter-spacing: -0.02em; color: #1946BD; margin: 28px auto 0; max-width: 900px; text-wrap: balance;">Was wäre, wenn Sie ein komplettes europäisches Team hätten?</h2>
+    <p data-i18n="eu.solution.sub" style="margin: 22px auto 0; font-size: 17px; color: #475569; max-width: 640px;">Ohne eigene Mitarbeiter. Ohne eigenes Lager. Ohne Risiko.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; text-align: center;">
+      <div style="background: #fff; border: 1.5px solid #AFD9BE; border-radius: 18px; padding: 40px 32px;">
+        <div style="width: 60px; height: 60px; border-radius: 14px; background: #F1EFEC; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: #1F8A4C;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 data-i18n="eu.solution.c1t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 21px; color: #0A1628; margin: 0 0 14px;">Lokale Präsenz</h3>
+        <p data-i18n="eu.solution.c1b" style="font-size: 15.5px; line-height: 1.65; color: #475569; margin: 0;">Wir sind Ihr Gesicht in Europa — mit deutscher Adresse, lokalem Support und echtem Vertrauen.</p>
+      </div>
+      <div style="background: #fff; border: 1.5px solid #AFD9BE; border-radius: 18px; padding: 40px 32px;">
+        <div style="width: 60px; height: 60px; border-radius: 14px; background: #F1EFEC; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: #1F8A4C;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 data-i18n="eu.solution.c2t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 21px; color: #0A1628; margin: 0 0 14px;">Alles aus einer Hand</h3>
+        <p data-i18n="eu.solution.c2b" style="font-size: 15.5px; line-height: 1.65; color: #475569; margin: 0;">Von der Marktanalyse über professionellen Content (Amazon, Kaufland, Otto) bis zum Versand — ein erfahrener Partner für alles.</p>
+      </div>
+      <div style="background: #fff; border: 1.5px solid #AFD9BE; border-radius: 18px; padding: 40px 32px;">
+        <div style="width: 60px; height: 60px; border-radius: 14px; background: #F1EFEC; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; color: #1F8A4C;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></div>
+        <h3 data-i18n="eu.solution.c3t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 21px; color: #0A1628; margin: 0 0 14px;">Kostenfreie Erstanalyse</h3>
+        <p data-i18n="eu.solution.c3b" style="font-size: 15.5px; line-height: 1.65; color: #475569; margin: 0;">Wir prüfen vorab objektiv, ob Ihr Produkt Erfolgsaussichten hat. Sie investieren erst dann, wenn eine Expansion wirklich Sinn ergibt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY + STEPS HEADING ============ -->
+<section style="background: #FBFAF7; padding: 90px 48px 40px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;">
+      <img src="assets/images/5d74771c-e354-48ed-a358-b497bc515e4e.png" alt="" style="width: 100%; height: 300px; object-fit: cover; border-radius: 16px; display: block;">
+      <img src="assets/images/c123e754-8df2-48f7-8288-67c5f196db1b.png" alt="" style="width: 100%; height: 300px; object-fit: cover; border-radius: 16px; display: block;">
+      <img src="assets/images/42535e4b-4489-4d98-b8ba-f138f7c785cb.png" alt="" style="width: 100%; height: 300px; object-fit: cover; border-radius: 16px; display: block;">
+    </div>
+    <h2 data-i18n="eu.steps.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(38px, 4.2vw, 60px); line-height: 1.05; letter-spacing: -0.02em; color: #0A1628; text-align: center; margin: 72px auto 0; max-width: 900px; text-wrap: balance;">Von der Idee zum ersten Verkauf — in 6 Schritten nach Europa</h2>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section style="background: #FBFAF7; padding: 56px 48px 90px;">
+  <div style="max-width: 1080px; margin: 0 auto; position: relative;">
+    <div style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: linear-gradient(#1946BD, rgba(25,70,189,0.15)); transform: translateX(-50%);"></div>
+
+    <div style="display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center; margin-bottom: 36px;">
+      <div></div>
+      <div style="display: flex; justify-content: center; z-index: 2;"><span style="width: 54px; height: 54px; border-radius: 12px; background: #fff; border: 2px solid #1946BD; display: flex; align-items: center; justify-content: center; color: #1946BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="13" y="8" width="3" height="10"/></svg></span></div>
+      <div style="background: #fff; border: 1px solid #FFE48A; border-radius: 16px; padding: 30px 32px; box-shadow: 0 14px 40px -24px rgba(10,22,40,0.4);">
+        <span style="display: inline-block; background: #1946BD; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 6px;">SCHRITT 1</span>
+        <h3 data-i18n="eu.step1.t" style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: #0A1628; margin: 16px 0 10px;">Analyse</h3>
+        <p data-i18n="eu.step1.b" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 18px;">Wir validieren das Marktpotenzial Ihrer Produkte in Europa durch eine detaillierte Nachfrage- und Wettbewerbsanalyse.</p>
+        <div data-i18n="eu.step1.r" style="background: #FBECA6; color: #1A1A1A; font-size: 13.5px; font-weight: 600; padding: 12px 16px; border-radius: 8px;">→ SIE WISSEN, OB IHR PRODUKT IN DER EU POTENZIAL HAT</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center; margin-bottom: 36px;">
+      <div style="background: #fff; border: 1px solid #ECE9E3; border-radius: 16px; padding: 30px 32px; box-shadow: 0 14px 40px -24px rgba(10,22,40,0.4);">
+        <span style="display: inline-block; background: #1946BD; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 6px;">SCHRITT 2</span>
+        <h3 data-i18n="eu.step2.t" style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: #0A1628; margin: 16px 0 10px;">Strategie</h3>
+        <p data-i18n="eu.step2.b" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 18px;">Wir entwickeln Ihren individuellen Markteintrittsplan inklusive optimaler Positionierung, Preisstrategie und Launch-Fahrplan.</p>
+        <div data-i18n="eu.step2.r" style="background: #FBECA6; color: #1A1A1A; font-size: 13.5px; font-weight: 600; padding: 12px 16px; border-radius: 8px;">→ EIN KLARER FAHRPLAN FÜR IHREN MARKTEINTRITT</div>
+      </div>
+      <div style="display: flex; justify-content: center; z-index: 2;"><span style="width: 54px; height: 54px; border-radius: 12px; background: #fff; border: 2px solid #1946BD; display: flex; align-items: center; justify-content: center; color: #1946BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span></div>
+      <div></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center; margin-bottom: 36px;">
+      <div></div>
+      <div style="display: flex; justify-content: center; z-index: 2;"><span style="width: 54px; height: 54px; border-radius: 12px; background: #fff; border: 2px solid #1946BD; display: flex; align-items: center; justify-content: center; color: #1946BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/><path d="m9 16 2 2 4-4"/></svg></span></div>
+      <div style="background: #fff; border: 1px solid #FFE48A; border-radius: 16px; padding: 30px 32px; box-shadow: 0 14px 40px -24px rgba(10,22,40,0.4);">
+        <span style="display: inline-block; background: #1946BD; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 6px;">SCHRITT 3</span>
+        <h3 data-i18n="eu.step3.t" style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: #0A1628; margin: 16px 0 10px;">Content</h3>
+        <p data-i18n="eu.step3.b" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 18px;">Unser Team erstellt verkaufsstarke Fotos, Videos und A+ Content, die exakt auf die Erwartungen europäischer Käufer zugeschnitten sind.</p>
+        <div data-i18n="eu.step3.r" style="background: #FBECA6; color: #1A1A1A; font-size: 13.5px; font-weight: 600; padding: 12px 16px; border-radius: 8px;">→ MATERIAL, DAS EUROPÄISCHE KÄUFER ÜBERZEUGT</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center; margin-bottom: 36px;">
+      <div style="background: #fff; border: 1px solid #FFE48A; border-radius: 16px; padding: 30px 32px; box-shadow: 0 14px 40px -24px rgba(10,22,40,0.4);">
+        <span style="display: inline-block; background: #1946BD; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 6px;">SCHRITT 4</span>
+        <h3 data-i18n="eu.step4.t" style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: #0A1628; margin: 16px 0 10px;">Launch</h3>
+        <p data-i18n="eu.step4.b" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 18px;">Wir übernehmen das komplette Setup auf Plattformen wie Amazon, Kaufland oder Otto und steuern die PPC-Kampagnen für maximale Sichtbarkeit.</p>
+        <div data-i18n="eu.step4.r" style="background: #FBECA6; color: #1A1A1A; font-size: 13.5px; font-weight: 600; padding: 12px 16px; border-radius: 8px;">→ IHR PRODUKT IST LIVE UND SICHTBAR</div>
+      </div>
+      <div style="display: flex; justify-content: center; z-index: 2;"><span style="width: 54px; height: 54px; border-radius: 12px; background: #fff; border: 2px solid #1946BD; display: flex; align-items: center; justify-content: center; color: #1946BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span></div>
+      <div></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center; margin-bottom: 36px;">
+      <div></div>
+      <div style="display: flex; justify-content: center; z-index: 2;"><span style="width: 54px; height: 54px; border-radius: 12px; background: #fff; border: 2px solid #1946BD; display: flex; align-items: center; justify-content: center; color: #1946BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span></div>
+      <div style="background: #fff; border: 1px solid #FFE48A; border-radius: 16px; padding: 30px 32px; box-shadow: 0 14px 40px -24px rgba(10,22,40,0.4);">
+        <span style="display: inline-block; background: #1946BD; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 6px;">SCHRITT 5</span>
+        <h3 data-i18n="eu.step5.t" style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: #0A1628; margin: 16px 0 10px;">Logistik</h3>
+        <p data-i18n="eu.step5.b" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 18px;">Nutzen Sie unsere schlüsselfertige Infrastruktur für Lagerung, strenge Qualitätsprüfung und den schnellen EU-weiten Versand.</p>
+        <div data-i18n="eu.step5.r" style="background: #FBECA6; color: #1A1A1A; font-size: 13.5px; font-weight: 600; padding: 12px 16px; border-radius: 8px;">→ SCHNELLE LIEFERUNG OHNE EIGENE INFRASTRUKTUR</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 72px 1fr; align-items: center;">
+      <div style="background: #fff; border: 1px solid #FFE48A; border-radius: 16px; padding: 30px 32px; box-shadow: 0 14px 40px -24px rgba(10,22,40,0.4);">
+        <span style="display: inline-block; background: #1946BD; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 5px 12px; border-radius: 6px;">SCHRITT 6</span>
+        <h3 data-i18n="eu.step6.t" style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; color: #0A1628; margin: 16px 0 10px;">Skalierung</h3>
+        <p data-i18n="eu.step6.b" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 18px;">Wir optimieren laufend die Performance und begleiten die Expansion Ihrer Marke in weitere europäische Märkte.</p>
+        <div data-i18n="eu.step6.r" style="background: #FBECA6; color: #1A1A1A; font-size: 13.5px; font-weight: 600; padding: 12px 16px; border-radius: 8px;">→ NACHHALTIGES WACHSTUM IN GANZ EUROPA</div>
+      </div>
+      <div style="display: flex; justify-content: center; z-index: 2;"><span style="width: 54px; height: 54px; border-radius: 12px; background: #fff; border: 2px solid #1946BD; display: flex; align-items: center; justify-content: center; color: #1946BD;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/></svg></span></div>
+      <div></div>
+    </div>
+
+    <div style="text-align: center; margin-top: 64px;">
+      <button data-qr-trigger data-i18n="eu.steps.cta" style="background: linear-gradient(180deg, #FFE45C, #FFD21E); color: #1A1A1A; padding: 18px 48px; border: 0; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 16px 36px -14px rgba(255,210,30,0.85);" style-hover="transform: translateY(-2px); box-shadow: 0 22px 46px -14px rgba(255,210,30,0.9);">Jetzt kontaktieren</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PILLARS ============ -->
+<section style="background: #F7F4EE; padding: 100px 48px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <h2 data-i18n="eu.pillars.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(36px, 3.6vw, 52px); line-height: 1.1; letter-spacing: -0.02em; color: #1946BD; text-align: center; margin: 0;">Alles, was Sie für den EU-Erfolg brauchen</h2>
+    <p data-i18n="eu.pillars.sub" style="text-align: center; font-size: 17px; color: #475569; margin: 18px 0 56px;">Drei Säulen. Ein Ziel: Ihr profitables Business in Europa.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start;">
+      <div style="background: #fff; border: 1.5px solid #FFE48A; border-radius: 20px; padding: 38px 34px;">
+        <div style="width: 56px; height: 56px; border-radius: 14px; background: #1946BD; color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 data-i18n="eu.pillar1.t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 22px; color: #0A1628; margin: 0 0 12px;">Content &amp; Branding</h3>
+        <p data-i18n="eu.pillar1.d" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 22px;">Wir rücken Ihre Produktqualität ins rechte Licht und schaffen Vertrauen bei europäischen Kunden.</p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar1.i1" style="font-size: 14.5px; color: #1A1A1A;">Professionelle Produktfotos (europäische Ästhetik)</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar1.i2" style="font-size: 14.5px; color: #1A1A1A;">Lifestyle-Shootings mit westlichen Models</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar1.i3" style="font-size: 14.5px; color: #1A1A1A;">Amazon-Listingbilder &amp; A+ Content</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar1.i4" style="font-size: 14.5px; color: #1A1A1A;">Unternehmens- &amp; Produktvideo für Vertrauensaufbau</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar1.i5" style="font-size: 14.5px; color: #1A1A1A;">KI-optimierte Conversion-Tests</span></div>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1.5px solid #FFE48A; border-radius: 20px; padding: 38px 34px;">
+        <div style="width: 56px; height: 56px; border-radius: 14px; background: #1946BD; color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="m7.5 4.27 9 5.15"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg></div>
+        <h3 data-i18n="eu.pillar2.t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 22px; color: #0A1628; margin: 0 0 12px;">Strategie &amp; Amazon</h3>
+        <p data-i18n="eu.pillar2.d" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 22px;">Wir positionieren Ihre Marke dort, wo die Zielgruppe sucht und kauft.</p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar2.i1" style="font-size: 14.5px; color: #1A1A1A;">Tiefgehende Markt- &amp; Wettbewerbsanalyse</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar2.i2" style="font-size: 14.5px; color: #1A1A1A;">Strategische Keyword-Recherche für die EU</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar2.i3" style="font-size: 14.5px; color: #1A1A1A;">Pricing-Strategie mit exakter Margenberechnung</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar2.i4" style="font-size: 14.5px; color: #1A1A1A;">SEO-optimierte Produkttitel &amp; Beschreibungen</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar2.i5" style="font-size: 14.5px; color: #1A1A1A;">PPC-Kampagnen &amp; kontinuierliche Skalierung</span></div>
+        </div>
+      </div>
+      <div style="background: #fff; border: 1.5px solid #FFE48A; border-radius: 20px; padding: 38px 34px;">
+        <div style="width: 56px; height: 56px; border-radius: 14px; background: #1946BD; color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h3 data-i18n="eu.pillar3.t" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 22px; color: #0A1628; margin: 0 0 12px;">Logistik &amp; Fulfillment</h3>
+        <p data-i18n="eu.pillar3.d" style="font-size: 15px; line-height: 1.6; color: #475569; margin: 0 0 22px;">Wir übernehmen die komplette operative Abwicklung für reibungslosen Versand.</p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar3.i1" style="font-size: 14.5px; color: #1A1A1A;">Sichere Lagerung direkt in Deutschland nahe Hamburg</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar3.i2" style="font-size: 14.5px; color: #1A1A1A;">Professionelle Warenannahme &amp; Qualitätsprüfung</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar3.i3" style="font-size: 14.5px; color: #1A1A1A;">Amazon FBA-Ready Prozesse</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar3.i4" style="font-size: 14.5px; color: #1A1A1A;">Schneller Versand in alle EU-Länder</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #FFB800; flex-shrink: 0; margin-top: 1px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.pillar3.i5" style="font-size: 14.5px; color: #1A1A1A;">B2C- und B2B-Fulfillment-Lösungen</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNER ============ -->
+<section style="background: #FBFAF7; padding: 40px 48px 100px;">
+  <div style="max-width: 1200px; margin: 0 auto; background: #fff; border-radius: 28px; padding: 28px; box-shadow: 0 30px 80px -40px rgba(10,22,40,0.4); display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 28px; align-items: stretch;">
+    <img src="assets/images/9ca4f5b0-5c05-4222-8911-9ecdccb5ce38.png" alt="Pari Jazz" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px; display: block; min-height: 560px;">
+    <div style="background: #1946BD; color: #fff; border-radius: 18px; padding: 48px 48px 44px;">
+      <h2 data-i18n-html="eu.partner.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(32px, 3.2vw, 46px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 24px;">Ihr europäischer Partner<br>— mit Wurzeln in China</h2>
+      <p data-i18n="eu.partner.p1" style="font-size: 15px; line-height: 1.7; color: rgba(247,244,238,0.92); margin: 0 0 18px;">Seit über fünf Jahren begleite ich mit meinem Team internationale Hersteller beim erfolgreichen Markteintritt in Europa. Ich verstehe nicht nur die europäische Marktdynamik im Detail, sondern spreche auch Ihre Sprache und kenne die Abläufe in chinesischen Produktionsstätten aus erster Hand. Ich bin mehrmals im Jahr persönlich vor Ort — in den Fabriken, bei Verhandlungen und bei strengen Qualitätskontrollen.</p>
+      <p data-i18n="eu.partner.p2" style="font-size: 15px; line-height: 1.7; color: rgba(247,244,238,0.92); margin: 0 0 32px;">Mit einem instinktiven Gespür für Bestseller steuere ich den gesamten Prozess — von der Auswahl spezialisierter Hersteller bis zur kompromisslosen Qualitätssicherung. In meiner Laufbahn habe ich über 600 Produkte eigenständig entwickelt und erfolgreich im Online- und Einzelhandel platziert. Als international gefragte Expertin auf führenden E-Commerce-Fachmessen agiere ich als Schnittstelle zwischen innovativer Produktion und weltweitem Handel.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px 32px;">
+        <div style="display: flex; gap: 14px; align-items: center;"><span style="color: #FFD21E; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/><path d="m9 16 2 2 4-4"/></svg></span><span data-i18n="eu.partner.s1" style="font-size: 15px; font-weight: 600;">10+ Jahre E-Commerce</span></div>
+        <div style="display: flex; gap: 14px; align-items: center;"><span style="color: #FFD21E; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/></svg></span><span data-i18n="eu.partner.s2" style="font-size: 15px; font-weight: 600;">600+ erfolgreiche Launches</span></div>
+        <div style="display: flex; gap: 14px; align-items: center;"><span style="color: #FFD21E; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span data-i18n="eu.partner.s3" style="font-size: 15px; font-weight: 600;">Globale Reichweite</span></div>
+        <div style="display: flex; gap: 14px; align-items: center;"><span style="color: #FFD21E; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span data-i18n="eu.partner.s4" style="font-size: 15px; font-weight: 600;">Persönliche Betreuung</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section style="background: #FBFAF7; padding: 20px 48px 100px;">
+  <div style="max-width: 880px; margin: 0 auto;">
+    <h2 data-i18n="eu.faq.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(36px, 3.6vw, 50px); color: #1946BD; text-align: center; margin: 0 0 48px;">FAQ</h2>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div class="eu-faq-item" data-open="0" style="background: #fff; border: 1px solid #C5D2F2; border-radius: 14px; overflow: hidden;">
+        <button data-faq-toggle style="width: 100%; text-align: left; background: transparent; border: 0; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer;">
+          <span data-i18n="eu.faq.q1" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: #0A1628;">Was, wenn mein Produkt nicht für Europa geeignet ist?</span>
+          <span class="eu-faq-chev" style="color: #1946BD; flex-shrink: 0; transition: transform .3s ease;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="eu-faq-ans"><p data-i18n="eu.faq.a1" style="margin: 0; padding: 0 28px 24px; font-size: 15.5px; line-height: 1.65; color: #475569;">Das finden wir vorher heraus. Unsere Analyse zeigt Ihnen ehrlich, ob und wie Ihr Produkt funktionieren kann — bevor Sie investieren.</p></div>
+      </div>
+      <div class="eu-faq-item" data-open="0" style="background: #fff; border: 1px solid #C5D2F2; border-radius: 14px; overflow: hidden;">
+        <button data-faq-toggle style="width: 100%; text-align: left; background: transparent; border: 0; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer;">
+          <span data-i18n="eu.faq.q2" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: #0A1628;">Wie kommunizieren wir?</span>
+          <span class="eu-faq-chev" style="color: #1946BD; flex-shrink: 0; transition: transform .3s ease;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="eu-faq-ans"><p data-i18n="eu.faq.a2" style="margin: 0; padding: 0 28px 24px; font-size: 15.5px; line-height: 1.65; color: #475569;">Über WeChat, E-Mail oder Video-Calls — wie es für Sie am besten passt. Pari spricht Ihre Sprache und ist regelmäßig in China vor Ort.</p></div>
+      </div>
+      <div class="eu-faq-item" data-open="0" style="background: #fff; border: 1px solid #C5D2F2; border-radius: 14px; overflow: hidden;">
+        <button data-faq-toggle style="width: 100%; text-align: left; background: transparent; border: 0; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer;">
+          <span data-i18n="eu.faq.q3" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: #0A1628;">Brauche ich ein eigenes Lager in Europa?</span>
+          <span class="eu-faq-chev" style="color: #1946BD; flex-shrink: 0; transition: transform .3s ease;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="eu-faq-ans"><p data-i18n="eu.faq.a3" style="margin: 0; padding: 0 28px 24px; font-size: 15.5px; line-height: 1.65; color: #475569;">Nein. Wir bieten komplettes Fulfillment: Ihre Ware kommt in unser Lager, wir übernehmen Qualitätsprüfung, Lagerung und Versand.</p></div>
+      </div>
+      <div class="eu-faq-item" data-open="0" style="background: #fff; border: 1px solid #C5D2F2; border-radius: 14px; overflow: hidden;">
+        <button data-faq-toggle style="width: 100%; text-align: left; background: transparent; border: 0; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer;">
+          <span data-i18n="eu.faq.q4" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: #0A1628;">Wie schnell kann ich starten?</span>
+          <span class="eu-faq-chev" style="color: #1946BD; flex-shrink: 0; transition: transform .3s ease;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="eu-faq-ans"><p data-i18n="eu.faq.a4" style="margin: 0; padding: 0 28px 24px; font-size: 15.5px; line-height: 1.65; color: #475569;">Nach dem Erstgespräch erstellen wir innerhalb weniger Tage Ihre Analyse. Der komplette Launch dauert je nach Produkt 4–8 Wochen.</p></div>
+      </div>
+      <div class="eu-faq-item" data-open="0" style="background: #fff; border: 1px solid #C5D2F2; border-radius: 14px; overflow: hidden;">
+        <button data-faq-toggle style="width: 100%; text-align: left; background: transparent; border: 0; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer;">
+          <span data-i18n="eu.faq.q5" style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: #0A1628;">Übernehmen Sie auch die steuerliche und rechtliche Registrierung in der EU?</span>
+          <span class="eu-faq-chev" style="color: #1946BD; flex-shrink: 0; transition: transform .3s ease;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="eu-faq-ans"><p data-i18n="eu.faq.a5" style="margin: 0; padding: 0 28px 24px; font-size: 15.5px; line-height: 1.65; color: #475569;">Ja, wir begleiten Sie durch den gesamten Dschungel der EU-Anforderungen. Von der EPR-Registrierung bis zur Einhaltung EU-weiter Qualitätsstandards sorgen wir dafür, dass Ihr Business rechtssicher und stabil aufgestellt ist.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section style="background: #FBFAF7; padding: 0 48px 110px;">
+  <div style="max-width: 1080px; margin: 0 auto; background: #1946BD; border-radius: 28px; padding: 72px 48px; text-align: center; box-shadow: 0 40px 100px -40px rgba(25,70,189,0.55);">
+    <h2 data-i18n="eu.cta.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(36px, 3.8vw, 56px); line-height: 1.08; color: #fff; margin: 0; text-wrap: balance;">Bereit, in Europa Produkte zu verkaufen?</h2>
+    <p data-i18n="eu.cta.sub" style="font-size: 18px; color: rgba(247,244,238,0.9); margin: 18px 0 0;">Stark für Ihre Marke vor Ort in Europa!</p>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 14px 40px; margin: 32px 0 38px; color: #fff;">
+      <div style="display: flex; gap: 10px; align-items: center; font-size: 15px;"><span style="color: #FFD21E;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.cta.b1">Jahrelange E-Commerce-Expertise</span></div>
+      <div style="display: flex; gap: 10px; align-items: center; font-size: 15px;"><span style="color: #FFD21E;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.cta.b2">Persönlicher Ansprechpartner</span></div>
+      <div style="display: flex; gap: 10px; align-items: center; font-size: 15px;"><span style="color: #FFD21E;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span data-i18n="eu.cta.b3">Skalierung Produktportfolio</span></div>
+    </div>
+    <button data-qr-trigger data-i18n="eu.cta.btn" style="background: linear-gradient(180deg, #FFE45C, #FFD21E); color: #1A1A1A; padding: 19px 52px; border: 0; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; box-shadow: 0 0 60px rgba(255,210,30,0.5);" style-hover="transform: translateY(-2px);">Jetzt kontaktieren</button>
+    <p data-i18n="eu.cta.note" style="font-size: 14px; color: rgba(247,244,238,0.8); margin: 26px 0 0;">Antwort innerhalb von 24 Stunden</p>
+  </div>
+</section>
+
+<footer style="background: #0A0F1E; color: rgba(247,244,238,0.7); padding: 80px 48px 48px;">
+  <div style="max-width: 1440px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; padding-bottom: 56px; border-bottom: 1px solid rgba(247,244,238,0.1);">
+      <div>
+        <div style="display: flex; flex-direction: column; line-height: 1;">
+          <span style="font-family: 'Playfair Display', serif; font-weight: 600; font-size: 32px; color: #F7F4EE;">Pari Jazz</span>
+          <span style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: 0.32em; color: #C9A96E; margin-top: 6px;">COMMERCE</span>
+        </div>
+        <p data-i18n="footer.tagline" style="margin-top: 24px; font-size: 14px; line-height: 1.6; max-width: 360px;">Wir begleiten Hersteller und Marken beim erfolgreichen Eintritt in den europäischen Markt — mit Strategie, Content und Logistik aus einer Hand.</p>
+        <div style="margin-top: 28px; display: flex; gap: 12px;">
+          <a href="https://www.instagram.com/parijazz_" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE; transition: border-color .25s ease, background .25s ease;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://www.youtube.com/@PariJazzz" aria-label="YouTube" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE; transition: border-color .25s ease, background .25s ease;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C16.7 3.4 12 3.4 12 3.4s-4.7 0-7.9.3c-.4 0-1.4 0-2.2 1C1.2 5.4 1 7 1 7s-.2 1.9-.2 3.8v1.8C.8 14.5 1 16.4 1 16.4s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.7.3 7.7.3s4.7 0 7.9-.3c.4 0 1.4 0 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8zM10 15V8l6 3.5L10 15z"/></svg></a>
+          <a href="https://www.tiktok.com/@pari.jazz" aria-label="TikTok" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE; transition: border-color .25s ease, background .25s ease;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.3a4.8 4.8 0 0 1-2.9-1c-.6-.5-1-1.1-1.3-1.8a4.5 4.5 0 0 1-.2-1.4h-3.4v13.1a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.1a6 6 0 1 0 5.3 6V8.7c1 .7 2.3 1.1 3.7 1.1h.7V6.3z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div data-i18n="footer.services" style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Leistungen</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="e-commerce.html" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">E-Commerce</a>
+          <a href="sourcing.html" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">Sourcing</a>
+          <a href="eu-market-entry.html" data-i18n="nav.eu" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">EU-Markteintritt</a>
+        </div>
+      </div>
+      <div>
+        <div data-i18n="footer.company" style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Unternehmen</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="index.html" data-i18n="footer.home" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">Startseite</a>
+          <a href="contact.html" data-i18n="footer.contact" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">Kontakt</a>
+        </div>
+      </div>
+      <div>
+        <div data-i18n="footer.legal" style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Rechtliches</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="#" data-i18n="footer.imprint" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">Impressum</a>
+          <a href="#" data-i18n="footer.privacy" style="color: rgba(247,244,238,0.7); transition: color .2s ease;" style-hover="color: #F7F4EE;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top: 32px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(247,244,238,0.4);">
+      <div>© 2026 Pari Jazz. Alle Rechte vorbehalten.</div>
+      <div>Hamburg · Guangzhou · Shenzhen</div>
+    </div>
+  </div>
+</footer>
+{{ qrModal }}
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1100}}">
+const I18N = {
+  de: {
+    'nav.home': 'Startseite', 'nav.ecommerce': 'E-Commerce', 'nav.sourcing': 'Sourcing', 'nav.eu': 'EU-Markteintritt', 'nav.contact': 'Kontakt', 'nav.cta': 'Jetzt kontaktieren',
+    'eu.hero.title': 'Sie produzieren Weltklasse-Produkte. Zeit, dass <em style="font-style: italic;">Europa</em> sie entdeckt.',
+    'eu.hero.body': 'Wir begleiten chinesische Hersteller beim erfolgreichen Markteintritt in Europa. Mit unserer Multi-Channel-Expertise platzieren wir Ihre Produkte auf Plattformen wie Amazon, Kaufland und Otto, bauen leistungsstarke Onlineshops, implementieren EU-konforme Qualitätsprüfungen und liefern Full-Service-Fulfillment für nachhaltige Expansion.',
+    'eu.hero.b1': '<strong>Jahrelange E-Commerce-Expertise:</strong> Unser Team skaliert seit Jahren Marken auf allen relevanten europäischen Plattformen — von Amazon und Kaufland bis Otto und hochperformanten eigenen Onlineshops.',
+    'eu.hero.b2': '<strong>Vertrauen durch Transparenz:</strong> Wir produzieren hochprofessionelle Produkt- und Unternehmensvideos, die Ihre hohen Standards für europäische Händler und Endkunden greifbar machen.',
+    'eu.hero.b3': '<strong>Full-Service Logistik-Backend:</strong> Sie erhalten sofortigen Zugang zu einem schlüsselfertigen europäischen Fulfillment-Netzwerk inklusive strenger Qualitätsprüfung nach EU-Normen.',
+    'eu.hero.cta': 'Jetzt kontaktieren',
+    'eu.reality.eyebrow': 'DIE REALITÄT', 'eu.reality.title': 'Der europäische Markt ist lukrativ — aber voller Fallstricke.', 'eu.reality.sub': 'Als chinesischer Hersteller stehen Sie vor Hürden, die lokale Verkäufer nicht haben:',
+    'eu.reality.c1t': 'Kein Vertrauen', 'eu.reality.c1b': 'Europäische Käufer zögern bei Marken ohne lokale Präsenz. Ohne Partner vor Ort wird Ihre Qualität oft gar nicht erst wahrgenommen.',
+    'eu.reality.c2t': 'Falscher Kompass', 'eu.reality.c2b': 'Andere Keywords, Preise und Wettbewerber: Was in China funktioniert, scheitert in der EU oft an mangelnder Marktanpassung.',
+    'eu.reality.c3t': 'Logistik-Chaos', 'eu.reality.c3b': 'Zoll, FBA-Anforderungen und EU-weiter Versand sind ohne eingespielte Infrastruktur vor Ort ein operativer Albtraum.',
+    'eu.solution.eyebrow': 'DIE LÖSUNG', 'eu.solution.title': 'Was wäre, wenn Sie ein komplettes europäisches Team hätten?', 'eu.solution.sub': 'Ohne eigene Mitarbeiter. Ohne eigenes Lager. Ohne Risiko.',
+    'eu.solution.c1t': 'Lokale Präsenz', 'eu.solution.c1b': 'Wir sind Ihr Gesicht in Europa — mit deutscher Adresse, lokalem Support und echtem Vertrauen.',
+    'eu.solution.c2t': 'Alles aus einer Hand', 'eu.solution.c2b': 'Von der Marktanalyse über professionellen Content (Amazon, Kaufland, Otto) bis zum Versand — ein erfahrener Partner für alles.',
+    'eu.solution.c3t': 'Kostenfreie Erstanalyse', 'eu.solution.c3b': 'Wir prüfen vorab objektiv, ob Ihr Produkt Erfolgsaussichten hat. Sie investieren erst dann, wenn eine Expansion wirklich Sinn ergibt.',
+    'eu.steps.title': 'Von der Idee zum ersten Verkauf — in 6 Schritten nach Europa', 'eu.steps.cta': 'Jetzt kontaktieren',
+    'eu.step1.t': 'Analyse', 'eu.step1.b': 'Wir validieren das Marktpotenzial Ihrer Produkte in Europa durch eine detaillierte Nachfrage- und Wettbewerbsanalyse.', 'eu.step1.r': '→ SIE WISSEN, OB IHR PRODUKT IN DER EU POTENZIAL HAT',
+    'eu.step2.t': 'Strategie', 'eu.step2.b': 'Wir entwickeln Ihren individuellen Markteintrittsplan inklusive optimaler Positionierung, Preisstrategie und Launch-Fahrplan.', 'eu.step2.r': '→ EIN KLARER FAHRPLAN FÜR IHREN MARKTEINTRITT',
+    'eu.step3.t': 'Content', 'eu.step3.b': 'Unser Team erstellt verkaufsstarke Fotos, Videos und A+ Content, die exakt auf die Erwartungen europäischer Käufer zugeschnitten sind.', 'eu.step3.r': '→ MATERIAL, DAS EUROPÄISCHE KÄUFER ÜBERZEUGT',
+    'eu.step4.t': 'Launch', 'eu.step4.b': 'Wir übernehmen das komplette Setup auf Plattformen wie Amazon, Kaufland oder Otto und steuern die PPC-Kampagnen für maximale Sichtbarkeit.', 'eu.step4.r': '→ IHR PRODUKT IST LIVE UND SICHTBAR',
+    'eu.step5.t': 'Logistik', 'eu.step5.b': 'Nutzen Sie unsere schlüsselfertige Infrastruktur für Lagerung, strenge Qualitätsprüfung und den schnellen EU-weiten Versand.', 'eu.step5.r': '→ SCHNELLE LIEFERUNG OHNE EIGENE INFRASTRUKTUR',
+    'eu.step6.t': 'Skalierung', 'eu.step6.b': 'Wir optimieren laufend die Performance und begleiten die Expansion Ihrer Marke in weitere europäische Märkte.', 'eu.step6.r': '→ NACHHALTIGES WACHSTUM IN GANZ EUROPA',
+    'eu.pillars.title': 'Alles, was Sie für den EU-Erfolg brauchen', 'eu.pillars.sub': 'Drei Säulen. Ein Ziel: Ihr profitables Business in Europa.',
+    'eu.pillar1.t': 'Content & Branding', 'eu.pillar1.d': 'Wir rücken Ihre Produktqualität ins rechte Licht und schaffen Vertrauen bei europäischen Kunden.',
+    'eu.pillar1.i1': 'Professionelle Produktfotos (europäische Ästhetik)', 'eu.pillar1.i2': 'Lifestyle-Shootings mit westlichen Models', 'eu.pillar1.i3': 'Amazon-Listingbilder & A+ Content', 'eu.pillar1.i4': 'Unternehmens- & Produktvideo für Vertrauensaufbau', 'eu.pillar1.i5': 'KI-optimierte Conversion-Tests',
+    'eu.pillar2.t': 'Strategie & Amazon', 'eu.pillar2.d': 'Wir positionieren Ihre Marke dort, wo die Zielgruppe sucht und kauft.',
+    'eu.pillar2.i1': 'Tiefgehende Markt- & Wettbewerbsanalyse', 'eu.pillar2.i2': 'Strategische Keyword-Recherche für die EU', 'eu.pillar2.i3': 'Pricing-Strategie mit exakter Margenberechnung', 'eu.pillar2.i4': 'SEO-optimierte Produkttitel & Beschreibungen', 'eu.pillar2.i5': 'PPC-Kampagnen & kontinuierliche Skalierung',
+    'eu.pillar3.t': 'Logistik & Fulfillment', 'eu.pillar3.d': 'Wir übernehmen die komplette operative Abwicklung für reibungslosen Versand.',
+    'eu.pillar3.i1': 'Sichere Lagerung direkt in Deutschland nahe Hamburg', 'eu.pillar3.i2': 'Professionelle Warenannahme & Qualitätsprüfung', 'eu.pillar3.i3': 'Amazon FBA-Ready Prozesse', 'eu.pillar3.i4': 'Schneller Versand in alle EU-Länder', 'eu.pillar3.i5': 'B2C- und B2B-Fulfillment-Lösungen',
+    'eu.partner.title': 'Ihr europäischer Partner<br>— mit Wurzeln in China',
+    'eu.partner.p1': 'Seit über fünf Jahren begleite ich mit meinem Team internationale Hersteller beim erfolgreichen Markteintritt in Europa. Ich verstehe nicht nur die europäische Marktdynamik im Detail, sondern spreche auch Ihre Sprache und kenne die Abläufe in chinesischen Produktionsstätten aus erster Hand. Ich bin mehrmals im Jahr persönlich vor Ort — in den Fabriken, bei Verhandlungen und bei strengen Qualitätskontrollen.',
+    'eu.partner.p2': 'Mit einem instinktiven Gespür für Bestseller steuere ich den gesamten Prozess — von der Auswahl spezialisierter Hersteller bis zur kompromisslosen Qualitätssicherung. In meiner Laufbahn habe ich über 600 Produkte eigenständig entwickelt und erfolgreich im Online- und Einzelhandel platziert. Als international gefragte Expertin auf führenden E-Commerce-Fachmessen agiere ich als Schnittstelle zwischen innovativer Produktion und weltweitem Handel.',
+    'eu.partner.s1': '10+ Jahre E-Commerce', 'eu.partner.s2': '600+ erfolgreiche Launches', 'eu.partner.s3': 'Globale Reichweite', 'eu.partner.s4': 'Persönliche Betreuung',
+    'eu.faq.title': 'FAQ',
+    'eu.faq.q1': 'Was, wenn mein Produkt nicht für Europa geeignet ist?', 'eu.faq.a1': 'Das finden wir vorher heraus. Unsere Analyse zeigt Ihnen ehrlich, ob und wie Ihr Produkt funktionieren kann — bevor Sie investieren.',
+    'eu.faq.q2': 'Wie kommunizieren wir?', 'eu.faq.a2': 'Über WeChat, E-Mail oder Video-Calls — wie es für Sie am besten passt. Pari spricht Ihre Sprache und ist regelmäßig in China vor Ort.',
+    'eu.faq.q3': 'Brauche ich ein eigenes Lager in Europa?', 'eu.faq.a3': 'Nein. Wir bieten komplettes Fulfillment: Ihre Ware kommt in unser Lager, wir übernehmen Qualitätsprüfung, Lagerung und Versand.',
+    'eu.faq.q4': 'Wie schnell kann ich starten?', 'eu.faq.a4': 'Nach dem Erstgespräch erstellen wir innerhalb weniger Tage Ihre Analyse. Der komplette Launch dauert je nach Produkt 4–8 Wochen.',
+    'eu.faq.q5': 'Übernehmen Sie auch die steuerliche und rechtliche Registrierung in der EU?', 'eu.faq.a5': 'Ja, wir begleiten Sie durch den gesamten Dschungel der EU-Anforderungen. Von der EPR-Registrierung bis zur Einhaltung EU-weiter Qualitätsstandards sorgen wir dafür, dass Ihr Business rechtssicher und stabil aufgestellt ist.',
+    'eu.cta.title': 'Bereit, in Europa Produkte zu verkaufen?', 'eu.cta.sub': 'Stark für Ihre Marke vor Ort in Europa!', 'eu.cta.b1': 'Jahrelange E-Commerce-Expertise', 'eu.cta.b2': 'Persönlicher Ansprechpartner', 'eu.cta.b3': 'Skalierung Produktportfolio', 'eu.cta.btn': 'Jetzt kontaktieren', 'eu.cta.note': 'Antwort innerhalb von 24 Stunden',
+    'qr.caption': 'Scannen Sie den Code, um mit uns in Kontakt zu treten',
+    'footer.tagline': 'Wir begleiten Hersteller und Marken beim erfolgreichen Eintritt in den europäischen Markt — mit Strategie, Content und Logistik aus einer Hand.',
+    'footer.services': 'Leistungen', 'footer.company': 'Unternehmen', 'footer.legal': 'Rechtliches',
+    'footer.home': 'Startseite', 'footer.contact': 'Kontakt', 'footer.imprint': 'Impressum', 'footer.privacy': 'Datenschutz',
+  },
+  en: {
+    'nav.home': 'Home', 'nav.ecommerce': 'E-Commerce', 'nav.sourcing': 'Sourcing', 'nav.eu': 'EU Market Entry', 'nav.contact': 'Contact', 'nav.cta': 'Contact us now',
+    'eu.hero.title': 'You produce world-class products. It\u2019s time <em style="font-style: italic;">Europe</em> discovered them.',
+    'eu.hero.body': 'We support Chinese manufacturers in successfully entering the European market. With our multi-channel expertise, we place your products on platforms like Amazon, Kaufland, and Otto, build high-performance online shops, implement EU-compliant quality checks, and provide full-service fulfillment for sustainable expansion.',
+    'eu.hero.b1': '<strong>Years of e-commerce expertise:</strong> Our team has many years of experience scaling brands on all relevant European platforms \u2014 from Amazon and Kaufland to Otto and high-performing own online shops.',
+    'eu.hero.b2': '<strong>Trust through transparency:</strong> We produce highly professional product and company videos that make your high standards tangible for European retailers and end customers.',
+    'eu.hero.b3': '<strong>Full-service logistics backend:</strong> You receive immediate access to a turnkey European fulfillment network including strict quality control according to EU standards.',
+    'eu.hero.cta': 'Contact us now',
+    'eu.reality.eyebrow': 'THE REALITY', 'eu.reality.title': 'The European market is lucrative \u2014 but full of pitfalls.', 'eu.reality.sub': 'As a Chinese manufacturer, you face hurdles that local sellers do not:',
+    'eu.reality.c1t': 'No trust', 'eu.reality.c1b': 'European buyers often hesitate to buy from brands without a local presence. Without a local partner, their quality often goes unnoticed.',
+    'eu.reality.c2t': 'Wrong compass', 'eu.reality.c2b': 'Different keywords, prices and competitors: What works in China often fails in the EU due to a lack of market adaptation.',
+    'eu.reality.c3t': 'Logistics chaos', 'eu.reality.c3b': 'Customs, FBA requirements and EU-wide shipping are an operational nightmare without a well-established local infrastructure.',
+    'eu.solution.eyebrow': 'THE SOLUTION', 'eu.solution.title': 'What if you had a full European team?', 'eu.solution.sub': 'No employees. No warehouse. No risk.',
+    'eu.solution.c1t': 'Local presence', 'eu.solution.c1b': 'We are your face in Europe \u2014 with a German address, local support and genuine trust.',
+    'eu.solution.c2t': 'Everything from a single source', 'eu.solution.c2b': 'From market analysis to professional content (Amazon, Kaufland, Otto) to shipping \u2014 an experienced partner for everything.',
+    'eu.solution.c3t': 'Free initial analysis', 'eu.solution.c3b': 'We objectively assess your product\u2019s potential for success beforehand. You only invest if expansion truly makes sense.',
+    'eu.steps.title': 'From idea to first sale, 6 steps to Europe', 'eu.steps.cta': 'Contact us now',
+    'eu.step1.t': 'Analysis', 'eu.step1.b': 'We validate the market potential of your products in Europe through a detailed demand and competitive analysis.', 'eu.step1.r': '→ YOU KNOW IF YOUR PRODUCT HAS POTENTIAL IN THE EU',
+    'eu.step2.t': 'Strategy', 'eu.step2.b': 'We develop your individual market entry plan including optimal positioning, pricing strategy and launch roadmap.', 'eu.step2.r': '→ A CLEAR PLAN FOR YOUR MARKET ENTRY',
+    'eu.step3.t': 'Content', 'eu.step3.b': 'Our team creates high-converting photos, videos and A+ content that are precisely tailored to the expectations of European buyers.', 'eu.step3.r': '→ MATERIAL THAT CONVINCES EUROPEAN BUYERS',
+    'eu.step4.t': 'Launch', 'eu.step4.b': 'We handle the complete setup on platforms like Amazon, Kaufland or Otto and manage the PPC campaigns for maximum visibility.', 'eu.step4.r': '→ YOUR PRODUCT IS LIVE AND VISIBLE',
+    'eu.step5.t': 'Logistics', 'eu.step5.b': 'Take advantage of our turnkey infrastructure for warehousing, strict quality control and fast EU-wide shipping.', 'eu.step5.r': '→ FAST DELIVERY WITHOUT YOUR OWN INFRASTRUCTURE',
+    'eu.step6.t': 'Scaling', 'eu.step6.b': 'We continuously optimize performance and support the expansion of your brand into other European markets.', 'eu.step6.r': '→ SUSTAINABLE GROWTH ACROSS EUROPE',
+    'eu.pillars.title': 'Everything you need for EU success', 'eu.pillars.sub': 'Three pillars. One goal: Your profitable business in Europe.',
+    'eu.pillar1.t': 'Content & Branding', 'eu.pillar1.d': 'We put your product quality in the right light and build trust with European customers.',
+    'eu.pillar1.i1': 'Professional product photos (European aesthetic)', 'eu.pillar1.i2': 'Lifestyle photoshoots with Western models', 'eu.pillar1.i3': 'Amazon listing images & A+ content', 'eu.pillar1.i4': 'Corporate product video for building trust', 'eu.pillar1.i5': 'AI-optimized conversion tests',
+    'eu.pillar2.t': 'Strategy & Amazon', 'eu.pillar2.d': 'We position your brand where your target audience searches and buys.',
+    'eu.pillar2.i1': 'In-depth market and competitive analysis', 'eu.pillar2.i2': 'Strategic keyword research for the EU', 'eu.pillar2.i3': 'Pricing strategy with precise margin calculation', 'eu.pillar2.i4': 'SEO-optimized product titles & descriptions', 'eu.pillar2.i5': 'PPC campaigns & continuous scaling',
+    'eu.pillar3.t': 'Logistics & Fulfillment', 'eu.pillar3.d': 'We handle all operational aspects to ensure smooth shipping.',
+    'eu.pillar3.i1': 'Secure storage directly in Germany near Hamburg', 'eu.pillar3.i2': 'Professional goods receipt & quality control', 'eu.pillar3.i3': 'Amazon FBA-Ready Processes', 'eu.pillar3.i4': 'Fast shipping to all EU countries', 'eu.pillar3.i5': 'B2C and B2B fulfillment solutions',
+    'eu.partner.title': 'Your European partner<br>\u2014 with roots in China',
+    'eu.partner.p1': 'For over five years, my team and I have been supporting international manufacturers in their successful market entry into Europe. I not only understand the dynamics of the European market in detail, but also speak your language and have firsthand knowledge of the processes in Chinese production facilities. I am personally on-site several times a year \u2014 in the factories, during negotiations, and for rigorous quality control checks.',
+    'eu.partner.p2': 'With an instinctive feel for bestsellers, I manage the entire process \u2014 from selecting specialized manufacturers to uncompromising quality assurance. In my career to date, I have independently developed and successfully launched over 600 products in online and brick-and-mortar retail. As an internationally sought-after expert at leading e-commerce trade fairs, I act as a bridge between innovative production and global trade.',
+    'eu.partner.s1': '10+ years of e-commerce', 'eu.partner.s2': '600+ successful launches', 'eu.partner.s3': 'Global reach', 'eu.partner.s4': 'Personal care',
+    'eu.faq.title': 'FAQ',
+    'eu.faq.q1': 'What if my product is not suitable for Europe?', 'eu.faq.a1': 'We find that out beforehand. Our analysis shows you honestly whether and how your product can work \u2014 before you invest.',
+    'eu.faq.q2': 'How do we communicate?', 'eu.faq.a2': 'Via WeChat, email or video calls \u2014 whatever works best for you. Pari speaks your language and is regularly on-site in China.',
+    'eu.faq.q3': 'Do I need my own warehouse in Europe?', 'eu.faq.a3': 'No. We offer complete fulfillment: your goods come to our warehouse, and we handle quality control, storage and shipping.',
+    'eu.faq.q4': 'How quickly can I start?', 'eu.faq.a4': 'After the initial consultation, we create your analysis within a few days. The complete launch takes 4\u20138 weeks depending on the product.',
+    'eu.faq.q5': 'Do you also handle the tax and legal registration in the EU?', 'eu.faq.a5': 'Yes, we guide you through the entire jungle of EU requirements. From EPR registration to compliance with EU-wide quality standards, we ensure your business is legally compliant and stable.',
+    'eu.cta.title': 'Ready to sell products in Europe?', 'eu.cta.sub': 'Strong for your brand locally in Europe!', 'eu.cta.b1': 'Years of e-commerce expertise', 'eu.cta.b2': 'Personal contact person', 'eu.cta.b3': 'Scaling product portfolio', 'eu.cta.btn': 'Contact us now', 'eu.cta.note': 'Response within 24 hours',
+    'qr.caption': 'Scan to get in touch with us',
+    'footer.tagline': 'We support manufacturers and brands in successfully entering the European market — with strategy, content and logistics from a single source.',
+    'footer.services': 'Services', 'footer.company': 'Company', 'footer.legal': 'Legal',
+    'footer.home': 'Home', 'footer.contact': 'Contact', 'footer.imprint': 'Imprint', 'footer.privacy': 'Privacy Policy',
+  },
+};
+
+const LANGUAGES = [
+  { code: 'de', flag: '🇩🇪', label: 'Deutsch' },
+  { code: 'en', flag: '🇺🇸', label: 'English' },
+  { code: 'cn', flag: '🇨🇳', label: '中文' },
+  { code: 'fr', flag: '🇫🇷', label: 'Français' },
+  { code: 'es', flag: '🇪🇸', label: 'Español' },
+  { code: 'pt', flag: '🇵🇹', label: 'Português' },
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    try { localStorage.setItem('pj-language', 'de'); } catch (e) {}
+    this.state = { lang: 'de', langOpen: false, qrOpen: false };
+  }
+
+  componentDidMount() {
+    this._applyTranslations();
+    this._setupHandlers();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState && prevState.lang !== this.state.lang) {
+      this._applyTranslations();
+      try { localStorage.setItem('pj-language', this.state.lang); } catch (e) {}
+    }
+  }
+
+  _applyTranslations() {
+    const dict = I18N[this.state.lang] || I18N.de;
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const k = el.dataset.i18n; if (dict[k] != null) el.textContent = dict[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      const k = el.dataset.i18nHtml; if (dict[k] != null) el.innerHTML = dict[k];
+    });
+  }
+
+  _setupHandlers() {
+    this._click = (e) => {
+      const qrT = e.target.closest('[data-qr-trigger]');
+      if (qrT) { e.preventDefault(); this.setState({ qrOpen: true }); document.body.style.overflow = 'hidden'; return; }
+      if (e.target.closest('[data-qr-close]') || e.target.matches('[data-qr-overlay]')) {
+        e.preventDefault(); this.setState({ qrOpen: false }); document.body.style.overflow = ''; return;
+      }
+      const faq = e.target.closest('[data-faq-toggle]');
+      if (faq) {
+        e.preventDefault();
+        const item = faq.closest('.eu-faq-item');
+        if (item) item.setAttribute('data-open', item.getAttribute('data-open') === '1' ? '0' : '1');
+        return;
+      }
+      const langTrig = e.target.closest('[data-lang-trigger]');
+      if (langTrig) { e.preventDefault(); this.setState((s) => ({ langOpen: !s.langOpen })); return; }
+      const langOpt = e.target.closest('[data-lang-option]');
+      if (langOpt) { e.preventDefault(); this.setState({ lang: langOpt.dataset.langOption, langOpen: false }); return; }
+      if (this.state.langOpen && !e.target.closest('[data-lang-dropdown]')) this.setState({ langOpen: false });
+    };
+    document.addEventListener('click', this._click);
+    this._key = (e) => {
+      if (e.key === 'Escape') {
+        if (this.state.qrOpen) { this.setState({ qrOpen: false }); document.body.style.overflow = ''; }
+        else if (this.state.langOpen) this.setState({ langOpen: false });
+      }
+    };
+    document.addEventListener('keydown', this._key);
+  }
+
+  componentWillUnmount() {
+    if (this._click) document.removeEventListener('click', this._click);
+    if (this._key) document.removeEventListener('keydown', this._key);
+  }
+
+  _buildLangSwitcher() { return null;
+    const e = React.createElement;
+    const current = LANGUAGES.find((l) => l.code === this.state.lang) || LANGUAGES[0];
+    return e('div', { 'data-lang-dropdown': true, style: { position: 'relative' } },
+      e('button', { 'data-lang-trigger': true, 'aria-haspopup': 'listbox', style: { display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'transparent', border: '1.5px solid #C9A96E', borderRadius: '999px', padding: '8px 14px', fontFamily: 'Inter', fontSize: '13px', fontWeight: 600, color: '#1A1A1A', cursor: 'pointer' } },
+        e('span', { style: { fontSize: '16px', lineHeight: 1 } }, current.flag),
+        e('span', { style: { letterSpacing: '0.08em' } }, current.code.toUpperCase()),
+        e('span', { style: { fontSize: '10px', color: '#C9A96E', transform: this.state.langOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform .2s ease' } }, '▾'),
+      ),
+      this.state.langOpen ? e('div', { role: 'listbox', style: { position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1px solid #EAD7A1', borderRadius: '14px', padding: '6px', minWidth: '190px', boxShadow: '0 12px 40px rgba(25,70,189,0.12)', zIndex: 1000 } },
+        LANGUAGES.map((lang) => {
+          const active = lang.code === this.state.lang;
+          return e('div', { key: lang.code, 'data-lang-option': lang.code, role: 'option', style: { padding: '10px 12px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', background: active ? '#F7F4EE' : 'transparent', fontWeight: active ? 700 : 500, color: active ? '#1946BD' : '#1A1A1A', fontSize: '14px' } },
+            e('span', { style: { fontSize: '18px' } }, lang.flag), e('span', { style: { flex: 1 } }, lang.label),
+            active ? e('span', { style: { width: '6px', height: '6px', borderRadius: '999px', background: '#C9A96E' } }) : null);
+        })) : null);
+  }
+
+  _buildQrModal() {
+    if (!this.state.qrOpen) return null;
+    const dict = I18N[this.state.lang] || I18N.de;
+    const e = React.createElement;
+    return e('div', { 'data-qr-overlay': true, role: 'dialog', 'aria-modal': 'true', style: { position: 'fixed', inset: 0, background: 'rgba(10,22,40,0.78)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' } },
+      e('div', { style: { background: '#fff', borderRadius: '16px', width: '100%', maxWidth: '380px', padding: '40px 36px 34px', position: 'relative', boxShadow: '0 40px 100px rgba(10,22,40,0.45)', textAlign: 'center' } },
+        e('button', { 'data-qr-close': true, 'aria-label': 'Close', style: { position: 'absolute', top: '16px', right: '16px', width: '36px', height: '36px', borderRadius: '999px', border: '1.5px solid #EAD7A1', background: '#F7F4EE', color: '#1A1A1A', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, '✕'),
+        e('img', { src: 'assets/images/wechat-qr.png', alt: 'WeChat QR — Pari Jazz', style: { width: '260px', maxWidth: '100%', height: 'auto', display: 'block', margin: '6px auto 0', borderRadius: '8px' } }),
+        e('p', { style: { fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500, color: '#475569', margin: '22px 0 0', lineHeight: 1.5 } }, dict['qr.caption'] || 'Scan to get in touch with us'),
+      ));
+  }
+
+
+  renderVals() {
+    return {
+      langSwitcher: this._buildLangSwitcher(),
+      qrModal: this._buildQrModal(),
+    };
+  }
+}
+</script>
+</body>
+</html>
