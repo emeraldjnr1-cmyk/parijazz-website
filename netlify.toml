@@ -1,6 +1,5 @@
-# Netlify config for Pari Jazz Commerce static site
 [build]
-  publish = "deploy"
+  publish = "."
 
 [[headers]]
   for = "/*.html"
@@ -9,10 +8,5 @@
 
 [[headers]]
   for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/support.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
