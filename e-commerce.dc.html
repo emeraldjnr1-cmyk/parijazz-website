@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./responsive.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #F7F4EE; color: #1A1A1A; font-family: 'Inter', system-ui, -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: #1946BD; color: #F7F4EE; }
+  @keyframes euOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes euModalIn { from { opacity: 0; transform: scale(.94) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  @keyframes euFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  [data-qr-overlay] { animation: euOverlayIn 200ms ease forwards; }
+  [data-qr-overlay] > div { animation: euModalIn 300ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  [data-lang-dropdown] [role="listbox"] { animation: euFadeUp 180ms ease forwards; }
+
+  /* ============ TIER 1 ANIMATIONS ============ */
+  /* Default: content fully visible. Animations apply only in browsers that support scroll-driven animation-timeline (Chromium 115+). Graceful fallback elsewhere. */
+  @keyframes pjFadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  @keyframes pjFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pjPop     { from { opacity: 0; transform: translate(-50%, -50%) scale(0.2); } 70% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+  @keyframes pjGrow    { from { transform: translateX(-50%) scaleY(0); } to { transform: translateX(-50%) scaleY(1); } }
+  @keyframes pjPhotoIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+  @keyframes pjSlideR  { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+  @keyframes pjSlideL  { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+  @keyframes pjKenBurns { from { transform: scale(1); } to { transform: scale(1.06); } }
+  @keyframes pjBreathe  { 0%, 100% { transform: scale(1); opacity: 0.18; } 50% { transform: scale(1.04); opacity: 0.22; } }
+
+  /* Ken-burns on hero portrait — always on, very slow */
+  [data-hero-portrait] img { animation: pjKenBurns 24s ease-in-out infinite alternate; transform-origin: center 30%; will-change: transform; }
+
+  /* Phoenix watermark slow breath — always on */
+  [data-phoenix] { animation: pjBreathe 9s ease-in-out infinite; will-change: transform, opacity; }
+
+  @supports (animation-timeline: view()) {
+    /* Generic section/element reveal as it enters the viewport */
+    [data-reveal] {
+      animation: pjFadeUp linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    [data-reveal-fade] {
+      animation: pjFadeIn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    [data-reveal-l] {
+      animation: pjSlideR linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    [data-reveal-r] {
+      animation: pjSlideL linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    /* Timeline yellow line draws from top to bottom along the section's scroll */
+    [data-timeline-line] {
+      transform-origin: top center;
+      animation: pjGrow linear both;
+      animation-timeline: scroll(nearest);
+      animation-range: cover 0% cover 70%;
+    }
+    /* Scope the line's scroll-timeline to its parent section */
+    [data-timeline-wrap] { view-timeline-name: --pj-timeline; view-timeline-axis: block; }
+    [data-timeline-line] {
+      animation-timeline: --pj-timeline;
+      animation-range: entry 0% contain 60%;
+    }
+
+    /* Yellow icon badges pop in as their row enters view */
+    [data-badge] {
+      animation: pjPop cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+
+    /* Phase + program cards staggered fade-up via per-child range delay */
+    [data-stagger-parent] > * {
+      animation: pjFadeUp linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    [data-stagger-parent] > *:nth-child(2) { animation-delay: 80ms; }
+    [data-stagger-parent] > *:nth-child(3) { animation-delay: 160ms; }
+    [data-stagger-parent] > *:nth-child(4) { animation-delay: 240ms; }
+    [data-stagger-parent] > *:nth-child(5) { animation-delay: 320ms; }
+    [data-stagger-parent] > *:nth-child(6) { animation-delay: 400ms; }
+
+    /* Photo grid cascade */
+    [data-gallery] > * {
+      animation: pjPhotoIn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    [data-gallery] > *:nth-child(2n)   { animation-delay: 60ms; }
+    [data-gallery] > *:nth-child(3)    { animation-delay: 120ms; }
+    [data-gallery] > *:nth-child(4)    { animation-delay: 180ms; }
+    [data-gallery] > *:nth-child(5)    { animation-delay: 240ms; }
+    [data-gallery] > *:nth-child(6)    { animation-delay: 300ms; }
+    [data-gallery] > *:nth-child(7)    { animation-delay: 360ms; }
+    [data-gallery] > *:nth-child(8)    { animation-delay: 420ms; }
+    [data-gallery] > *:nth-child(n+9)  { animation-delay: 480ms; }
+  }
+
+  /* Counter — always animates via JS once on intersection; pre-render shows final value */
+  [data-counter] { font-variant-numeric: tabular-nums; }
+
+  
+  /* Accordion (details) — hide default disclosure triangle, rotate the vertical bar of the +/− icon */
+  [data-acc] > summary::-webkit-details-marker { display: none; }
+  [data-acc] > summary { list-style: none; }
+  [data-acc][open] [data-acc-vbar] { transform: translateX(-50%) scaleY(0); }
+  [data-acc] [data-acc-vbar] { transform-origin: center; }
+  [data-acc] > summary:hover [data-acc-icon] { opacity: 0.7; }
+  [data-acc][open] > summary { border-bottom: 1px solid rgba(240, 196, 25, 0.4); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero-portrait] img, [data-phoenix] { animation: none !important; }
+    [data-reveal], [data-reveal-fade], [data-reveal-l], [data-reveal-r],
+    [data-timeline-line], [data-badge],
+    [data-stagger-parent] > *, [data-gallery] > * { animation: none !important; opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</helmet>
+
+<main data-screen-label="E-Commerce" style="min-width: 1280px; background: #F7F4EE; color: #1A1A1A;">
+
+<nav style="position: sticky; top: 0; z-index: 100; background: rgba(247,244,238,0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(26,26,26,0.06);">
+  <div style="max-width: 1440px; margin: 0 auto; padding: 12px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 88px;">
+    <a href="Pari Jazz Commerce.dc.html" style="display: flex; align-items: center; gap: 14px; line-height: 1;">
+      <span aria-hidden="true" style="display: block; height: 84px; flex-shrink: 0; line-height: 0;">
+        <img src="assets/images/pari-jazz-logo-cropped.png" alt="Pari Jazz" style="height: 100%; width: auto; display: block;">
+      </span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <a href="Pari Jazz Commerce.dc.html" data-i18n="nav.home" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">Startseite</a>
+      <a href="e-commerce.dc.html" data-i18n="nav.ecommerce" style="font-size: 15px; font-weight: 600; color: #1946BD; white-space: nowrap;">E-Commerce</a>
+      <a href="Sourcing.dc.html" data-i18n="nav.sourcing" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">Sourcing</a>
+      <a href="eu-market-entry.dc.html" data-i18n="nav.eu" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">EU-Markteintritt</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <a href="https://www.instagram.com/parijazz_" target="_blank" rel="noopener" aria-label="Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="pjIgGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FEDA77"/>
+              <stop offset="25%" stop-color="#F58529"/>
+              <stop offset="50%" stop-color="#DD2A7B"/>
+              <stop offset="75%" stop-color="#8134AF"/>
+              <stop offset="100%" stop-color="#515BD4"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#pjIgGrad)"/>
+          <rect x="6" y="6" width="12" height="12" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+          <circle cx="12" cy="12" r="3.2" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+          <circle cx="17" cy="7" r="1.1" fill="#FFFFFF"/>
+        </svg>
+      </a>
+      <a href="https://www.youtube.com/@PariJazzz" target="_blank" rel="noopener" aria-label="YouTube" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#FF0000" d="M23 7s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C16.7 3.4 12 3.4 12 3.4s-4.7 0-7.9.3c-.4 0-1.4 0-2.2 1C1.2 5.4 1 7 1 7s-.2 1.9-.2 3.8v1.8C.8 14.5 1 16.4 1 16.4s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.7.3 7.7.3s4.7 0 7.9-.3c.4 0 1.4 0 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8z"/>
+          <path fill="#FFFFFF" d="M10 15V8l6 3.5L10 15z"/>
+        </svg>
+      </a>
+      <a href="https://www.tiktok.com/@pari.jazz" target="_blank" rel="noopener" aria-label="TikTok" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#25F4EE" d="M20.4 7.5a5.8 5.8 0 0 1-3.5-1.2v8.5a6.2 6.2 0 1 1-5.4-6.1v2.9a3.3 3.3 0 1 0 2.4 3.2V2h3a4.6 4.6 0 0 0 .1.85A4.6 4.6 0 0 0 18 5.6a4.6 4.6 0 0 0 2.4.7z" transform="translate(-1.2 .8)"/>
+          <path fill="#FE2C55" d="M20.4 7.5a5.8 5.8 0 0 1-3.5-1.2v8.5a6.2 6.2 0 1 1-5.4-6.1v2.9a3.3 3.3 0 1 0 2.4 3.2V2h3a4.6 4.6 0 0 0 .1.85A4.6 4.6 0 0 0 18 5.6a4.6 4.6 0 0 0 2.4.7z" transform="translate(1.2 -.8)"/>
+          <path fill="#000000" d="M20.4 7.5a5.8 5.8 0 0 1-3.5-1.2v8.5a6.2 6.2 0 1 1-5.4-6.1v2.9a3.3 3.3 0 1 0 2.4 3.2V2h3a4.6 4.6 0 0 0 .1.85A4.6 4.6 0 0 0 18 5.6a4.6 4.6 0 0 0 2.4.7z"/>
+        </svg>
+      </a>
+      <span aria-hidden="true" style="display: inline-block; width: 1px; height: 24px; background: rgba(26,26,26,0.15); margin: 0 6px;"></span>
+      <button data-lang-option="de" aria-label="Deutsch" type="button" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 24px; border: 1px solid rgba(26,26,26,0.08); padding: 0; background: transparent; cursor: pointer; border-radius: 4px; overflow: hidden; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="32" height="22" viewBox="0 0 5 3" preserveAspectRatio="none" aria-hidden="true">
+          <rect width="5" height="1" y="0" fill="#000000"/>
+          <rect width="5" height="1" y="1" fill="#DD0000"/>
+          <rect width="5" height="1" y="2" fill="#FFCE00"/>
+        </svg>
+      </button>
+      <button data-lang-option="en" aria-label="English" type="button" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 24px; border: 1px solid rgba(26,26,26,0.08); padding: 0; background: transparent; cursor: pointer; border-radius: 4px; overflow: hidden; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="32" height="22" viewBox="0 0 7410 3900" preserveAspectRatio="none" aria-hidden="true">
+          <rect width="7410" height="3900" fill="#B22234"/>
+          <path d="M0,450 H7410 M0,1050 H7410 M0,1650 H7410 M0,2250 H7410 M0,2850 H7410 M0,3450 H7410" stroke="#FFFFFF" stroke-width="300"/>
+          <rect width="2964" height="2100" fill="#3C3B6E"/>
+        </svg>
+      </button>
+      <button data-contact-trigger type="button" style="margin-left: 4px; background: #1946BD; color: #F7F4EE; padding: 12px 22px; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: transform .2s ease, background .2s ease; box-shadow: 0 8px 24px rgba(25, 70, 189, 0.18); white-space: nowrap;" style-hover="background: #15378A; transform: translateY(-1px);">Kontakt aufnehmen</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section style="padding: 80px 48px 90px;">
+  <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 460px; gap: 80px; align-items: center;">
+    <div data-reveal-l>
+      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(40px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -0.01em; color: #1946BD; margin: 0; text-transform: uppercase;">Pari Jazz<br>Commerce</h1>
+      <p style="margin: 28px 0 0; font-family: 'Playfair Display', serif; font-weight: 500; font-size: 18px; line-height: 1.55; color: #0A1628;">Nicht nur Wissen. Sondern die richtigen Menschen, die richtigen Kontakte und die richtigen Entscheidungen.</p>
+      <div style="margin-top: 28px; font-family: 'Playfair Display', serif; font-size: 15.5px; line-height: 1.7; color: #1A1A1A;">
+        <p style="margin: 0 0 14px;">Viele Menschen suchen nach dem einen klaren Fahrplan. Die Wahrheit ist: Wissen war noch nie so einfach zugänglich wie heute. Videos, Podcasts, Bücher, KI und unzählige Experten teilen täglich Informationen.</p>
+        <p style="margin: 0 0 14px;">Trotzdem scheitern die meisten Menschen nicht am Wissen. Sie scheitern an den Entscheidungen, den Kontakten, der Umsetzung und den richtigen Schritten zur richtigen Zeit. Genau hier setzt das Pari Jazz Commerce an.</p>
+        <p style="margin: 0;">Ich biete keine klassischen Coachings an. Ich biete Zugang zu einem Ökosystem aus Erfahrungen, Experten, Herstellern, Dienstleistern, Strategien und Lösungen, die ich selbst über Jahre hinweg aufgebaut habe und bis heute täglich nutze.</p>
+      </div>
+      <button data-qr-trigger type="button" style="margin-top: 36px; background: #1946BD; color: #FFFFFF; padding: 16px 30px; border: 0; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; box-shadow: 0 12px 30px -10px rgba(25,70,189,0.5);">Jetzt Erstgespräch vereinbaren</button>
+    </div>
+    <div data-hero-portrait data-reveal-r style="border-radius: 4px; overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 24px 60px -20px rgba(10,22,40,0.25);">
+      <img src="assets/images/76474110-d9da-427a-a120-63d6a5fdfe8e.jpg" alt="Pari Jazz" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO INTRO ============ -->
+<section style="padding: 30px 48px 80px;">
+  <div data-reveal style="max-width: 920px; margin: 0 auto; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(32px, 3.4vw, 46px); line-height: 1.15; color: #0A1628; margin: 0 0 36px;">Video — Was erfolgreiche Marken wirklich brauchen</h2>
+    <div style="margin: 0 auto 44px; max-width: 760px; aspect-ratio: 16/9; background: #0A1628; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(247,244,238,0.55); font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;">▶ Video folgt</div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.85; color: #475569;">
+      <p style="margin: 0 0 14px;">Viele Menschen glauben, dass erfolgreiche Marken mit einer guten Produktidee beginnen.</p>
+      <p style="margin: 0 0 14px;">Andere glauben, der richtige Hersteller sei der entscheidende Faktor.</p>
+      <p style="margin: 0 0 14px;">Wieder andere konzentrieren sich ausschließlich auf Werbung oder Plattformen wie Amazon, TikTok Shop oder Shopify.</p>
+      <p style="margin: 0 0 14px; font-weight: 600; color: #0A1628;">Die Realität sieht anders aus.</p>
+      <p style="margin: 0 0 14px;">Eine erfolgreiche Marke entsteht durch das Zusammenspiel von vielen Bausteinen. Fehlt einer dieser Bausteine, entstehen häufig unnötige Kosten, Verzögerungen oder Fehler, die Monate oder sogar Jahre kosten können.</p>
+      <p style="margin: 0 0 14px;">In den vergangenen Jahren habe ich Unternehmen, Produkte, Marken und Hersteller aus unterschiedlichsten Branchen begleitet und dabei immer wieder festgestellt:</p>
+      <p style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; color: #0A1628;">Erfolgreiche Brands folgen fast immer denselben Grundprinzipien.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CURRICULUM TIMELINE ============ -->
+<section style="padding: 40px 48px 100px;">
+  <div data-timeline-wrap style="max-width: 1080px; margin: 0 auto; position: relative;">
+    <div data-timeline-line style="position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: #F0C419; transform: translateX(-50%); border-radius: 999px;"></div>
+    <div style="display: flex; flex-direction: column; gap: 48px;">
+
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      <div></div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5 3 3 0 0 0 2 5v1a3 3 0 0 0 6 0V3a3 3 0 0 0-3 0z"/><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5 3 3 0 0 1-2 5v1a3 3 0 0 1-6 0"/></svg></div>
+      
+    <div style="padding-left: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Fundament & Unternehmerisches Denken</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5 3 3 0 0 0 2 5v1a3 3 0 0 0 6 0V3a3 3 0 0 0-3 0z"/><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 2 5 3 3 0 0 1-2 5v1a3 3 0 0 1-6 0"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Mindset</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Bevor ein Produkt verkauft wird, steht immer die Person hinter dem Unternehmen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Deshalb beschäftigen wir uns unter anderem mit:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Glaubenssätzen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Disziplin</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Prioritäten</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Umgang mit Rückschlägen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Fokus</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Shiny Object Syndrome</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Zeitmanagement</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Persönlichkeitsentwicklung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Zielsetzung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Risikobewusstsein</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Deinem persönlichen Warum</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Wissen versus Realität</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Denn viele Menschen scheitern nicht am Business.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Sie scheitern daran, dass sie sich ständig von neuen Möglichkeiten ablenken lassen oder die falschen Prioritäten setzen.</p></div>
+      </details>
+    </div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      
+    <div style="padding-right: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">E-Commerce & Plattformverständnis</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Was ist E-Commerce?</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Nicht jede Plattform ist für jedes Produkt geeignet.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Gemeinsam betrachten wir die Chancen, Risiken und Möglichkeiten verschiedener Plattformen:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Amazon</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Ebay</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Kaufland</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Otto</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Temu</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">TikTok Shop</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Darüber hinaus analysieren wir:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">unterschiedliche E-Commerce Modelle</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Marktdaten</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Plattformstrukturen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Gebührenmodelle</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Chancen und Risiken</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Marktanalysen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Wettbewerbsrecherchen</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Das Ziel ist nicht, überall zu verkaufen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Das Ziel ist, die richtigen Plattformen für dein Produkt und deine Strategie zu identifizieren.</p></div>
+      </details>
+    </div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg></div>
+      <div></div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      <div></div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#1A1A1A"/></svg></div>
+      
+    <div style="padding-left: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Marketing Grundlagen</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#1A1A1A"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Zielgruppe & Positionierung</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Viele Menschen starten mit Werbung, bevor sie ihre Zielgruppe überhaupt verstehen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Deshalb beginnen wir bei den Grundlagen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Dazu gehören:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Verkaufspsychologie</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Zielgruppenanalyse</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Zielgruppenverständnis</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Push-Marketing</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Pull-Marketing</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Werbepsychologie</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Positionierung</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Denn gutes Marketing beginnt nicht bei Anzeigen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Es beginnt beim Verständnis deiner Kunden.</p></div>
+      </details>
+    </div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      
+    <div style="padding-right: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Produktentwicklung & Markenaufbau</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Produkt & Brand</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Das Produkt ist die Grundlage jeder Marke.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Gemeinsam betrachten wir unter anderem:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Produktrecherche</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Daten- und Faktenanalyse</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Zielgruppenrecherche</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Nischenrecherche</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Musterbestellungen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Compliance</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Quality Inspection</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Markenentwicklung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Patent- und Markenrecht</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Produkthaftpflichtversicherung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Analyse- und Recherchetools</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Der Fokus liegt nicht auf kurzfristigen Trends.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Sondern auf Produkten mit langfristigem Potenzial.</p></div>
+      </details>
+    </div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12"/></svg></div>
+      <div></div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      <div></div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20V10l-6 4V10l-6 4V4H4l-2 6z"/><path d="M6 16h2M11 16h2M16 16h2"/></svg></div>
+      
+    <div style="padding-left: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Hersteller & Sourcing</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20V10l-6 4V10l-6 4V4H4l-2 6z"/><path d="M6 16h2M11 16h2M16 16h2"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Manifaktur</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Der richtige Hersteller kann den Unterschied zwischen Erfolg und Misserfolg ausmachen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Deshalb beschäftigen wir uns mit:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Herstellern und Trading Companies</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Sourcing</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Herstelleranfragen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Preisbildung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Verhandlungen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Produktionsprozessen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Fachmessen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Lieferantenbewertung</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Zusätzlich lernen wir die wichtigsten Dokumente kennen:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Proforma Invoice (PI)</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Commercial Invoice (CI)</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Packlisten</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Produktionsunterlagen</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Denn eine stabile Lieferkette beginnt lange vor der ersten Bestellung.</p></div>
+      </details>
+    </div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      
+    <div style="padding-right: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Kalkulation & Wirtschaftlichkeit</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h13M3 18h13"/><path d="M19 5l2 2-2 2M19 11l2 2-2 2M19 17l2 2-2 2"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Daten und Fakten</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Viele Produkte sehen auf den ersten Blick profitabel aus.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Auf den zweiten Blick häufig nicht mehr.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Deshalb betrachten wir:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Margen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Kostenstrukturen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Cashflow</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Preisgestaltung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Gewinnpotenziale</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Risiken</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Skalierbarkeit</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Denn Umsatz allein bedeutet noch keinen Erfolg.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Profitabilität schon.</p></div>
+      </details>
+    </div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h13M3 18h13"/><path d="M19 5l2 2-2 2M19 11l2 2-2 2M19 17l2 2-2 2"/></svg></div>
+      <div></div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      <div></div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 10h4l3 3v4h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg></div>
+      
+    <div style="padding-left: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Import & Shipping</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 10h4l3 3v4h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Export / Import</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Produkte müssen nicht nur entwickelt werden.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Sie müssen sicher und wirtschaftlich importiert werden.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Dazu gehören unter anderem:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">FOB</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">DDP</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">EXW</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">CIF</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Zollprozesse</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">EORI-Nummern</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Verzollung innerhalb der EU</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Freight Forwarder</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Speditionen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Fulfillment-Strukturen</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Pre-Fulfillment Lager</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Lieferketten</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Verständlich erklärt und praxisnah umgesetzt.</p></div>
+      </details>
+    </div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      
+    <div style="padding-right: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Marketing & Launch</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Sichtbarkeit</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Ein Produktlaunch entscheidet oft über die ersten Monate eines Brands.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Deshalb beschäftigen wir uns mit:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Listing Optimierung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Launch Strategien</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Keyword Recherche</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Bewertungsmanagement</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Conversion Optimierung</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Sichtbarkeit</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Positionierung</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Das Ziel ist ein professioneller Markteintritt mit einer klaren Strategie.</p></div>
+      </details>
+    </div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div></div>
+    </div>
+    <div data-reveal style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative; align-items: start; min-height: 130px;">
+      <div></div>
+      <div data-badge style="position: absolute; left: 50%; top: 60px; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #F0C419; display: flex; align-items: center; justify-content: center; border-radius: 4px; z-index: 2; box-shadow: 0 4px 12px rgba(240,196,25,0.35);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="2.5" height="6"/><rect x="12" y="9" width="2.5" height="10"/><rect x="17" y="5" width="2.5" height="14"/></svg></div>
+      
+    <div style="padding-left: 64px; text-align: left;">
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Advertising & Skalierung</h3>
+      <div style="height: 2px; background: #F0C419; margin-bottom: 6px;"></div>
+      <details data-acc style="border-bottom: 1px solid rgba(240, 196, 25, 0.6);">
+        <summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; user-select: none;">
+          <span style="display: flex; align-items: center; gap: 12px;">
+            <span style="display: inline-flex; opacity: 0.85;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="2.5" height="6"/><rect x="12" y="9" width="2.5" height="10"/><rect x="17" y="5" width="2.5" height="14"/></svg></span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: #0A1628; letter-spacing: 0.01em;">Optimierung</span>
+          </span>
+          <span data-acc-icon aria-hidden="true" style="position: relative; width: 14px; height: 14px; flex-shrink: 0;">
+            <span style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #1A1A1A; transform: translateY(-50%);"></span>
+            <span data-acc-vbar style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #1A1A1A; transform: translateX(-50%); transition: transform .25s ease;"></span>
+          </span>
+        </summary>
+        <div style="padding: 18px 4px 6px 4px;"><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Wachstum entsteht durch Sichtbarkeit und Optimierungen.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Gemeinsam betrachten wir die wichtigsten Werbekanäle:</p><ul style="margin: 8px 0 14px; padding-left: 22px; list-style: disc;"><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Amazon PPC</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Amazon Sichtbarkeit</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Google Ads</li><li style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.8; color: #1A1A1A; padding-left: 6px;">Meta Advertising</li></ul><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Dabei geht es nicht um blindes Werbebudget.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Sondern um datenbasierte Entscheidungen und nachhaltiges Wachstum.</p><p style="margin: 0 0 10px; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.7; color: #1A1A1A;">Zeitgleich optimieren wir auch die Kalkulation auf Basis der aktuellen Kennzahlen und ggf. das / die Produkte.</p></div>
+      </details>
+    </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHINA NETWORK ============ -->
+<section style="background: #FBFAF7; padding: 100px 48px;">
+  <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px;">
+    <div data-reveal style="font-family: 'Playfair Display', serif;">
+      <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 28px; line-height: 1.2; color: #0A1628; margin: 0 0 18px;">Mein Netzwerk in China: Mehr als nur Kontakte</h2>
+      <p style="font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 10px;">Ich reise zwei- bis dreimal jährlich persönlich nach China und habe mir über Jahre hinweg ein Netzwerk aus mehr als 15.000 geprüften und qualitativ hochwertigen Herstellern aufgebaut.</p>
+      <p style="font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 10px;">Mit vielen dieser Partner verbindet mich nicht nur eine geschäftliche, sondern auch eine persönliche Beziehung.</p>
+      <p style="font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 36px;">Diese Nähe schafft Vorteile, die man nicht über Plattformen oder E-Mails erhält.</p>
+
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 24px; color: #0A1628; margin: 0 0 14px;">Warum das für meine Kunden entscheidend ist</h3>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 0 0 14px;">Geschwindigkeit ist im Business einer der wichtigsten Erfolgsfaktoren. Während andere wochenlang auf Antworten warten, profitiere ich von direkten Wegen:</p>
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Neue Produkte und Weiterentwicklungen von Bestsellern erfahre ich häufig als Erste — teilweise bereits während der Entwicklung.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Angebote und Preisabfragen dauern oft nur wenige Minuten bis maximal einen Tag.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Entscheidungen basieren nicht auf Strategien aus dem Jahr 2021, sondern auf aktuellen Marktdaten, relevanten Kontakten, modernen Tools und realen Erfahrungen.</span></div>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 18px 0 36px;">Ohne endlose Meetings. Ohne wochenlange Diskussionen. Ohne unnötige Umwege.</p>
+
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 24px; color: #0A1628; margin: 0 0 14px;">Was ich in China aufgebaut habe</h3>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 0 0 10px;">Mein Netzwerk umfasst:</p>
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Über 15.000 Hersteller</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Mehr als 10 Millionen Produkte</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Direkten Zugang zu Produktentwicklungen</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Führende Messen in China und Hongkong</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Plattformpartner für Markt- und Produktinsights</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Qualitätsprüfer, Anwälte und lokale Mitarbeiter vor Ort</span></div>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 18px 0 36px;">Ich kann nahezu jede Produktidee begleiten: Von Fertighäusern bis hin zu individuell entwickelten Produkten in Laboren oder gemeinsam mit Ingenieuren.</p>
+
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: 24px; color: #0A1628; margin: 0 0 14px;">Mein Netzwerk in Deutschland</h3>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 0 0 18px;">Mein Netzwerk besteht nicht aus Affiliate-Links oder theoretischen Kontakten. Ich arbeite mit echten Experten zusammen, die täglich operative Ergebnisse liefern. Dazu gehören:</p>
+
+      <h4 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 18px; color: #1946BD; margin: 0 0 10px;">Recht & Schutz</h4>
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Recht: Kanzleien Markenrecht, Patentrecht, Handelsrecht, Vertragsrecht</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Zoll</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Amazon PPC</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Google Advertising</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Steuerberater mit Spezialisierung auf Handel</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Produktvideo-Agenturen</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Produktfotografie</span></div>
+
+      <h4 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 18px; color: #1946BD; margin: 26px 0 10px;">Logistik & Fulfillment</h4>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 0 0 10px;">Vom Import bis zur vollständigen Lager- und Versandabwicklung. Mit über 12.000 Quadratmetern bestehender Fläche und zusätzlichem Ausbaupotenzial von 20.000 Quadratmetern.</p>
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>In der Nähe von Hamburg Hafen</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Import und Versand</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>bessere Konditionen als andere</span></div>
+
+      <h4 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 18px; color: #1946BD; margin: 26px 0 10px;">Tools, die sinnvoll sind — aber kein Muss</h4>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 0 0 10px;">Unter meinen Empfehlungen befinden sich selbstverständlich auch moderne Softwarelösungen. Dazu gehören beispielsweise:</p>
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>DataDive</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Helium10</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>WorldFirst Payments</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Schnittstellen-Software</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Rechnungstools</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>weitere professionelle Business-Lösungen</span></div>
+      <p style="font-size: 14.5px; line-height: 1.7; color: #475569; margin: 22px 0 0;"><strong style="color: #0A1628;">Der Unterschied:</strong> Ich verkaufe keine Tools. Ich zeige, welche Tools tatsächlich sinnvoll sind — und welche nicht.</p>
+    </div>
+
+    <div style="position: sticky; top: 110px; align-self: start;">
+      <div data-gallery style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/3b23d484-5c04-4b3b-93d4-8f759c331b03.png" alt="Eindrücke aus China-Reise & Netzwerk 1" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/08ddade4-5d42-49d5-a4e0-fc98e82bb354.png" alt="Eindrücke aus China-Reise & Netzwerk 2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/7676b5aa-66e9-450f-a7a4-bc4861350a61.jpg" alt="Eindrücke aus China-Reise & Netzwerk 3" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/285a6820-2252-4fda-9f40-05a695de22c0.png" alt="Eindrücke aus China-Reise & Netzwerk 4" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/13982c8d-54a8-4bcd-9efc-c6fa6b3d9f54.png" alt="Eindrücke aus China-Reise & Netzwerk 5" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/77ec1c6c-fa27-420e-a641-3306ba02a427.png" alt="Eindrücke aus China-Reise & Netzwerk 6" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/b25477be-54b4-4d8a-a4a6-614b3324d4ec.png" alt="Eindrücke aus China-Reise & Netzwerk 7" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/9fd7060d-4ec9-4c26-8796-f6fa09d9c237.png" alt="Eindrücke aus China-Reise & Netzwerk 8" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/d31359cb-38ed-4742-99c3-cd20b777d631.png" alt="Eindrücke aus China-Reise & Netzwerk 9" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/26e239a0-41e8-4fb8-a394-834c92893d02.png" alt="Eindrücke aus China-Reise & Netzwerk 10" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/a1893ed1-f52b-42ac-963a-d54685b317d8.png" alt="Eindrücke aus China-Reise & Netzwerk 11" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div style="aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 14px -8px rgba(10,22,40,0.18);">
+    <img src="assets/images/fa5e1886-1f70-4e09-a4f8-07cf2bbfd924.jpg" alt="Eindrücke aus China-Reise & Netzwerk 12" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+      </div>
+      <p style="margin: 16px 0 0; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(10,22,40,0.45); text-align: center;">Fotomontage: Messe, Fabrikbesuche & Team in China</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLACK HERO: Veraltete Theorien ============ -->
+<section style="position: relative; background: #1F2733; color: #FFFFFF; padding: 110px 48px; overflow: hidden;">
+  <div data-phoenix aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.18; pointer-events: none;">
+    <img src="assets/images/phoenix-watermark.png" alt="" style="width: min(80%, 900px); height: auto; object-fit: contain; mix-blend-mode: screen;">
+  </div>
+  <div data-reveal style="position: relative; max-width: 820px; margin: 0 auto; text-align: center;">
+    <div style="margin: 0 auto 26px;">
+      <img src="assets/images/pari-jazz-logo-light.png" alt="Pari Jazz" style="height: 72px; width: auto; display: inline-block;">
+    </div>
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(36px, 4.2vw, 60px); line-height: 1.05; margin: 0; text-wrap: balance;">Veraltete Theorien vs. tagesgenaue Daten &amp; Fakten</h2>
+    <p style="margin: 28px auto 0; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 640px;">Vergiss veraltete Theorien und Pseudo-Experten — wir analysieren dein Business auf Basis tagesgenauer Daten und ebnen dir mit einer maßgeschneiderten Infrastruktur, verifizierten China-Herstellern und logistischer Praxis den Weg zur skalierten E-Commerce-Marke.</p>
+    <button data-qr-trigger type="button" style="margin-top: 38px; background: #1946BD; color: #FFFFFF; padding: 16px 32px; border: 0; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 36px -10px rgba(25,70,189,0.7);">Jetzt Erstgespräch vereinbaren</button>
+  </div>
+</section>
+
+<!-- ============ ECOSYSTEM ALT CARDS ============ -->
+<section style="background: #F7F4EE; padding: 100px 48px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <!-- staggered cards -->
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(32px, 3.6vw, 46px); line-height: 1.15; color: #0A1628; margin: 0 0 56px; text-align: center; text-wrap: balance;">Ich öffne dir den Zugang zu einem Commerce-Ökosystem</h2>
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+
+    <article data-reveal style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; padding: 36px; box-shadow: 0 1px 0 rgba(10,22,40,0.03);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+    <div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 26px; line-height: 1.2; color: #0A1628; margin: 0 0 16px;">Zugang statt Theorie</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Was andere als Wissen verkaufen, nutze ich täglich selbst.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Du erhältst keinen vorproduzierten Standardkurs und keine veralteten Strategien.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Du erhältst Zugang zu Erfahrungen aus dem aktiven Markenaufbau, Produktentwicklungen, Herstellernetzwerken und aktuellen Markt-Insights aus unterschiedlichen Branchen und Plattformen.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Von der ersten Idee bis zur Skalierung profitierst du von Wissen, das nicht aus Büchern stammt, sondern aus der Praxis und das AKTUELL!</p>
+    </div><div style="border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 14px 40px -16px rgba(10,22,40,0.2);"><img src="assets/images/bec21b3b-a946-4c4e-b2fb-64db3f443480.jpg" alt="Pari Jazz und Aydin Yagoubi bei einer Strategie-Session am Whiteboard" style="width:100%; height:100%; object-fit:cover; display:block;"></div></div>
+    </article>
+    <article data-reveal style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; padding: 36px; box-shadow: 0 1px 0 rgba(10,22,40,0.03);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;"><div style="border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 14px 40px -16px rgba(10,22,40,0.2);"><img src="assets/images/af30a42c-5d2e-40f8-a257-8830937ed781.png" alt="Pari Jazz im Telefonat mit Partnern aus dem Netzwerk" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+    <div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 26px; line-height: 1.2; color: #0A1628; margin: 0 0 16px;">Das richtige Netzwerk zur richtigen Zeit</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Viele Herausforderungen lassen sich nicht durch mehr Wissen lösen. Sondern durch die richtigen Kontakte.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Hinter erfolgreichen Marken stehen selten Einzelpersonen.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Deshalb greifst du — je nach Bedarf — auf ein Netzwerk aus Spezialisten zurück. Von PPC über Google Ads und Meta Advertising bis hin zu Markenrecht, Steuerberatung, Zoll, Produktprüfung und Fulfillment.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Menschen, die nicht nur darüber sprechen, sondern täglich damit arbeiten.</p>
+    </div></div>
+    </article>
+    <article data-reveal style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; padding: 36px; box-shadow: 0 1px 0 rgba(10,22,40,0.03);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+    <div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 26px; line-height: 1.2; color: #0A1628; margin: 0 0 16px;">Strategische Entscheidungen mit Weitblick</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Viele Unternehmer verlieren Zeit, Geld und Energie durch vermeidbare Fehlentscheidungen.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Durch meine Erfahrungen aus verschiedenen Märkten, Plattformen und Produktkategorien betrachten wir Herausforderungen nicht isoliert, sondern als Teil des gesamten Systems.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">So entstehen Entscheidungen, die nicht nur heute funktionieren, sondern auch langfristig Wachstum ermöglichen.</p>
+    </div><div style="border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 14px 40px -16px rgba(10,22,40,0.2);"><img src="assets/images/817088b2-b6e8-4b36-8e04-63c7d75a66d7.png" alt="Pari Jazz mit einem Hersteller in einer Produktionsstätte" style="width:100%; height:100%; object-fit:cover; display:block;"></div></div>
+    </article>
+    <article data-reveal style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; padding: 36px; box-shadow: 0 1px 0 rgba(10,22,40,0.03);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;"><div style="border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 14px 40px -16px rgba(10,22,40,0.2);"><img src="assets/images/1ec9a25a-6fd4-4226-b4ed-f009af7f7bf0.png" alt="Unterstützung entlang des gesamten Prozesses" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+    <div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 26px; line-height: 1.2; color: #0A1628; margin: 0 0 16px;">Unterstützung entlang des gesamten Prozesses</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Egal ob Produktidee, Hersteller, Kalkulation, Import, Compliance, Launch oder Skalierung: Du musst nicht jede Herausforderung allein lösen.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Je nach Ausgangssituation erhältst du Unterstützung in genau den Bereichen, die aktuell den größten Einfluss auf dein Wachstum haben.</p>
+    </div></div>
+    </article>
+    <article data-reveal style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; padding: 36px; box-shadow: 0 1px 0 rgba(10,22,40,0.03);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+    <div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 26px; line-height: 1.2; color: #0A1628; margin: 0 0 16px;">China & Europa aus einer Perspektive</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Durch meine aktive Arbeit mit Herstellern und Produktentwicklungsabteilungen in China sowie mein Netzwerk in Deutschland und Europa verbinde ich beide Welten miteinander.</p><p style="font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.7; color: #475569; margin: 0 0 12px;">Das ermöglicht schnellere Prozesse, bessere Entscheidungen und direkte Einblicke in Entwicklungen, die viele erst Monate später erreichen.</p>
+    </div><div style="border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 14px 40px -16px rgba(10,22,40,0.2);"><img src="assets/images/4cf8eec7-1f44-4949-aa84-dc3f4c7df83b.jpg" alt="Pari Jazz in einer Strategie-Session mit Partnern in China" style="width:100%; height:100%; object-fit:cover; display:block;"></div></div>
+    </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLUE BAND ============ -->
+<section style="background: linear-gradient(180deg, #1946BD 0%, #15378A 100%); color: #FFFFFF; padding: 90px 48px;">
+  <div data-reveal style="max-width: 880px; margin: 0 auto; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(30px, 3.2vw, 42px); line-height: 1.15; margin: 0; color: #FFFFFF; text-wrap: balance;">Die meisten suchen nach dem nächsten Geheimtipp.</h2>
+    <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1; margin: 22px 0 28px; color: #F0C419;">Erfolgreiche Unternehmer bauen Systeme.</h3>
+    <p style="font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.88); margin: 0; max-width: 720px; margin-left: auto; margin-right: auto;">Während andere Trends und kurzfristigen Hacks hinterherlaufen, konzentrieren sich starke Marken auf stabile Prozesse, belastbare Netzwerke und Infrastruktur. Genau diese Systeme bauen wir gemeinsam auf.</p>
+  </div>
+</section>
+
+<!-- ============ KEIN KURS HEADLINE ============ -->
+<section style="background: #F7F4EE; padding: 100px 48px 70px;">
+  <div data-reveal style="max-width: 920px; margin: 0 auto; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(34px, 3.8vw, 50px); line-height: 1.1; color: #0A1628; margin: 0 0 26px; text-wrap: balance;">Kein Kurs. Kein Coaching. Ein echtes Commerce-System.</h2>
+    <p style="font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.8; color: #475569; margin: 0;">Wir verkaufen dir kein graues Theoriewissen von gestern. Du erhältst vollen Zugang zu unserem internationalen Netzwerk, bewährten Sourcing-Prozessen in China und der Praxis-Erfahrung aus realen Projekten — <strong style="color: #0A1628;">auf dem aktuellen Stand</strong> von heute. Da wir täglich selbst im Markt aktiv sind, basieren unsere Strategien auf Live-Daten und den Algorithmen der Gegenwart — nicht auf veralteten Konzepten aus der Vergangenheit. Von der Produktentwicklung bis zur globalen Skalierung.</p>
+  </div>
+</section>
+
+<!-- ============ PHASES ============ -->
+<section style="background: #F7F4EE; padding: 30px 48px 100px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 46px); line-height: 1.15; color: #0A1628; margin: 0 0 48px; text-align: center;">Die vier Phasen im PARI JAZZ Commerce Network</h2>
+    <div data-stagger-parent style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;">
+
+  <div style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;">
+    <div style="aspect-ratio: 4/3; overflow: hidden;"><img src="assets/images/unsplash-VJHb4QPBgV4.jpg" alt="Brille" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+    <div style="padding: 26px 24px 28px;">
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #C9A96E; text-transform: uppercase; margin-bottom: 10px;">Phase 1</div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Analyse & Orientierung</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0;">Bevor du Zeit und Kapital investierst, analysieren wir deine Ausgangssituation. Gemeinsam bewerten wir Chancen, Risiken und Geschäftsmodelle, um eine fundierte und sichere Entscheidungsgrundlage für deinen Erfolg zu schaffen.</p>
+    </div>
+  </div>
+  <div style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;">
+    <div style="aspect-ratio: 4/3; overflow: hidden;"><img src="assets/images/unsplash-SyRlD4s_amw.jpg" alt="Sourcing-Planung am Tisch" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+    <div style="padding: 26px 24px 28px;">
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #C9A96E; text-transform: uppercase; margin-bottom: 10px;">Phase 2</div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Produktentwicklung & Sourcing</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0;">Die Basis jeder starken Marke ist ein marktfähiges Produkt. In dieser Phase fokussieren wir uns auf Marktanalysen, die gezielte Herstellersuche, Kalkulationen sowie die strategische Vorbereitung deines Markteintritts.</p>
+    </div>
+  </div>
+  <div style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;">
+    <div style="aspect-ratio: 4/3; overflow: hidden;"><img src="assets/images/unsplash--_jFGWIE6fg.jpg" alt="E-Commerce Einkaufskorb" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+    <div style="padding: 26px 24px 28px;">
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #C9A96E; text-transform: uppercase; margin-bottom: 10px;">Phase 3</div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Markteintritt & Sichtbarkeit</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0;">Nach der Produktentwicklung folgt der Start am Markt. Wir positionieren deine Marke optimal auf den relevanten Plattformen und sorgen durch gezieltes Advertising und optimierte Listings für maximale Sichtbarkeit und erste Verkäufe.</p>
+    </div>
+  </div>
+  <div style="background: #FFFFFF; border: 1px solid rgba(26,26,26,0.06); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;">
+    <div style="aspect-ratio: 4/3; overflow: hidden;"><img src="assets/images/unsplash-ZVprbBmT8QA.jpg" alt="Pflanze als Wachstumssymbol" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+    <div style="padding: 26px 24px 28px;">
+      <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #C9A96E; text-transform: uppercase; margin-bottom: 10px;">Phase 4</div>
+      <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 22px; line-height: 1.2; color: #0A1628; margin: 0 0 14px;">Optimierung & Expansion</h3>
+      <p style="font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.65; color: #475569; margin: 0;">Langfristiger Erfolg erfordert kontinuierliche Anpassung. Durch präzise Datenanalysen, Sortimentserweiterungen und neue Vertriebskanäle entwickeln wir nationale sowie internationale Wachstumsstrategien für dein Business.</p>
+    </div>
+  </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NICHT JEDER ============ -->
+<section style="background: #F7F4EE; padding: 60px 48px 40px;">
+  <div data-reveal style="max-width: 820px; margin: 0 auto; text-align: center; font-family: 'Playfair Display', serif;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(30px, 3vw, 40px); line-height: 1.15; color: #0A1628; margin: 0 0 24px;">Nicht jeder steht am selben Punkt.</h2>
+    <p style="font-size: 15.5px; line-height: 1.75; color: #475569; margin: 0 0 8px;">Manche Menschen möchten zunächst herausfinden, ob E-Commerce überhaupt der richtige Weg für sie ist.</p>
+    <p style="font-size: 15.5px; line-height: 1.75; color: #475569; margin: 0 0 8px;">Andere stehen kurz vor ihrem ersten Produktlaunch.</p>
+    <p style="font-size: 15.5px; line-height: 1.75; color: #475569; margin: 0 0 16px;">Wieder andere verkaufen bereits und suchen nach dem nächsten Wachstumsschritt.</p>
+    <p style="font-size: 15.5px; line-height: 1.75; color: #0A1628; margin: 0; font-weight: 600;">Deshalb gibt es bei PARI JAZZ Commerce Network keine Standardlösung für alle, sondern unterschiedliche Programme — abgestimmt auf deinen aktuellen Stand.</p>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programme" style="background: #FBFAF7; padding: 100px 48px; border-top: 1px solid rgba(26,26,26,0.06);">
+  <div style="max-width: 1440px; margin: 0 auto;">
+    <div style="text-align: center; max-width: 880px; margin: 0 auto 56px;">
+      <div style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 22px;">
+        <span style="display: inline-block; width: 28px; height: 1px; background: #C9A96E;"></span>
+        <span data-i18n="ec.pr.eyebrow" style="font-size: 11px; font-weight: 700; letter-spacing: 0.4em; color: #C9A96E; text-transform: uppercase;">Die Programme</span>
+        <span style="display: inline-block; width: 28px; height: 1px; background: #C9A96E;"></span>
+      </div>
+      <h2 data-i18n-html="ec.pr.title" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 500; font-size: clamp(40px, 4.6vw, 64px); line-height: 1.05; letter-spacing: -0.02em; color: #0A1628; margin: 0; text-wrap: balance;">Du musst noch nicht wissen,<br>welcher Weg <em style="font-style: italic; color: #1946BD;">deiner</em> ist.</h2>
+      <p data-i18n="ec.pr.sub" style="margin: 24px auto 0; font-size: 18px; line-height: 1.6; color: #475569; max-width: 600px;">Vier Programme — abgestimmt auf den Punkt, an dem du heute stehst.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch;">
+
+      <!-- Reality Check -->
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid rgba(26,26,26,0.08); border-radius: 20px; padding: 32px; gap: 18px; transition: transform .3s ease, box-shadow .3s ease;" style-hover="transform: translateY(-4px); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.15);">
+        <div data-i18n="ec.pr1.badge" style="display: inline-flex; align-self: flex-start; padding: 7px 14px; border-radius: 999px; background: #E5E1D8; font-size: 9.5px; font-weight: 700; letter-spacing: 0.22em; color: #1A1A1A; text-transform: uppercase;">Für Orientierungssuchende &amp; Einsteiger</div>
+        <h3 data-i18n="ec.pr1.t" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 500; font-size: 30px; line-height: 1.05; margin: 0; color: #0A1628;">Commerce Reality Check</h3>
+        <div style="font-size: 13.5px; color: #475569; margin-top: -8px;"><strong style="color: #0A1628; font-weight: 600;" data-i18n="ec.pr.format">Dauer/Format:</strong> <span data-i18n="ec.pr1.m">90 Minuten 1:1 Strategiegespräch (Einmalig)</span></div>
+        <div style="font-size: 14.5px; color: #1A1A1A; line-height: 1.55; padding: 14px 16px; background: rgba(25, 70, 189, 0.04); border-left: 3px solid #1946BD; border-radius: 0 8px 8px 0;"><strong data-i18n="ec.pr.focus">Fokus:</strong> <span data-i18n="ec.pr1.d">Klarheit vor der Investition. Find heraus, ob E-Commerce dein Weg ist.</span></div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #1A1A1A; flex: 1;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr1.l1">Status Quo &amp; Potenzialanalyse</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr1.l2">Ehrliche Chancen- &amp; Risikoabwägung</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr1.l3">Dein persönlicher, individueller Fahrplan</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr1.l4">Plattform- &amp; Kapitalplanung</span></div>
+        </div>
+        <button data-qr-trigger data-i18n="ec.pr1.cta" style="text-align: center; padding: 14px; background: #1A1A1A; color: #F7F4EE; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .25s ease;" style-hover="background: #0E1426;">Jetzt Reality Check buchen</button>
+      </div>
+
+      <!-- Launch -->
+      <div style="display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid rgba(26,26,26,0.08); border-radius: 20px; padding: 32px; gap: 18px; transition: transform .3s ease, box-shadow .3s ease;" style-hover="transform: translateY(-4px); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.15);">
+        <div data-i18n="ec.pr2.badge" style="display: inline-flex; align-self: flex-start; padding: 7px 14px; border-radius: 999px; background: #E5E1D8; font-size: 9.5px; font-weight: 700; letter-spacing: 0.22em; color: #1A1A1A; text-transform: uppercase;">Für angehende Markeninhaber</div>
+        <h3 data-i18n="ec.pr2.t" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 500; font-size: 30px; line-height: 1.05; margin: 0; color: #0A1628;">Commerce Launch</h3>
+        <div style="font-size: 13.5px; color: #475569; margin-top: -8px;"><strong style="color: #0A1628; font-weight: 600;" data-i18n="ec.pr.format">Dauer/Format:</strong> <span data-i18n="ec.pr2.m">12 Monate intensive Begleitung</span></div>
+        <div style="font-size: 14.5px; color: #1A1A1A; line-height: 1.55; padding: 14px 16px; background: rgba(25, 70, 189, 0.04); border-left: 3px solid #1946BD; border-radius: 0 8px 8px 0;"><strong data-i18n="ec.pr.focus">Fokus:</strong> <span data-i18n="ec.pr2.d">Von der ersten Idee zum rechtssicheren, marktreifen Produkt.</span></div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #1A1A1A; flex: 1;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr2.l1">Schritt-für-Schritt Produktrecherche &amp; -entwicklung</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr2.l2">Sourcing über das exklusive Herstellernetzwerk</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr2.l3">Abwicklung von Import, Zoll &amp; Compliance</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr2.l4">Launch-Strategie für Amazon, TikTok Shop, Otto &amp; Co.</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr2.l5">Inklusive: 12 Monate Zugang zu Experten, Tools &amp; Vorlagen</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 1px dashed rgba(26,26,26,0.12);">
+          <div data-i18n="ec.pr.levels" style="font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: #475569; text-transform: uppercase;">Inhalte nach Level</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button data-level="launch-1" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid #C9A96E; background: transparent; color: #1A1A1A; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #1946BD; border-color: #1946BD; color: #F7F4EE;">Level 1</button>
+            <button data-level="launch-2" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid #C9A96E; background: transparent; color: #1A1A1A; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #1946BD; border-color: #1946BD; color: #F7F4EE;">Level 2</button>
+            <button data-level="launch-3" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid #C9A96E; background: transparent; color: #1A1A1A; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #1946BD; border-color: #1946BD; color: #F7F4EE;">Level 3</button>
+            <button data-level="launch-4" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid #C9A96E; background: transparent; color: #1A1A1A; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #1946BD; border-color: #1946BD; color: #F7F4EE;">Level 4</button>
+          </div>
+        </div>
+        <button data-qr-trigger data-i18n="ec.pr2.cta" style="text-align: center; padding: 14px; background: #1A1A1A; color: #F7F4EE; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .25s ease;" style-hover="background: #0E1426;">Jetzt für den Launch bewerben</button>
+      </div>
+
+      <!-- Growth (highlighted bestseller) -->
+      <div style="position: relative; display: flex; flex-direction: column; background: linear-gradient(180deg, #15378A 0%, #1946BD 100%); color: #F7F4EE; border: 1px solid #1946BD; border-radius: 20px; padding: 36px 32px 32px; gap: 18px; transform: scale(1.04); box-shadow: 0 40px 100px -30px rgba(25, 70, 189, 0.55), 0 1px 0 rgba(255,255,255,0.15) inset; transition: transform .3s ease;" style-hover="transform: scale(1.04) translateY(-4px);">
+        <div data-i18n="ec.pr3.tag" style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #C9A96E; color: #1A1A1A; font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; padding: 7px 16px; border-radius: 999px; white-space: nowrap;">⭐ Bestseller</div>
+        <div data-i18n="ec.pr3.badge" style="display: inline-flex; align-self: flex-start; padding: 7px 14px; border-radius: 999px; background: #0E1426; color: #F7F4EE; font-size: 9.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;">Empfohlen für aktive Seller &amp; Brands</div>
+        <h3 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 500; font-size: 30px; line-height: 1.05; margin: 0;"><span data-i18n="ec.pr3.t">Commerce Growth</span> <em data-i18n="ec.pr3.tag2" style="font-style: italic; color: #C9A96E; font-size: 22px; display: block; margin-top: 4px;">— Dein Bestseller.</em></h3>
+        <div style="font-size: 13.5px; color: rgba(247,244,238,0.85); margin-top: -4px;"><strong style="color: #FFFFFF; font-weight: 600;" data-i18n="ec.pr.format">Dauer/Format:</strong> <span data-i18n="ec.pr3.m">12 Monate Skalierung &amp; Expansion</span></div>
+        <div style="font-size: 14.5px; color: #FFFFFF; line-height: 1.55; padding: 14px 16px; background: rgba(255,255,255,0.08); border-left: 3px solid #C9A96E; border-radius: 0 8px 8px 0;"><strong data-i18n="ec.pr.focus">Fokus:</strong> <span data-i18n="ec.pr3.d">Umsatz, Prozesse und Profitabilität bestehender Marken aufs nächste Level heben.</span></div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; flex: 1;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr3.l1">Produktoptimierung &amp; Sortimentserweiterung</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr3.l2">Fortgeschrittene PPC-, Google Ads- &amp; Meta Ads-Strategien</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr3.l3">Nutzung von Premium Analyse Tools</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">★</span><span><strong data-i18n="ec.pr.hl" style="color: #C9A96E;">HIGHLIGHT:</strong> <span data-i18n="ec.pr3.l4">Exklusive, begleitete China-Reise zu den Fabriken</span></span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr3.l5">Inklusive: 12 Monate System-Zugang &amp; Infrastruktur</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 1px dashed rgba(247,244,238,0.18);">
+          <div data-i18n="ec.pr.levels" style="font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: rgba(247,244,238,0.7); text-transform: uppercase;">Inhalte nach Level</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button data-level="growth-1" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid rgba(201,169,110,0.6); background: transparent; color: #F7F4EE; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #C9A96E; border-color: #C9A96E; color: #1A1A1A;">Level 1</button>
+            <button data-level="growth-2" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid rgba(201,169,110,0.6); background: transparent; color: #F7F4EE; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #C9A96E; border-color: #C9A96E; color: #1A1A1A;">Level 2</button>
+            <button data-level="growth-3" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid rgba(201,169,110,0.6); background: transparent; color: #F7F4EE; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #C9A96E; border-color: #C9A96E; color: #1A1A1A;">Level 3</button>
+            <button data-level="growth-4" style="padding: 7px 12px; border-radius: 999px; border: 1.5px solid rgba(201,169,110,0.6); background: transparent; color: #F7F4EE; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s ease;" style-hover="background: #C9A96E; border-color: #C9A96E; color: #1A1A1A;">Level 4</button>
+            <button data-level="growth-plus" style="padding: 7px 13px; border-radius: 999px; border: 1.5px solid #C9A96E; background: linear-gradient(135deg, #C9A96E, #EAD7A1); color: #1A1A1A; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s ease;" style-hover="background: linear-gradient(135deg, #EAD7A1, #C9A96E);">★ Level +</button>
+          </div>
+        </div>
+        <button data-qr-trigger data-i18n="ec.pr3.cta" style="text-align: center; padding: 14px; background: #C9A96E; color: #1A1A1A; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .25s ease;" style-hover="background: #EAD7A1;">Jetzt Wachstums-Gespräch vereinbaren</button>
+      </div>
+
+      <!-- Advisory -->
+      <div style="display: flex; flex-direction: column; background: #1A1A1A; color: #F7F4EE; border: 1px solid #1A1A1A; border-radius: 20px; padding: 32px; gap: 18px; transition: transform .3s ease, box-shadow .3s ease;" style-hover="transform: translateY(-4px); box-shadow: 0 30px 80px -30px rgba(0,0,0,0.4);">
+        <div data-i18n="ec.pr4.badge" style="display: inline-flex; align-self: flex-start; padding: 7px 14px; border-radius: 999px; background: rgba(201,169,110,0.15); color: #C9A96E; font-size: 9.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;">Für etablierte Unternehmen &amp; VIPs</div>
+        <h3 data-i18n="ec.pr4.t" style="font-family: 'Playfair Display', Georgia, serif; font-weight: 500; font-size: 30px; line-height: 1.05; margin: 0;">Commerce Advisory</h3>
+        <div style="font-size: 13.5px; color: rgba(247,244,238,0.7); margin-top: -8px;"><strong style="color: #FFFFFF; font-weight: 600;" data-i18n="ec.pr.format">Dauer/Format:</strong> <span data-i18n="ec.pr4.m">Strategische Langzeit-Begleitung</span></div>
+        <div style="font-size: 14.5px; color: #FFFFFF; line-height: 1.55; padding: 14px 16px; background: rgba(201,169,110,0.08); border-left: 3px solid #C9A96E; border-radius: 0 8px 8px 0;"><strong data-i18n="ec.pr.focus">Fokus:</strong> <span data-i18n="ec.pr4.d">Direkte, engste Zusammenarbeit mit Pari Jazz für maximale Hebel.</span></div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; flex: 1;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr4.l1">Exklusive 1:1 Zusammenarbeit direkt mit Pari Jazz</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr4.l2">Strategische Weichenstellungen auf Unternehmensebene</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr4.l3">Direkter Zugriff auf das persönliche VIP-Netzwerk &amp; Deep Sourcing</span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">★</span><span><strong data-i18n="ec.pr.hl" style="color: #C9A96E;">HIGHLIGHT:</strong> <span data-i18n="ec.pr4.l4">Exklusive China-Reise &amp; Begleitung vor Ort</span></span></div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;"><span style="color: #C9A96E; font-weight: 700; flex-shrink: 0; margin-top: 2px;">✓</span><span data-i18n="ec.pr4.l5">Maßgeschneiderte, individuelle Sonderlösungen</span></div>
+        </div>
+        <button data-qr-trigger data-i18n="ec.pr4.cta" style="text-align: center; padding: 14px; background: #C9A96E; color: #1A1A1A; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .25s ease;" style-hover="background: #EAD7A1;">Persönliche Anfrage stellen</button>
+      </div>
+    </div>
+
+    <div data-i18n="ec.pr.foot" style="margin-top: 56px; text-align: center; font-size: 14px; color: #475569;">Alle Programme inkl. Zugang zu 12 Experten, ~170 Videos, eigenen Tools &amp; Logistik-Konditionen.</div>
+  </div>
+</section>
+
+
+
+<!-- ============ WEN WIR BEGLEITEN ============ -->
+<section style="background: #FBFAF7; padding: 100px 48px; border-top: 1px solid rgba(26,26,26,0.06);">
+  <div data-reveal style="max-width: 880px; margin: 0 auto; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 46px); line-height: 1.15; color: #0A1628; margin: 0 0 24px;">Wen wir auf dem Weg zum Erfolg begleiten</h2>
+    <p style="font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.8; color: #475569; margin: 0 0 28px;">Bis heute verkaufe ich selbst aktiv Produkte im Markt und optimiere sie fortlaufend. Im PARI JAZZ Network bringen wir ambitionierte Menschen zusammen, die keine Abkürzungen suchen, sondern echte Marken aufbauen wollen.</p>
+    <div style="text-align: left; max-width: 720px; margin: 0 auto;">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Angestellte & Gründer mit dem klaren Wunsch nach einem eigenen, soliden Business.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Selbstständige, E-Commerce Seller & Markeninhaber, die ihre Prozesse professionalisieren und international skalieren wollen.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Influencer & Creatives, die ihre eigene Produktidee mit einer stabilen Infrastruktur realisieren möchten.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span>Hersteller & Lieferanten, die ihre Produkte gezielt im DACH-Raum etablieren wollen.</span></div>
+    </div>
+    <p style="font-family: 'Playfair Display', serif; font-size: 15.5px; line-height: 1.8; color: #0A1628; margin: 28px 0 0; font-weight: 600;">Von der ersten Produktidee bis zur internationalen Skalierung entsteht so ein Netzwerk aus Menschen, die gemeinsam wachsen und voneinander profitieren.</p>
+  </div>
+</section>
+
+<!-- ============ WARUM ICH ANDERS ============ -->
+<section style="background: #F7F4EE; padding: 100px 48px;">
+  <div data-reveal style="max-width: 880px; margin: 0 auto; text-align: center;">
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 46px); line-height: 1.15; color: #0A1628; margin: 0 0 24px;">Warum ich anders arbeite</h2>
+    <p style="font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.8; color: #475569; margin: 0 0 28px;">Viele Programme auf dem Markt verkaufen bloße Hoffnung oder veraltete Informationen. Erfolgreiche Marken entstehen jedoch nicht durch Motivationssprüche, sondern durch die richtige Infrastruktur.</p>
+    <div style="text-align: left; max-width: 760px; margin: 0 auto;">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span><strong>Aktuelles Praxiswissen:</strong> Keine graue Theorie, sondern Strategien auf dem heutigen Stand des Marktes.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span><strong>Direkte Umsetzung:</strong> Begleitung von der ersten Produktidee bis zur weltweiten Skalierung.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span><strong>Geprüfte Hersteller:</strong> Direkter Zugang zu über 15.000 verifizierten Fabriken und Sourcing-Kanälen in China.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span><strong>Eigene Infrastruktur:</strong> Zugriff auf unser starkes Logistik-Netzwerk direkt in Deutschland.</span></div><div style="display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-family: 'Playfair Display', serif; font-size: 14.5px; line-height: 1.55; color: #1A1A1A;"><span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: #F0C419; color: #1A1A1A; border-radius: 2px; flex-shrink: 0; margin-top: 3px; font-size: 11px; font-weight: 800;">✓</span><span><strong>Tagesgenaue Daten & Tools:</strong> Wir überlassen nichts dem Zufall. Durch den Einsatz modernster Tools bewerten und analysieren wir Daten und Fakten in jedem Bereich deines Business — absolut präzise und tagesaktuell.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section style="position: relative; background: #1F2733; color: #FFFFFF; padding: 110px 48px; overflow: hidden;">
+  <div data-phoenix aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.18; pointer-events: none;">
+    <img src="assets/images/phoenix-watermark.png" alt="" style="width: min(80%, 900px); height: auto; object-fit: contain; mix-blend-mode: screen;">
+  </div>
+  <div data-reveal style="position: relative; max-width: 820px; margin: 0 auto; text-align: center;">
+    <div style="margin: 0 auto 26px;">
+      <img src="assets/images/pari-jazz-logo-light.png" alt="Pari Jazz" style="height: 72px; width: auto; display: inline-block;">
+    </div>
+    <h2 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: clamp(36px, 4.2vw, 60px); line-height: 1.05; margin: 0; text-wrap: balance;">Veraltete Theorien vs. tagesgenaue Daten &amp; Fakten</h2>
+    <p style="margin: 28px auto 0; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 640px;">Vergiss veraltete Theorien und Pseudo-Experten — wir analysieren dein Business auf Basis tagesgenauer Daten und ebnen dir mit einer maßgeschneiderten Infrastruktur, verifizierten China-Herstellern und logistischer Praxis den Weg zur skalierten E-Commerce-Marke.</p>
+    <button data-qr-trigger type="button" style="margin-top: 38px; background: #1946BD; color: #FFFFFF; padding: 16px 32px; border: 0; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; box-shadow: 0 14px 36px -10px rgba(25,70,189,0.7);">Jetzt Erstgespräch vereinbaren</button>
+  </div>
+</section>
+
+<footer style="background: #06091A; color: rgba(247,244,238,0.7); padding: 80px 48px 48px;">
+  <div style="max-width: 1440px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; padding-bottom: 56px; border-bottom: 1px solid rgba(247,244,238,0.1);">
+      <div>
+        <div style="display: block; line-height: 0;">
+          <img src="assets/images/pari-jazz-logo-light.png" alt="Pari Jazz" style="height: 84px; width: auto; display: block;">
+        </div>
+        <p data-i18n="footer.tagline" style="margin-top: 24px; font-size: 14px; line-height: 1.6; max-width: 360px;">Zugang zu einem echten E-Commerce-Ökosystem. Kein Coaching. Über Jahre aufgebaut — bis heute täglich genutzt.</p>
+        <div style="margin-top: 28px; display: flex; gap: 12px;">
+          <a href="https://www.instagram.com/parijazz_" aria-label="Instagram" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://www.youtube.com/@PariJazzz" aria-label="YouTube" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C16.7 3.4 12 3.4 12 3.4s-4.7 0-7.9.3c-.4 0-1.4 0-2.2 1C1.2 5.4 1 7 1 7s-.2 1.9-.2 3.8v1.8C.8 14.5 1 16.4 1 16.4s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.7.3 7.7.3s4.7 0 7.9-.3c.4 0 1.4 0 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8zM10 15V8l6 3.5L10 15z"/></svg></a>
+          <a href="https://www.tiktok.com/@pari.jazz" aria-label="TikTok" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.3a4.8 4.8 0 0 1-2.9-1c-.6-.5-1-1.1-1.3-1.8a4.5 4.5 0 0 1-.2-1.4h-3.4v13.1a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.1a6 6 0 1 0 5.3 6V8.7c1 .7 2.3 1.1 3.7 1.1h.7V6.3z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div data-i18n="footer.services" style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Leistungen</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="e-commerce.dc.html" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">E-Commerce</a>
+          <a href="Sourcing.dc.html" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">Sourcing</a>
+          <a href="eu-market-entry.dc.html" data-i18n="nav.eu" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">EU-Markteintritt</a>
+        </div>
+      </div>
+      <div>
+        <div data-i18n="footer.company" style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Unternehmen</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="Pari Jazz Commerce.dc.html" data-i18n="footer.home" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">Startseite</a>
+          <a href="contact.dc.html" data-i18n="footer.contact" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">Kontakt</a>
+        </div>
+      </div>
+      <div>
+        <div data-i18n="footer.legal" style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Rechtliches</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="#" data-i18n="footer.imprint" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">Impressum</a>
+          <a href="#" data-i18n="footer.privacy" style="color: rgba(247,244,238,0.7);" style-hover="color: #F7F4EE;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top: 32px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(247,244,238,0.4);">
+      <div>© 2026 Pari Jazz. Alle Rechte vorbehalten.</div>
+      <div>Hamburg · Guangzhou · Shenzhen</div>
+    </div>
+  </div>
+</footer>
+
+{{ qrModal }}
+{{ levelModal }}
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1100}}">
+const I18N = {
+  de: {
+    'nav.home': 'Startseite', 'nav.ecommerce': 'E-Commerce', 'nav.sourcing': 'Sourcing', 'nav.eu': 'EU-Markteintritt', 'nav.contact': 'Kontakt', 'nav.cta': 'Jetzt kontaktieren',
+    'ec.eyebrow': 'Pari Jazz Commerce', 'ec.title': 'Nicht nur Wissen. Sondern das richtige <em style="font-style: italic; color: #1946BD;">Ökosystem</em>.',
+    'ec.intro': 'Die meisten scheitern nicht am Wissen, sondern an Entscheidungen, Kontakten und Umsetzung. Ich biete kein klassisches Coaching, sondern Zugang zu einem Ökosystem aus Erfahrungen, Experten, Herstellern, Dienstleistern, Strategien und Lösungen — über Jahre aufgebaut und bis heute täglich genutzt.',
+    'ec.cta': 'Jetzt Erstgespräch vereinbaren',
+    'ec.curr.title': 'Was erfolgreiche Marken wirklich brauchen', 'ec.curr.sub': 'Eine starke Marke entsteht aus dem Zusammenspiel vieler Bausteine. Fehlt einer, kostet das Monate. Diese Bausteine bauen wir gemeinsam auf:',
+    'ec.m1.t': 'Fundament & Mindset', 'ec.m1.d': 'Unternehmerisches Denken, Disziplin, Fokus und der Umgang mit Rückschlägen — bevor das erste Produkt verkauft wird.',
+    'ec.m2.t': 'E-Commerce & Plattformen', 'ec.m2.d': 'Amazon, Otto, Kaufland, eBay, Temu, TikTok Shop: Wir identifizieren die richtigen Plattformen für dein Produkt und deine Strategie.',
+    'ec.m3.t': 'Marketing-Grundlagen', 'ec.m3.d': 'Verkaufspsychologie, Zielgruppenverständnis, Push- und Pull-Marketing und Positionierung — gutes Marketing beginnt beim Kunden.',
+    'ec.m4.t': 'Produkt & Brand', 'ec.m4.d': 'Produktrecherche, Nischenanalyse, Musterbestellungen, Compliance und Markenentwicklung — mit Fokus auf langfristiges Potenzial.',
+    'ec.m5.t': 'Hersteller & Sourcing', 'ec.m5.d': 'Herstelleranfragen, Verhandlungen, Produktionsprozesse und die wichtigsten Dokumente — eine stabile Lieferkette von Anfang an.',
+    'ec.m6.t': 'Kalkulation & Wirtschaftlichkeit', 'ec.m6.d': 'Margen, Kostenstrukturen, Cashflow und Skalierbarkeit. Denn Umsatz allein bedeutet keinen Erfolg — Profitabilität schon.',
+    'ec.m7.t': 'Import & Shipping', 'ec.m7.d': 'FOB, DDP, EXW, Zollprozesse, EORI, Freight Forwarder und Fulfillment — verständlich erklärt und praxisnah umgesetzt.',
+    'ec.m8.t': 'Marketing & Launch', 'ec.m8.d': 'Listing-Optimierung, Launch-Strategien, Keyword-Recherche und Conversion — ein professioneller Markteintritt mit klarer Strategie.',
+    'ec.m9.t': 'Advertising & Skalierung', 'ec.m9.d': 'Amazon PPC, Google Ads, Meta — datenbasierte Entscheidungen statt blindem Werbebudget für nachhaltiges Wachstum.',
+    'ec.cn.eyebrow': 'Mein Netzwerk in China', 'ec.cn.title': 'Mehr als nur Kontakte.',
+    'ec.cn.body': 'Ich reise zwei- bis dreimal jährlich persönlich nach China und habe über Jahre ein Netzwerk aus über 15.000 geprüften Herstellern aufgebaut. Diese Nähe schafft Vorteile, die man nicht über Plattformen oder E-Mails erhält: Angebote in Minuten statt Wochen, neue Produkte oft als Erste, Entscheidungen auf Basis aktueller Marktdaten.',
+    'ec.cn.s1': 'Geprüfte Hersteller', 'ec.cn.s2': 'Produkte im Zugriff', 'ec.cn.s3': 'Eigene Logistik bei Hamburg', 'ec.cn.s4': 'Experten & Partner',
+    'ec.ph.title': 'Die vier Phasen im Pari Jazz Commerce Network', 'ec.ph.sub': 'Von der ersten Idee bis zur internationalen Skalierung — strukturiert begleitet.',
+    'ec.ph.l1': 'Phase 1', 'ec.ph.t1': 'Analyse & Orientierung', 'ec.ph.d1': 'Wir bewerten Chancen, Risiken und Geschäftsmodelle und schaffen eine fundierte Entscheidungsgrundlage.',
+    'ec.ph.l2': 'Phase 2', 'ec.ph.t2': 'Produktentwicklung & Sourcing', 'ec.ph.d2': 'Marktanalysen, gezielte Herstellersuche, Kalkulationen und die strategische Vorbereitung deines Markteintritts.',
+    'ec.ph.l3': 'Phase 3', 'ec.ph.t3': 'Markteintritt & Sichtbarkeit', 'ec.ph.d3': 'Optimale Positionierung auf relevanten Plattformen und gezieltes Advertising für maximale Sichtbarkeit.',
+    'ec.ph.l4': 'Phase 4', 'ec.ph.t4': 'Optimierung & Expansion', 'ec.ph.d4': 'Präzise Datenanalysen, Sortimentserweiterungen und neue Vertriebskanäle für nationales und internationales Wachstum.',
+    'ec.pr.title': 'Programme', 'ec.pr.sub': 'Kein Standard für alle. Abgestimmt auf deinen aktuellen Stand.', 'ec.pr.book': 'Erstgespräch buchen', 'ec.pr.ask': 'Anfragen',
+    'ec.pr1.t': 'Commerce Reality Check', 'ec.pr1.m': '90 Minuten Strategiegespräch', 'ec.pr1.d': 'Für alle, die herausfinden möchten, ob E-Commerce, Produktentwicklung oder Markenaufbau zu ihnen passen.',
+    'ec.pr2.t': 'Commerce Launch', 'ec.pr2.m': '12 Monate Markenaufbau', 'ec.pr2.d': 'Für Einsteiger und angehende Markeninhaber, die ihr erstes Produkt professionell entwickeln und launchen wollen.',
+    'ec.pr3.t': 'Commerce Growth', 'ec.pr3.m': '12 Monate Skalierung', 'ec.pr3.d': 'Für Verkäufer und Marken, die bereits Produkte verkaufen und ihre Umsätze, Prozesse und Profitabilität steigern wollen.',
+    'ec.pr4.t': 'Commerce Advisory', 'ec.pr4.m': 'Strategische Begleitung', 'ec.pr4.d': 'Für etablierte Marken und Unternehmen, die direkten Zugang zu Strategie, Netzwerk und Umsetzung suchen.',
+    'ec.final.title': 'Kein Kurs. Kein Coaching. Ein echtes Commerce-System.', 'ec.final.sub': 'Vollen Zugang zu Netzwerk, Sourcing-Prozessen und Praxis-Erfahrung — auf dem Stand von heute, basierend auf Live-Daten.',
+    'qr.caption': 'Scannen Sie den Code, um mit uns in Kontakt zu treten',
+    'footer.tagline': 'Zugang zu einem echten E-Commerce-Ökosystem. Kein Coaching. Über Jahre aufgebaut — bis heute täglich genutzt.',
+    'footer.services': 'Leistungen', 'footer.company': 'Unternehmen', 'footer.legal': 'Rechtliches', 'footer.home': 'Startseite', 'footer.contact': 'Kontakt', 'footer.imprint': 'Impressum', 'footer.privacy': 'Datenschutz',
+  },
+  en: {
+    'nav.home': 'Home', 'nav.ecommerce': 'E-Commerce', 'nav.sourcing': 'Sourcing', 'nav.eu': 'EU Market Entry', 'nav.contact': 'Contact', 'nav.cta': 'Contact us now',
+    'ec.eyebrow': 'Pari Jazz Commerce', 'ec.title': 'Not just knowledge. The right <em style="font-style: italic; color: #1946BD;">ecosystem</em>.',
+    'ec.intro': 'Most people don\u2019t fail because of knowledge, but because of decisions, contacts and execution. I don\u2019t offer classical coaching — I offer access to an ecosystem of experience, experts, manufacturers, service providers, strategies and solutions, built over years and used daily.',
+    'ec.cta': 'Book your first consultation',
+    'ec.curr.title': 'What successful brands really need', 'ec.curr.sub': 'A strong brand emerges from the interplay of many building blocks. If one is missing, it costs months. We build these together:',
+    'ec.m1.t': 'Foundation & Mindset', 'ec.m1.d': 'Entrepreneurial thinking, discipline, focus and dealing with setbacks — before the first product is ever sold.',
+    'ec.m2.t': 'E-Commerce & Platforms', 'ec.m2.d': 'Amazon, Otto, Kaufland, eBay, Temu, TikTok Shop: we identify the right platforms for your product and strategy.',
+    'ec.m3.t': 'Marketing Fundamentals', 'ec.m3.d': 'Sales psychology, target audience understanding, push and pull marketing and positioning — good marketing starts with the customer.',
+    'ec.m4.t': 'Product & Brand', 'ec.m4.d': 'Product research, niche analysis, sample orders, compliance and brand development — focused on long-term potential.',
+    'ec.m5.t': 'Manufacturers & Sourcing', 'ec.m5.d': 'Manufacturer inquiries, negotiations, production processes and the key documents — a stable supply chain from the start.',
+    'ec.m6.t': 'Calculation & Profitability', 'ec.m6.d': 'Margins, cost structures, cash flow and scalability. Because revenue alone means no success — profitability does.',
+    'ec.m7.t': 'Import & Shipping', 'ec.m7.d': 'FOB, DDP, EXW, customs processes, EORI, freight forwarders and fulfillment — clearly explained and implemented in practice.',
+    'ec.m8.t': 'Marketing & Launch', 'ec.m8.d': 'Listing optimization, launch strategies, keyword research and conversion — a professional market entry with a clear strategy.',
+    'ec.m9.t': 'Advertising & Scaling', 'ec.m9.d': 'Amazon PPC, Google Ads, Meta — data-driven decisions instead of blind ad budget for sustainable growth.',
+    'ec.cn.eyebrow': 'My network in China', 'ec.cn.title': 'More than just contacts.',
+    'ec.cn.body': 'I travel to China personally two to three times a year and have built a network of over 15,000 vetted manufacturers over the years. This closeness creates advantages you can\u2019t get through platforms or emails: quotes in minutes instead of weeks, new products often first, decisions based on current market data.',
+    'ec.cn.s1': 'Vetted manufacturers', 'ec.cn.s2': 'Products accessible', 'ec.cn.s3': 'Own logistics near Hamburg', 'ec.cn.s4': 'Experts & partners',
+    'ec.ph.title': 'The four phases in the Pari Jazz Commerce Network', 'ec.ph.sub': 'From the first idea to international scaling — structured and guided.',
+    'ec.ph.l1': 'Phase 1', 'ec.ph.t1': 'Analysis & Orientation', 'ec.ph.d1': 'We assess opportunities, risks and business models and create a sound basis for decisions.',
+    'ec.ph.l2': 'Phase 2', 'ec.ph.t2': 'Product Development & Sourcing', 'ec.ph.d2': 'Market analyses, targeted manufacturer search, calculations and the strategic preparation of your market entry.',
+    'ec.ph.l3': 'Phase 3', 'ec.ph.t3': 'Market Entry & Visibility', 'ec.ph.d3': 'Optimal positioning on relevant platforms and targeted advertising for maximum visibility.',
+    'ec.ph.l4': 'Phase 4', 'ec.ph.t4': 'Optimization & Expansion', 'ec.ph.d4': 'Precise data analysis, assortment expansion and new sales channels for national and international growth.',
+    'ec.pr.title': 'Programs', 'ec.pr.sub': 'No one-size-fits-all. Tailored to where you are today.', 'ec.pr.book': 'Book consultation', 'ec.pr.ask': 'Inquire',
+    'ec.pr1.t': 'Commerce Reality Check', 'ec.pr1.m': '90-minute strategy session', 'ec.pr1.d': 'For anyone who wants to find out whether e-commerce, product development or brand building fits them.',
+    'ec.pr2.t': 'Commerce Launch', 'ec.pr2.m': '12 months brand building', 'ec.pr2.d': 'For beginners and aspiring brand owners who want to professionally develop and launch their first product.',
+    'ec.pr3.t': 'Commerce Growth', 'ec.pr3.m': '12 months scaling', 'ec.pr3.d': 'For sellers and brands already selling products who want to grow revenue, processes and profitability.',
+    'ec.pr4.t': 'Commerce Advisory', 'ec.pr4.m': 'Strategic guidance', 'ec.pr4.d': 'For established brands and companies seeking direct access to strategy, network and execution.',
+    'ec.final.title': 'No course. No coaching. A real commerce system.', 'ec.final.sub': 'Full access to network, sourcing processes and hands-on experience — at today\u2019s standard, based on live data.',
+    'qr.caption': 'Scan to get in touch with us',
+    'footer.tagline': 'Access to a real e-commerce ecosystem. Not coaching. Built over years — used daily to this day.',
+    'footer.services': 'Services', 'footer.company': 'Company', 'footer.legal': 'Legal', 'footer.home': 'Home', 'footer.contact': 'Contact', 'footer.imprint': 'Imprint', 'footer.privacy': 'Privacy Policy',
+  },
+};
+
+const LANGUAGES = [
+  { code: 'de', flag: '🇩🇪', label: 'Deutsch' },
+  { code: 'en', flag: '🇺🇸', label: 'English' },
+  { code: 'cn', flag: '🇨🇳', label: '中文' },
+  { code: 'fr', flag: '🇫🇷', label: 'Français' },
+  { code: 'es', flag: '🇪🇸', label: 'Español' },
+  { code: 'pt', flag: '🇵🇹', label: 'Português' },
+];
+
+const LEVEL_DATA = {
+  'launch-1': { eyebrow: 'COMMERCE LAUNCH · LEVEL 1', title: 'Unternehmerisches Fundament, Mindset, Markenaufbau & Profitable Produktideen', objective: 'Du entwickelst die Denkweise eines Markeninhabers, verstehst die wichtigsten E-Commerce-Plattformen, baust dein Markenverständnis auf und lernst, welche Produkte sich wirklich für den Markt eignen.',
+    sections: [
+      { title: 'Fokus Mindset', items: ['Unternehmerisches Denken statt „Seller-Hopping"', 'Aufbau einer klaren 12-Monats-Routine', 'Fokus- und Umsetzungsstrategien', 'Risikomanagement im E-Commerce'] },
+      { title: 'Marktverständnis & Produktideen', items: ['Analyse von Amazon, Otto, Kaufland und eBay', 'Verständnis von Marktplatz-Algorithmen', 'Einführung in TikTok Shop & Social Commerce', 'Verkaufspsychologie und Kaufverhalten', 'Zielgruppenanalyse & Positionierung', 'Wirtschaftlichkeitsprüfung von Produkten', 'Margen-, Cashflow- und Preisberechnung'] },
+      { title: 'Markenaufbau — was eine Marke ist', items: ['Was ist eine Marke & warum sie entscheidend ist', 'Markenpositionierung: Werte, USP & Zielgruppe definieren', 'Vom Produkt zur Marke — strategischer Aufbau', 'Markenname, Logo & erste Markenpräsenz aufbauen'] },
+      { title: 'Markenaufbau Praxis (Experte)', items: ['Wie Dilan ihre Marke aufgebaut hat — Learnings', 'Brand-Identität: Logo, Farben, Packaging — wie starten', 'Community & Social Media Präsenz als Marke aufbauen'] },
+      { title: 'Steuerliche Grundlagen (Experte)', items: ['Kleinunternehmerregelung vs. Regelbesteuerung', 'GmbH vs. UG vs. Einzelunternehmen', 'Umsatzsteuer beim Import & EU-Erwerb', 'Steuernummer, USt-ID & Gewerbeanmeldung', 'Typische Steuerfehler von E-Commerce-Einsteigern'] },
+      { title: 'Buchhaltung & Struktur (Experte)', items: ['Buchhaltungs-Setup für Amazon-Seller', 'Bankkonten & Cashflow-Struktur aufbauen', 'Jahresabschluss & Steuererklärung — Überblick'] },
+    ],
+    extras: ['Fokus- & Prioritäten-Planer', 'Zielgruppen-Avatar-Workbook', 'Wettbewerbsanalyse-Templates', 'Plattform-Vergleichsmatrix', 'Unternehmensstruktur-Entscheidungsmatrix'],
+    result: 'Du weißt exakt, welche Produkte wirtschaftlich Sinn ergeben, welche Plattform geeignet ist und was es bedeutet, eine echte Marke aufzubauen.' },
+  'launch-2': { eyebrow: 'COMMERCE LAUNCH · LEVEL 2', title: 'Produktentwicklung, Rechtssicherheit & Herstellersourcing', objective: 'Du entwickelst ein marktfähiges Produkt, sicherst dich rechtlich ab und baust eine geprüfte Lieferkette mit verlässlichem Hersteller auf.',
+    sections: [
+      { title: 'Produktentwicklung & Sourcing', items: ['Softwaregestützte Produkt- und Nischenanalyse', 'Suchvolumen-, Trend- und Wettbewerbsanalysen', 'Produktoptimierung statt Produktkopie', 'Musterbestellungen professionell durchführen', 'Herstellerrecherche in China', 'Fabriken von Trading Companies unterscheiden', 'Preisverhandlungen und MOQ-Verhandlungen'] },
+      { title: 'Compliance & Produktsicherheit (Experte)', items: ['CE-Kennzeichnung, REACH, RoHS & Produktsicherheit', 'LUCID, ElektroG und Importeurspflichten', 'Qualitätskontrollen und Produktionsüberwachung'] },
+      { title: 'Markenanmeldung & Patentrecht (Experte)', items: ['Markenanmeldung Schritt für Schritt (EUIPO/DPMA)', 'Patentrecherche — was darf ich, was nicht', 'Amazon Brand Registry einrichten', 'Markenschutz & Abmahnungen vermeiden'] },
+      { title: 'Produkthaftpflicht & Versicherungen (Experte)', items: ['Produkthaftung und Risikominimierung', 'Die richtige Produkthaftpflichtversicherung wählen', 'Versicherungs-Checkliste für dein Produkt'] },
+      { title: 'Vertragsrecht (Experte)', items: ['Lieferantenverträge mit China richtig aufsetzen', 'AGB, Impressum & Datenschutz für Amazon-Seller', 'NDA & Exklusivitätsvereinbarungen', 'Haftungsklauseln & Rückgaberecht im B2C'] },
+    ],
+    extras: ['Nischenanalyse-Blueprints', 'Compliance-Checklisten', 'RFQ-Anfragevorlagen (DE/EN/CN)', 'Qualitätsprüfungs-Vorlagen', 'WorldFirst Zugang & Onboarding'],
+    access: ['Herstellerzugang (geprüftes Netzwerk)', 'Versicherungs-Partner & Markenrechts-Kanzleien', 'Lokale Qualitätsprüfer in China'],
+    result: 'Du verfügst über ein rechtssicheres Produkt, einen verlässlichen Hersteller, geprüfte Lieferkette und sichere Zahlungsstruktur.' },
+  'launch-3': { eyebrow: 'COMMERCE LAUNCH · LEVEL 3', title: 'Import, Logistik & Professioneller Produkt-Launch', objective: 'Du bringst dein Produkt sicher nach Europa und startest mit professionellem Listing, Grafiken und ersten Werbekampagnen.',
+    sections: [
+      { title: 'Import & Logistik (Experten)', items: ['Importprozesse und Zollabwicklung', 'EORI-Nummer & Verzollung', 'Incoterms verständlich erklärt', 'Auswahl der richtigen Versandart', 'Lager- und Fulfillment-Strukturen', 'Amazon FBA vs. externe Logistik', 'Liquiditäts- und Nachbestellplanung'] },
+      { title: 'SEO & Listing-Optimierung', items: ['Keyword-Recherche und SEO — Strategie & Vorgehen', 'Listing-Optimierung: Titel, Bullets, Beschreibung', 'Erstellung verkaufsstarker Bilder und Texte', 'Algorithmus-Launch für die ersten 14 Tage', 'Bewertungsstrategie aufbauen'] },
+      { title: 'SEO mit Tools & PPC Einstieg (Experte)', items: ['Keyword-Recherche mit Tool-Stack live erklärt', 'Amazon SEO: wie der Algorithmus Keywords bewertet', 'Amazon PPC Grundlagen — Kampagnentypen', 'Erste Sponsored Products Kampagne aufsetzen', 'Auto vs. Manuelle Kampagnen — wann was', 'ACoS & RoAS verstehen und richtig nutzen'] },
+      { title: 'Listing-Grafiken & Creative (Experte)', items: ['Workflow: vom Briefing zur fertigen Grafik', 'Infografiken, Lifestyle-Bilder & A+ Content'] },
+    ],
+    extras: ['Incoterm-Spickzettel', 'Zoll-Leitfäden', 'SEO-Templates', 'Foto- & Video-Briefings', 'Launch-Tag-Checkliste'],
+    access: ['Zugang zu Import-, Logistik- und Fulfillment-Netzwerk', 'Sonderkonditionen für Logistiklösungen', 'Kontakte zu geprüften Freight Forwardern'],
+    result: 'Dein Produkt ist am Markt, professionell positioniert und mit einer funktionierenden Werbe- und Logistikstruktur ausgestattet.' },
+  'launch-4': { eyebrow: 'COMMERCE LAUNCH · LEVEL 4', title: 'Advertising, Optimierung & Nachhaltige Skalierung', objective: 'Du lernst, Werbebudgets profitabel einzusetzen, dein Geschäft mit Daten zu steuern und langfristig zu stabilisieren.',
+    sections: [
+      { title: 'Inhalte', items: ['Auswertung von Werbedaten & KPI-Reporting', 'Identifikation profitabler Keywords', 'Budgetkontrolle und Margenschutz', 'Angebotsoptimierung', 'Nachbestellungsplanung', 'Vermeidung von Out-of-Stock-Situationen'] },
+      { title: 'PPC-Optimierung & Mastery (Experte)', items: ['PPC-Optimierung deep dive', 'Negative Keywords strategisch einsetzen', 'Skalierung erfolgreicher Kampagnen', 'Halo Tracker — TACoS & Halo-Effekt verstehen', 'Search-Term Miner — profitable Begriffe finden', 'Reach Pilot — Skalierungspotenziale erkennen'] },
+    ],
+    tools: ['Halo Tracker — TACoS & Halo-Effekt pro ASIN', 'Search-Term Miner — profitable Suchbegriffe', 'Reach Pilot — Skalierungspotenziale', 'Negative Builder — Strategische Negatives', 'Spend-Leak-Scanner', 'ASIN Cleaner', 'Bid Pilot — RoAS-Korridor-Optimierung'],
+    result: 'Du verfügst über ein profitables System zur Umsatzsteigerung und kannst datenbasiert skalieren.' },
+  'growth-1': { eyebrow: 'COMMERCE GROWTH · LEVEL 1', title: 'Advanced Analytics, Controlling & Profitabilität', objective: 'Mehr Gewinn aus bestehenden Umsätzen erzielen durch tiefgehende Datenanalyse und Cashflow-Optimierung.',
+    sections: [
+      { title: 'Inhalte', items: ['Tiefgehende Profitabilitätsanalysen', 'TACoS-Steuerung', 'Cashflow-Optimierung & versteckte Kosten eliminieren', 'Conversion-Optimierung live am Produkt', 'Produkterweiterung / Produktverbesserung', 'Controlling-Dashboard einrichten & täglich nutzen'] },
+      { title: 'Ads-Experte', items: ['TACoS-Steuerung verstehen & anwenden', 'Professionelle Split-Testing-Prozesse', 'Halo Tracker Advanced — Parent/Child-ASIN Analyse', 'ASIN Cleaner — unterperformende ASINs'] },
+    ],
+    tools: ['Halo Tracker — TACoS-Steuerung', 'ASIN Cleaner', 'Premium Dashboard — Profitabilitätsübersicht in Echtzeit', 'CRO-Protokolle — Strukturierte Split-Testing-Prozesse'],
+    result: 'Mehr Gewinn bei gleichem Umsatz durch datenbasierte Optimierung.' },
+  'growth-2': { eyebrow: 'COMMERCE GROWTH · LEVEL 2', title: 'High-End Advertising & Omnichannel Marketing', objective: 'Werbekampagnen profitabel und kontrolliert über alle Kanäle skalieren.',
+    sections: [
+      { title: 'Advanced Amazon PPC (Experte)', items: ['Advanced Amazon PPC — Kampagnenstrukturen für Profis', 'Bulk-Sheet-Automatisierungen meistern', 'Plattformübergreifende Budgetsteuerung', 'Attribution & Reporting über alle Kanäle'] },
+      { title: 'Google Ads für E-Commerce (Experte)', items: ['Google Shopping — Setup & Strategie', 'Performance Max aufsetzen & optimieren', 'Search Campaigns für Marken-Traffic', 'Google Analytics & Conversion-Tracking'] },
+      { title: 'Meta Ads für Marken (Expertin)', items: ['Meta Ads für E-Commerce-Marken — Setup & Strategie', 'Creative-Strategie: Facebook & Instagram', 'Retargeting-Funnels aufbauen', 'Lookalike Audiences & Skalierung'] },
+    ],
+    tools: ['PPC Audit', 'Bid Pilot', 'Spend-Leak-Scanner', 'Search-Term Miner', 'Reach Pilot', 'Daypart Pilot'],
+    result: 'Höhere Reichweite, mehr Umsatz und maximale Kontrolle über Werbebudgets.' },
+  'growth-3': { eyebrow: 'COMMERCE GROWTH · LEVEL 3', title: 'Multichannel Expansion, Automatisierung & Kundensupport', objective: 'Unabhängigkeit von einer Plattform durch Expansion, automatisierte Prozesse und skalierbaren Kundensupport.',
+    sections: [
+      { title: 'Multichannel Expansion', items: ['Expansion auf Otto, Kaufland und eBay', 'ERP-Systeme professionell aufsetzen', 'Automatisierte Prozesse — Bestellung bis Versand', 'Cross-Selling-Strategien', 'Erhöhung des Customer Lifetime Value', 'Schnittstellen-Architektur & System-Integration'] },
+      { title: 'Kundensupport-Automatisierung (Experte)', items: ['Vorstellung des Kundensupport-Tools', 'Setup & Integration mit Amazon, Otto, Kaufland', 'Automatisierte Antworten & Ticket-Management live'] },
+      { title: 'Handel & stationärer Handel (Experte)', items: ['Von Online zu Offline — wann der Schritt Sinn ergibt', 'Großhandel & Handelsvertreter — Modell & Umsetzung', 'Listung bei Handelsketten — Anforderungen & Prozesse'] },
+    ],
+    extras: ['Schnittstellen-Architektur-Blueprint', 'Automatisierungs-Workflows', 'Kundensupport Tool-Zugang'],
+    result: 'Ein skalierbares Unternehmen mit mehreren Umsatzkanälen und automatisiertem Kundensupport.' },
+  'growth-4': { eyebrow: 'COMMERCE GROWTH · LEVEL 4', title: 'Logistik-Skalierung, Container-Import & Sortimentserweiterung', objective: 'Lieferketten für hohe Umsätze absichern und das Produktsortiment ohne Eigenkapital erweitern.',
+    sections: [
+      { title: 'Container-Import & Logistik', items: ['Container-Import: FCL vs. LCL — wann was', 'Frachtkostenoptimierung & Konsolidierung von Lieferungen', 'Pre-Fulfillment-Strukturen für hohes Volumen', 'Vermeidung von Out-of-Stock-Situationen', 'Großvolumige Importstrategien'] },
+      { title: 'Logistik-Skalierung (Experte)', items: ['Großvolumige Importstrategien live erklärt', 'Out-of-Stock bei hohen Umsätzen verhindern', 'Fulfillment-Lager Hamburg — Konditionen & Setup', 'Lieferantenbewertung & Lieferkette absichern'] },
+      { title: 'Sortiment erweitern ohne Eigenkapital', items: ['Die Methode erklärt — was sie bedeutet & für wen', 'Welche Produkte sich eignen & wie man sie findet', 'Lieferanten-Finanzierung & Zahlungsziel-Strategien', 'Factoring, Kontokorrent & Amazon Lending einsetzen'] },
+    ],
+    access: ['12.000 qm Fulfillment-Lager Hamburg — VIP-Konditionen', 'Direktzugang zu Cashflow-Optimierungs-Experten', 'Datax: Jahresabschluss & Steueroptimierung'],
+    result: 'Stabile Lieferketten, bessere Margen — und Sortimentswachstum ohne Eigenkapitalbedarf.' },
+  'growth-plus': { eyebrow: 'COMMERCE GROWTH · EXKLUSIV', title: 'China-Reise, Fabrikbesuche & Exklusive Herstellerkontakte', objective: 'Direkte Beziehungen zu Produzenten aufbauen und langfristige Wettbewerbsvorteile sichern.',
+    highlight: '✈ HIGHLIGHT — EXKLUSIVES ERLEBNIS ✈',
+    sections: [
+      { title: 'Inhalte', items: ['Vorbereitung auf Fabrikmessen', 'Begleitete China-Reise mit Fabrikbesuchen', 'Direkte Fabrikbesuche & Produktionsbesichtigungen', 'Verhandlungen mit Herstellern — Pari als Begleitung', 'Exklusive Produktionsrechte entwickeln', 'Sonderanfertigungen vom Konzept zum Prototyp', 'Qualitätskontrollen vor Ort'] },
+    ],
+    extras: ['Messe-Leitfaden', 'Lieferanten-Bewertungsprotokolle', 'Verhandlungsbegleitung durch Experten vor Ort'],
+    result: 'Direkter Zugang zu Herstellern, bessere Einkaufskonditionen und langfristige Wettbewerbsvorteile durch exklusive Produktionsrechte.' },
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    try { localStorage.setItem('pj-language', 'de'); } catch (e) {}
+    this.state = { lang: 'de', langOpen: false, qrOpen: false, modalKey: null };
+  }
+  componentDidMount() { this._applyTranslations(); this._setupHandlers(); }
+  componentDidUpdate(pp, ps) { if (ps && ps.lang !== this.state.lang) { this._applyTranslations(); try { localStorage.setItem('pj-language', this.state.lang); } catch (e) {} } }
+  _applyTranslations() {
+    const dict = I18N[this.state.lang] || I18N.de;
+    document.querySelectorAll('[data-i18n]').forEach((el) => { const k = el.dataset.i18n; if (dict[k] != null) el.textContent = dict[k]; });
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => { const k = el.dataset.i18nHtml; if (dict[k] != null) el.innerHTML = dict[k]; });
+  }
+  _setupHandlers() {
+    this._click = (e) => {
+      const qrT = e.target.closest('[data-qr-trigger]');
+      if (qrT) { e.preventDefault(); this.setState({ qrOpen: true }); document.body.style.overflow = 'hidden'; return; }
+      if (e.target.closest('[data-qr-close]') || e.target.matches('[data-qr-overlay]')) { e.preventDefault(); this.setState({ qrOpen: false }); document.body.style.overflow = ''; return; }
+      const lvl = e.target.closest('[data-level]');
+      if (lvl) { e.preventDefault(); this.setState({ modalKey: lvl.dataset.level }); document.body.style.overflow = 'hidden'; return; }
+      if (e.target.closest('[data-modal-close]') || e.target.matches('[data-modal-overlay]')) { e.preventDefault(); this.setState({ modalKey: null }); document.body.style.overflow = ''; return; }
+      const langTrig = e.target.closest('[data-lang-trigger]');
+      if (langTrig) { e.preventDefault(); this.setState((s) => ({ langOpen: !s.langOpen })); return; }
+      const langOpt = e.target.closest('[data-lang-option]');
+      if (langOpt) { e.preventDefault(); this.setState({ lang: langOpt.dataset.langOption, langOpen: false }); return; }
+      if (this.state.langOpen && !e.target.closest('[data-lang-dropdown]')) this.setState({ langOpen: false });
+    };
+    document.addEventListener('click', this._click);
+    this._key = (e) => { if (e.key === 'Escape') { if (this.state.qrOpen) { this.setState({ qrOpen: false }); document.body.style.overflow = ''; } else if (this.state.modalKey) { this.setState({ modalKey: null }); document.body.style.overflow = ''; } else if (this.state.langOpen) this.setState({ langOpen: false }); } };
+    document.addEventListener('keydown', this._key);
+  }
+  componentWillUnmount() { if (this._click) document.removeEventListener('click', this._click); if (this._key) document.removeEventListener('keydown', this._key); }
+
+  _buildLangSwitcher() { return null;
+    const e = React.createElement;
+    const current = LANGUAGES.find((l) => l.code === this.state.lang) || LANGUAGES[0];
+    return e('div', { 'data-lang-dropdown': true, style: { position: 'relative' } },
+      e('button', { 'data-lang-trigger': true, 'aria-haspopup': 'listbox', style: { display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'transparent', border: '1.5px solid #C9A96E', borderRadius: '999px', padding: '8px 14px', fontFamily: 'Inter', fontSize: '13px', fontWeight: 600, color: '#1A1A1A', cursor: 'pointer' } },
+        e('span', { style: { fontSize: '16px', lineHeight: 1 } }, current.flag),
+        e('span', { style: { letterSpacing: '0.08em' } }, current.code.toUpperCase()),
+        e('span', { style: { fontSize: '10px', color: '#C9A96E', transform: this.state.langOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform .2s ease' } }, '▾')),
+      this.state.langOpen ? e('div', { role: 'listbox', style: { position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1px solid #EAD7A1', borderRadius: '14px', padding: '6px', minWidth: '190px', boxShadow: '0 12px 40px rgba(25,70,189,0.12)', zIndex: 1000 } },
+        LANGUAGES.map((lang) => {
+          const active = lang.code === this.state.lang;
+          return e('div', { key: lang.code, 'data-lang-option': lang.code, role: 'option', style: { padding: '10px 12px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', background: active ? '#F7F4EE' : 'transparent', fontWeight: active ? 700 : 500, color: active ? '#1946BD' : '#1A1A1A', fontSize: '14px' } },
+            e('span', { style: { fontSize: '18px' } }, lang.flag), e('span', { style: { flex: 1 } }, lang.label), active ? e('span', { style: { width: '6px', height: '6px', borderRadius: '999px', background: '#C9A96E' } }) : null);
+        })) : null);
+  }
+
+  _buildQrModal() {
+    if (!this.state.qrOpen) return null;
+    const dict = I18N[this.state.lang] || I18N.de;
+    const e = React.createElement;
+    return e('div', { 'data-qr-overlay': true, role: 'dialog', 'aria-modal': 'true', style: { position: 'fixed', inset: 0, background: 'rgba(10,22,40,0.78)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' } },
+      e('div', { style: { background: '#fff', borderRadius: '16px', width: '100%', maxWidth: '380px', padding: '40px 36px 34px', position: 'relative', boxShadow: '0 40px 100px rgba(10,22,40,0.45)', textAlign: 'center' } },
+        e('button', { 'data-qr-close': true, 'aria-label': 'Close', style: { position: 'absolute', top: '16px', right: '16px', width: '36px', height: '36px', borderRadius: '999px', border: '1.5px solid #EAD7A1', background: '#F7F4EE', color: '#1A1A1A', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' } }, '✕'),
+        e('img', { src: 'assets/images/wechat-qr.png', alt: 'WeChat QR — Pari Jazz', style: { width: '260px', maxWidth: '100%', height: 'auto', display: 'block', margin: '6px auto 0', borderRadius: '8px' } }),
+        e('p', { style: { fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500, color: '#475569', margin: '22px 0 0', lineHeight: 1.5 } }, dict['qr.caption'] || 'Scan to get in touch with us')));
+  }
+
+  _buildLevelModal() {
+    const key = this.state.modalKey;
+    if (!key || !LEVEL_DATA[key]) return null;
+    const data = LEVEL_DATA[key];
+    const e = React.createElement;
+    const overlay = { position: 'fixed', inset: 0, background: 'rgba(10,22,40,0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' };
+    const card = { background: '#FFFFFF', borderRadius: '24px', width: '100%', maxWidth: '720px', maxHeight: '88vh', overflowY: 'auto', padding: '48px 48px 40px', position: 'relative', boxShadow: '0 32px 80px rgba(10,22,40,0.4)' };
+    const close = { position: 'absolute', top: '20px', right: '20px', width: '40px', height: '40px', borderRadius: '999px', border: '1.5px solid #EAD7A1', background: '#F7F4EE', color: '#1A1A1A', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' };
+    const sections = (data.sections || []).map((sec, i) => e('div', { key: 'sec' + i, style: { marginBottom: '24px' } },
+      e('div', { style: { fontFamily: 'Inter', fontSize: '11px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#1946BD', margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: '10px' } },
+        e('span', { style: { display: 'inline-block', width: '24px', height: '1px', background: '#1946BD' } }), sec.title),
+      sec.items.map((item, j) => e('div', { key: 'i' + j, style: { display: 'flex', alignItems: 'flex-start', gap: '12px', fontFamily: 'Inter', fontSize: '14.5px', color: '#1A1A1A', lineHeight: 1.6, padding: '8px 0', borderBottom: j === sec.items.length - 1 ? 'none' : '1px solid #F7F4EE' } },
+        e('span', { style: { color: '#C9A96E', fontWeight: 700, fontSize: '13px', flexShrink: 0, marginTop: '4px' } }, '✓'), e('span', null, item)))));
+    return e('div', { 'data-modal-overlay': true, role: 'dialog', 'aria-modal': 'true', style: overlay },
+      e('div', { style: card },
+        e('button', { 'data-modal-close': true, 'aria-label': 'Close', style: close }, '✕'),
+        e('div', { style: { fontFamily: 'Inter', fontSize: '11px', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: '14px' } }, data.eyebrow),
+        e('h3', { style: { fontFamily: "'Playfair Display', serif", fontSize: '32px', fontWeight: 500, color: '#1A1A1A', lineHeight: 1.2, margin: 0 } }, data.title),
+        e('div', { style: { height: '2px', background: 'linear-gradient(90deg, #C9A96E, transparent)', margin: '20px 0 24px', borderRadius: '999px' } }),
+        data.highlight ? e('div', { style: { padding: '14px 20px', background: 'linear-gradient(135deg, #C9A96E 0%, #EAD7A1 50%, #C9A96E 100%)', color: '#1A1A1A', borderRadius: '12px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.2em', textAlign: 'center', marginBottom: '24px', textTransform: 'uppercase' } }, data.highlight) : null,
+        e('div', { style: { padding: '18px 22px', background: '#F7F4EE', borderLeft: '3px solid #C9A96E', borderRadius: '0 10px 10px 0', fontSize: '15px', color: '#475569', lineHeight: 1.65, marginBottom: '28px' } },
+          e('div', { style: { color: '#1A1A1A', marginBottom: '6px', fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700 } }, 'Ziel'), data.objective),
+        sections,
+        data.extras ? e('div', { style: { background: 'linear-gradient(135deg, #EAD7A1 0%, #F7F4EE 100%)', border: '1.5px solid #C9A96E', borderRadius: '16px', padding: '20px 24px', margin: '24px 0' } },
+          e('div', { style: { fontFamily: 'Inter', fontSize: '11px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#1946BD', marginBottom: '12px' } }, 'Du erhältst zusätzlich'),
+          data.extras.map((it, i) => e('div', { key: 'ex' + i, style: { fontFamily: 'Inter', fontSize: '13.5px', color: '#1A1A1A', padding: '4px 0', display: 'flex', alignItems: 'center', gap: '10px' } }, e('span', { style: { color: '#C9A96E' } }, '📄'), it))) : null,
+        data.access ? e('div', { style: { background: 'rgba(25, 70, 189, 0.06)', border: '1px solid rgba(25, 70, 189, 0.2)', borderRadius: '16px', padding: '20px 24px', margin: '20px 0' } },
+          e('div', { style: { fontFamily: 'Inter', fontSize: '11px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#1946BD', marginBottom: '12px' } }, 'Exklusiver Zugang'),
+          data.access.map((it, i) => e('div', { key: 'ac' + i, style: { fontFamily: 'Inter', fontSize: '13.5px', color: '#1A1A1A', padding: '4px 0', display: 'flex', alignItems: 'center', gap: '10px' } }, e('span', { style: { color: '#1946BD' } }, '🔑'), it))) : null,
+        data.tools ? e('div', { style: { background: '#1A1A1A', color: '#F7F4EE', borderRadius: '16px', padding: '24px', margin: '24px 0' } },
+          e('div', { style: { fontFamily: 'Inter', fontSize: '11px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: '14px' } }, 'Tools Inklusive'),
+          data.tools.map((it, i) => e('div', { key: 'tl' + i, style: { fontFamily: 'Inter', fontSize: '13.5px', padding: '5px 0', display: 'flex', alignItems: 'flex-start', gap: '10px' } }, e('span', { style: { color: '#C9A96E', flexShrink: 0 } }, '⚙'), e('span', null, it)))) : null,
+        e('div', { style: { background: '#1946BD', borderRadius: '16px', padding: '24px 28px', marginTop: '32px' } },
+          e('div', { style: { fontFamily: 'Inter', fontSize: '11px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#C9A96E', marginBottom: '10px' } }, 'Ergebnis'),
+          e('div', { style: { fontFamily: "'Playfair Display', serif", fontSize: '18px', fontStyle: 'italic', color: '#FFFFFF', lineHeight: 1.6 } }, '„' + data.result + '“'))));
+  }
+
+  renderVals() { return { langSwitcher: this._buildLangSwitcher(), qrModal: this._buildQrModal(), levelModal: this._buildLevelModal() }; }
+}
+</script>
+
+<!-- ============ CONTACT MODAL (vanilla) ============ -->
+<div id="pj-contact-modal" data-contact-overlay style="display:none; position:fixed; inset:0; background:rgba(10,22,40,0.85); z-index:2100; align-items:center; justify-content:center; padding:24px; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);">
+  <div role="dialog" aria-modal="true" style="background:#FFFFFF; border-radius:24px; width:100%; max-width:640px; max-height:92vh; overflow-y:auto; padding:48px 48px 40px; position:relative; box-shadow:0 40px 100px rgba(10,22,40,0.45); box-sizing:border-box;">
+    <button data-contact-close type="button" aria-label="Schließen" style="position:absolute; top:20px; right:20px; width:40px; height:40px; border-radius:999px; border:1.5px solid #EAD7A1; background:#F7F4EE; color:#1A1A1A; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">✕</button>
+    <h2 style="font-family:'Playfair Display',Georgia,serif; font-size:34px; font-weight:600; color:#0A1628; line-height:1.1; margin:0 0 32px;">Kontaktanfrage</h2>
+    <form id="pj-contact-form" data-mail-form-user="info" data-mail-form-domain="parijazz.de" method="post" enctype="text/plain" style="display:flex; flex-direction:column; gap:20px;">
+      <div>
+        <label style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Anrede</label>
+        <div style="display:flex; gap:24px;">
+          <label style="cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A;"><input type="radio" name="salutation" value="Herr" style="accent-color:#1946BD;"> Herr</label>
+          <label style="cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A;"><input type="radio" name="salutation" value="Frau" style="accent-color:#1946BD;"> Frau</label>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div><label for="pjc-first" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Vorname *</label><input id="pjc-first" name="firstName" type="text" required placeholder="Dein Vorname" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+        <div><label for="pjc-last" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Nachname *</label><input id="pjc-last" name="lastName" type="text" required placeholder="Dein Nachname" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+      </div>
+      <div><label for="pjc-comp" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Firmenname</label><input id="pjc-comp" name="company" type="text" placeholder="Gebe Deinen offiziellen Firmennamen ein" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+      <div><label for="pjc-email" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">E-Mail *</label><input id="pjc-email" name="email" type="email" required placeholder="beispiel@gmx.de" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+      <div><label for="pjc-msg" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Beschreibe Deine Anfrage *</label><textarea id="pjc-msg" name="message" required placeholder="Beschreibe kurz das Thema Deiner Anfrage" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box; min-height:120px; resize:vertical; line-height:1.55;"></textarea></div>
+      <button type="submit" style="display:block; width:100%; padding:17px 24px; background:#1946BD; color:#FFFFFF; font-family:'Inter',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; border:0; border-radius:8px; cursor:pointer; box-shadow:0 14px 32px -10px rgba(25,70,189,0.45), 0 1px 0 rgba(255,255,255,0.18) inset;">Anfrage einreichen</button>
+      <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; user-select:none; font-family:'Inter',sans-serif; font-size:13.5px; color:#475569; line-height:1.55;"><input type="checkbox" name="terms" required style="margin-top:4px; accent-color:#1946BD;"><span>Durch das Absenden dieses Formulars stimme ich <a href="#" style="color:#C9A96E; text-decoration:underline; text-decoration-color:rgba(201,169,110,0.5); text-underline-offset:3px;">den Nutzungsbedingungen zu</a><span style="color:#C9A96E;">*</span></span></label>
+    </form>
+  </div>
+</div>
+<script>
+(function() {
+  var modal = document.getElementById('pj-contact-modal');
+  if (!modal || modal.dataset.wired) return;
+  modal.dataset.wired = '1';
+  function openModal(){ modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  function closeModal(){ modal.style.display = 'none'; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(ev) {
+    var t = ev.target.closest('[data-contact-trigger]');
+    if (t) { ev.preventDefault(); openModal(); return; }
+    if (ev.target.closest('[data-contact-close]') || ev.target === modal) { ev.preventDefault(); closeModal(); }
+  });
+  document.addEventListener('keydown', function(ev) { if (ev.key === 'Escape' && modal.style.display === 'flex') closeModal(); });
+  var f = document.getElementById('pj-contact-form');
+  if (f) {
+    var addr = f.dataset.mailFormUser + '@' + f.dataset.mailFormDomain;
+    f.setAttribute('action', 'mailto:' + addr);
+  }
+})();
+</script>
+
+</body>
+</html>

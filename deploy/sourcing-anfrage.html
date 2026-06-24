@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./responsive.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #F7F4EE; color: #1A1A1A; font-family: 'Inter', system-ui, -apple-system, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: #1946BD; color: #F7F4EE; }
+  @keyframes pjFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pjMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pjLogoScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1); }
+  [data-reveal].in { opacity: 1; transform: none; }
+  input:focus, textarea:focus, select:focus { outline: none !important; border-color: #1946BD !important; box-shadow: 0 0 0 3px rgba(25,70,189,0.10); }
+  input::placeholder, textarea::placeholder { color: #94A3B8; }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary { list-style: none; cursor: pointer; }
+  .pj-check input { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border: 1.5px solid #CBD5E1; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; background: #fff; position: relative; }
+  .pj-check input:checked { background: #1946BD; border-color: #1946BD; }
+  .pj-check input:checked::after { content: ''; position: absolute; left: 6px; top: 2px; width: 6px; height: 11px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .pj-check-dark input { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border: 1.5px solid rgba(255,255,255,0.35); border-radius: 6px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; background: rgba(255,255,255,0.08); position: relative; }
+  .pj-check-dark input:checked { background: #FFFFFF; border-color: #FFFFFF; }
+  .pj-check-dark input:checked::after { content: ''; position: absolute; left: 6px; top: 2px; width: 6px; height: 11px; border: solid #1946BD; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .pj-check-navy input { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border: 1.5px solid #0A1628; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; flex-shrink: 0; background: #0A1628; position: relative; }
+  .pj-check-navy input:checked { background: #0A1628; }
+  .pj-check-navy input::after { content: ''; position: absolute; left: 6px; top: 2px; width: 6px; height: 11px; border: solid #FFFFFF; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+</style>
+</helmet>
+
+<main data-screen-label="Pari Jazz Commerce — Sourcing" style="background: #F7F4EE; color: #1A1A1A; min-width: 1280px;">
+
+<!-- ============ STICKY NAV ============ -->
+<nav style="position: sticky; top: 0; z-index: 100; background: rgba(247,244,238,0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(26,26,26,0.06);">
+  <div style="max-width: 1440px; margin: 0 auto; padding: 12px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 88px;">
+    <a href="index.html" style="display: flex; align-items: center; gap: 14px; line-height: 1;">
+      <span aria-hidden="true" style="display: block; height: 84px; flex-shrink: 0; line-height: 0;">
+        <img src="assets/images/pari-jazz-logo-cropped.png" alt="Pari Jazz" style="height: 100%; width: auto; display: block;">
+      </span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <a href="index.html" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">Startseite</a>
+      <a href="e-commerce.html" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">E-Commerce</a>
+      <a href="sourcing.html" style="font-size: 15px; font-weight: 600; color: #1946BD; white-space: nowrap;">Sourcing</a>
+      <a href="eu-market-entry.html" style="font-size: 15px; font-weight: 500; color: #475569; transition: color .2s ease; white-space: nowrap;" style-hover="color: #1A1A1A;">EU-Markteintritt</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <a href="https://www.instagram.com/parijazz_" target="_blank" rel="noopener" aria-label="Instagram" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="pjIgGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FEDA77"/>
+              <stop offset="25%" stop-color="#F58529"/>
+              <stop offset="50%" stop-color="#DD2A7B"/>
+              <stop offset="75%" stop-color="#8134AF"/>
+              <stop offset="100%" stop-color="#515BD4"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#pjIgGrad)"/>
+          <rect x="6" y="6" width="12" height="12" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+          <circle cx="12" cy="12" r="3.2" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+          <circle cx="17" cy="7" r="1.1" fill="#FFFFFF"/>
+        </svg>
+      </a>
+      <a href="https://www.youtube.com/@PariJazzz" target="_blank" rel="noopener" aria-label="YouTube" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#FF0000" d="M23 7s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C16.7 3.4 12 3.4 12 3.4s-4.7 0-7.9.3c-.4 0-1.4 0-2.2 1C1.2 5.4 1 7 1 7s-.2 1.9-.2 3.8v1.8C.8 14.5 1 16.4 1 16.4s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.7.3 7.7.3s4.7 0 7.9-.3c.4 0 1.4 0 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8z"/>
+          <path fill="#FFFFFF" d="M10 15V8l6 3.5L10 15z"/>
+        </svg>
+      </a>
+      <a href="https://www.tiktok.com/@pari.jazz" target="_blank" rel="noopener" aria-label="TikTok" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#25F4EE" d="M20.4 7.5a5.8 5.8 0 0 1-3.5-1.2v8.5a6.2 6.2 0 1 1-5.4-6.1v2.9a3.3 3.3 0 1 0 2.4 3.2V2h3a4.6 4.6 0 0 0 .1.85A4.6 4.6 0 0 0 18 5.6a4.6 4.6 0 0 0 2.4.7z" transform="translate(-1.2 .8)"/>
+          <path fill="#FE2C55" d="M20.4 7.5a5.8 5.8 0 0 1-3.5-1.2v8.5a6.2 6.2 0 1 1-5.4-6.1v2.9a3.3 3.3 0 1 0 2.4 3.2V2h3a4.6 4.6 0 0 0 .1.85A4.6 4.6 0 0 0 18 5.6a4.6 4.6 0 0 0 2.4.7z" transform="translate(1.2 -.8)"/>
+          <path fill="#000000" d="M20.4 7.5a5.8 5.8 0 0 1-3.5-1.2v8.5a6.2 6.2 0 1 1-5.4-6.1v2.9a3.3 3.3 0 1 0 2.4 3.2V2h3a4.6 4.6 0 0 0 .1.85A4.6 4.6 0 0 0 18 5.6a4.6 4.6 0 0 0 2.4.7z"/>
+        </svg>
+      </a>
+      <span aria-hidden="true" style="display: inline-block; width: 1px; height: 24px; background: rgba(26,26,26,0.15); margin: 0 6px;"></span>
+      <button data-lang-option="de" aria-label="Deutsch" type="button" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 24px; border: 1px solid rgba(26,26,26,0.08); padding: 0; background: transparent; cursor: pointer; border-radius: 4px; overflow: hidden; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="32" height="22" viewBox="0 0 5 3" preserveAspectRatio="none" aria-hidden="true">
+          <rect width="5" height="1" y="0" fill="#000000"/>
+          <rect width="5" height="1" y="1" fill="#DD0000"/>
+          <rect width="5" height="1" y="2" fill="#FFCE00"/>
+        </svg>
+      </button>
+      <button data-lang-option="en" aria-label="English" type="button" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 24px; border: 1px solid rgba(26,26,26,0.08); padding: 0; background: transparent; cursor: pointer; border-radius: 4px; overflow: hidden; transition: transform .2s ease;" style-hover="transform: translateY(-1px);">
+        <svg width="32" height="22" viewBox="0 0 7410 3900" preserveAspectRatio="none" aria-hidden="true">
+          <rect width="7410" height="3900" fill="#B22234"/>
+          <path d="M0,450 H7410 M0,1050 H7410 M0,1650 H7410 M0,2250 H7410 M0,2850 H7410 M0,3450 H7410" stroke="#FFFFFF" stroke-width="300"/>
+          <rect width="2964" height="2100" fill="#3C3B6E"/>
+        </svg>
+      </button>
+      <button data-contact-trigger type="button" style="margin-left: 4px; background: #1946BD; color: #F7F4EE; padding: 12px 22px; border: 0; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; transition: transform .2s ease, background .2s ease; box-shadow: 0 8px 24px rgba(25, 70, 189, 0.18); white-space: nowrap;" style-hover="background: #15378A; transform: translateY(-1px);">Kontakt aufnehmen</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ SECTION 1: HERO SPLIT (PHOTO + FORM) ============ -->
+<section id="sourcing-form" data-comment-anchor="form" style="padding: 80px 48px 120px; background: #F7F4EE;">
+  <div style="max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;">
+
+    <!-- LEFT: photo + tagline -->
+    <div data-reveal style="display: flex; flex-direction: column; gap: 40px; position: sticky; top: 160px;">
+      <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 30px 80px -30px rgba(10,22,40,0.25); aspect-ratio: 4/3;">
+        <img src="assets/images/7d50e074-775d-452a-9124-9cf8f6e1b315.jpg" alt="Pari Jazz" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+      <div>
+        <h2 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; color: #0A1628; margin: 0; text-wrap: balance;">
+          Dein Produkt.<br>
+          Unsere Mission.
+        </h2>
+        <p style="font-size: 16px; line-height: 1.7; color: #475569; margin: 24px 0 0;">
+          Wir freuen uns darauf, dich bei der Realisierung deines Projekts zu unterstützen und die optimalen Konditionen für dein Produkt zu identifizieren.
+        </p>
+        <p style="font-size: 16px; line-height: 1.7; color: #475569; margin: 16px 0 0;">
+          Um eine präzise und zügige Kalkulation zu gewährleisten, bitten wir dich, das Formular so detailliert wie möglich auszufüllen. Jede Information hilft uns dabei, schnellstmöglich ein erstklassiges Ergebnis für dich zu erzielen.
+        </p>
+      </div>
+    </div>
+
+    <!-- RIGHT: form card -->
+    <div data-reveal style="background: #FFFFFF; border-radius: 20px; padding: 48px 48px 40px; box-shadow: 0 40px 100px -30px rgba(10,22,40,0.18); border: 1px solid rgba(26,26,26,0.04);">
+      <h1 style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 48px; line-height: 1.05; letter-spacing: -0.02em; color: #0A1628; margin: 0 0 40px;">Sourcing-Anfrage</h1>
+
+      <form data-sourcing-form action="mailto:sourcing@parijazz.de" method="post" enctype="text/plain" style="display: flex; flex-direction: column; gap: 22px;">
+
+        <div>
+          <label for="pj-s-product" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Produktbezeichnung *</label>
+          <input id="pj-s-product" name="product" type="text" required placeholder='z.B. "Powerbank", Heckenschere, "Smart Watch", etc.' style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-listing" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Link zu existierenden Listing (wenn vorhanden)</label>
+          <input id="pj-s-listing" name="existingListing" type="text" placeholder="Link zu Listing in Webshop, Amazon, Alibaba, etc." style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-competitor" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Produktlink vom Hersteller oder Konkurrenten</label>
+          <input id="pj-s-competitor" name="competitorLink" type="text" placeholder="Link zu Listing in Webshop, Amazon, Alibaba, etc." style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 12px;">Produktmuster *</label>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <label class="pj-check" style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A;">
+              <input type="checkbox" name="sample" value="vorhanden">
+              <span>Muster ist vorhanden</span>
+            </label>
+            <label class="pj-check" style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A;">
+              <input type="checkbox" name="sample" value="benoetigt">
+              <span>Muster wird benötigt</span>
+            </label>
+            <label class="pj-check" style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A;">
+              <input type="checkbox" name="sample" value="kein">
+              <span>Kein Muster vorhanden</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="pj-s-color" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Farbe / Farbcode *</label>
+          <input id="pj-s-color" name="color" type="text" required placeholder='z.B. "blau"' style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-dim" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Maßen *</label>
+          <input id="pj-s-dim" name="dimensions" type="text" required placeholder="H x B x T (Höhe x Breite x Tiefe)" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-weight" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Gewicht</label>
+          <input id="pj-s-weight" name="weight" type="text" placeholder="kg" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-material" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Material *</label>
+          <input id="pj-s-material" name="material" type="text" required placeholder='z.B. "Edelstahl"' style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-usp" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Beschreibung der Funktionen / USP *</label>
+          <textarea id="pj-s-usp" name="usp" required placeholder="Welche Funktion hat das Produkt? Beschreibe es so detailliert wie möglich." style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; min-height: 100px; resize: vertical; line-height: 1.55; transition: border 0.2s ease;"></textarea>
+        </div>
+
+        <div>
+          <label for="pj-s-req" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Anforderungen</label>
+          <input id="pj-s-req" name="requirements" type="text" placeholder='z.B. "CE"' style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-price" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Zielpreis in USD</label>
+          <input id="pj-s-price" name="targetPrice" type="text" placeholder="z.B. 12$ pro Stück" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-qty" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Geplante Abnahmemenge *</label>
+          <input id="pj-s-qty" name="quantity" type="text" required placeholder='z.B. "1000 Stück"' style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-more" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Weitere Informationen *</label>
+          <textarea id="pj-s-more" name="moreInfo" required placeholder="Was möchten Sie uns noch mitteilen?" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; min-height: 120px; resize: vertical; line-height: 1.55; transition: border 0.2s ease;"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <label for="pj-s-first" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Vorname *</label>
+            <input id="pj-s-first" name="firstName" type="text" required placeholder="Vorname" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+          </div>
+          <div>
+            <label for="pj-s-last" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Nachname *</label>
+            <input id="pj-s-last" name="lastName" type="text" required placeholder="Nachname" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+          </div>
+        </div>
+
+        <div>
+          <label for="pj-s-company" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Unternehmen / Organisation *</label>
+          <input id="pj-s-company" name="company" type="text" required placeholder="Ihr Unternehmen" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-email" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">E-Mail *</label>
+          <input id="pj-s-email" name="email" type="email" required placeholder="beispiel@gmx.de" style="width: 100%; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; transition: border 0.2s ease;">
+        </div>
+
+        <div>
+          <label for="pj-s-phone" style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Telefon *</label>
+          <div style="display: flex; align-items: center; border: 1px solid #E2E8F0; border-radius: 8px; background: #FFFFFF; transition: border 0.2s ease;">
+            <span aria-hidden="true" style="display: inline-flex; align-items: center; padding: 14px 12px 14px 16px; border-right: 1px solid #E2E8F0; gap: 6px; flex-shrink: 0;">
+              <span style="display: inline-block; width: 22px; height: 16px; border-radius: 2px; overflow: hidden; line-height: 0; box-shadow: 0 0 0 1px rgba(0,0,0,0.05);">
+                <span style="display: block; height: 33.3%; background: #000;"></span>
+                <span style="display: block; height: 33.3%; background: #DD0000;"></span>
+                <span style="display: block; height: 33.4%; background: #FFCE00;"></span>
+              </span>
+              <span style="color: #475569; font-size: 13px;">+49</span>
+            </span>
+            <input id="pj-s-phone" name="phone" type="tel" required placeholder="Geben Sie Ihre Telefonnummer ein" style="flex: 1; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 15px; color: #1A1A1A; background: transparent; border: 0; outline: none;">
+          </div>
+        </div>
+
+        <div>
+          <label style="display: block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; color: #0A1628; margin-bottom: 8px;">Datei hochladen</label>
+          <label for="pj-s-file" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 32px 16px; border: 1.5px dashed #CBD5E1; border-radius: 8px; background: #FAFAFA; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease;" style-hover="border-color: #1946BD; background: rgba(25,70,189,0.04);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A1628" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4v12"/>
+              <path d="M6 10l6-6 6 6"/>
+              <path d="M4 20h16"/>
+            </svg>
+            <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #0A1628; font-weight: 500;">Ziehen Sie Ihre Datei hierher, oder klicken Sie, um sie hochzuladen</div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 12px; color: #94A3B8;">Die maximal zulässige Dateigröße beträgt 10MB.</div>
+            <input id="pj-s-file" name="file" type="file" style="position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;">
+          </label>
+        </div>
+
+        <button type="submit" style="width: 100%; padding: 18px 24px; background: #1946BD; color: #FFFFFF; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: 0; border-radius: 8px; cursor: pointer; box-shadow: 0 14px 32px -10px rgba(25, 70, 189, 0.45), 0 1px 0 rgba(255,255,255,0.18) inset; transition: background 0.2s ease, transform 0.15s ease; margin-top: 8px;" style-hover="background: #15378A; transform: translateY(-1px);">Anfrage einreichen</button>
+
+        <label class="pj-check" style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; color: #475569; line-height: 1.55;">
+          <input type="checkbox" name="terms" required>
+          <span>Durch das Absenden dieses Formulars stimme ich <a href="#" style="color: #C9A96E; text-decoration: underline; text-decoration-color: rgba(201,169,110,0.5); text-underline-offset: 3px;">den Nutzungsbedingungen zu.</a> <span style="color: #C9A96E;">*</span></span>
+        </label>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background: #0A0F1E; color: rgba(247,244,238,0.7); padding: 80px 48px 48px;">
+  <div style="max-width: 1440px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; padding-bottom: 56px; border-bottom: 1px solid rgba(247,244,238,0.1);">
+      <div>
+        <div style="display: block; line-height: 0;">
+          <img src="assets/images/pari-jazz-logo-light.png" alt="Pari Jazz" style="height: 84px; width: auto; display: block;">
+        </div>
+        <p style="margin-top: 24px; font-size: 14px; line-height: 1.6; max-width: 360px;">
+          Zugang zu einem echten E-Commerce-Ökosystem. Kein Coaching. Über Jahre aufgebaut — bis heute täglich genutzt.
+        </p>
+        <div style="margin-top: 28px; display: flex; gap: 12px;">
+          <a href="https://www.instagram.com/parijazz_" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE; transition: border-color .25s ease, background .25s ease;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@PariJazzz" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE; transition: border-color .25s ease, background .25s ease;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C16.7 3.4 12 3.4 12 3.4s-4.7 0-7.9.3c-.4 0-1.4 0-2.2 1C1.2 5.4 1 7 1 7s-.2 1.9-.2 3.8v1.8C.8 14.5 1 16.4 1 16.4s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.7.3 7.7.3s4.7 0 7.9-.3c.4 0 1.4 0 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8zM10 15V8l6 3.5L10 15z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@pari.jazz" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(247,244,238,0.2); display: flex; align-items: center; justify-content: center; color: #F7F4EE; transition: border-color .25s ease, background .25s ease;" style-hover="border-color: #C9A96E; background: rgba(201,169,110,0.1);" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.3a4.8 4.8 0 0 1-2.9-1c-.6-.5-1-1.1-1.3-1.8a4.5 4.5 0 0 1-.2-1.4h-3.4v13.1a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.1a6 6 0 1 0 5.3 6V8.7c1 .7 2.3 1.1 3.7 1.1h.7V6.3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Leistungen</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="e-commerce.html" style="color: rgba(247,244,238,0.7); text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">E-Commerce</a>
+          <a href="sourcing.html" style="color: #C9A96E; text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">Sourcing</a>
+          <a href="eu-market-entry.html" style="color: rgba(247,244,238,0.7); text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">EU-Markteintritt</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Unternehmen</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="index.html" style="color: rgba(247,244,238,0.7); text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">Startseite</a>
+          <a href="contact.html" style="color: rgba(247,244,238,0.7); text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">Kontakt</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.3em; color: #F7F4EE; text-transform: uppercase; margin-bottom: 20px;">Rechtliches</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <a href="#" style="color: rgba(247,244,238,0.7); text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">Impressum</a>
+          <a href="#" style="color: rgba(247,244,238,0.7); text-decoration: none; transition: color .2s ease;" style-hover="color: #F7F4EE;">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding-top: 32px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(247,244,238,0.4);">
+      <div>© 2026 Pari Jazz. Alle Rechte vorbehalten.</div>
+      <div>Hamburg · Guangzhou · Shenzhen</div>
+    </div>
+  </div>
+</footer>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this._setupObservers();
+    this._setupClicks();
+  }
+
+  _setupObservers() {
+    this._obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          this._obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    this._counterObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = '1';
+          this._animateCounter(entry.target);
+          this._counterObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    setTimeout(() => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => this._obs.observe(el));
+      document.querySelectorAll('[data-counter]').forEach((el) => this._counterObs.observe(el));
+    }, 50);
+  }
+
+  _animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10) || 0;
+    const suffix = el.dataset.suffix || '';
+    const duration = 2000;
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const value = Math.floor(target * eased);
+      el.textContent = value.toLocaleString('en-US') + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = target.toLocaleString('en-US') + suffix;
+    };
+    requestAnimationFrame(tick);
+  }
+
+  _setupClicks() {
+    this._click = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (a) {
+        const id = a.getAttribute('href').slice(1);
+        if (id) {
+          const target = document.getElementById(id);
+          if (target) {
+            e.preventDefault();
+            const navEl = document.querySelector('nav[data-pj-nav]');
+            const navH = navEl ? navEl.getBoundingClientRect().height : 0;
+            const top = target.getBoundingClientRect().top + window.scrollY - navH - 8;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }
+      }
+    };
+    document.addEventListener('click', this._click);
+
+    this._submit = (e) => {
+      const form = e.target.closest('form[data-sourcing-form]');
+      if (!form) return;
+      e.preventDefault();
+      const fd = new FormData(form);
+      const samples = [];
+      const lines = [];
+      const label = {
+        product: 'Produktbezeichnung',
+        existingListing: 'Link zu existierenden Listing',
+        competitorLink: 'Produktlink Hersteller/Konkurrenten',
+        color: 'Farbe / Farbcode',
+        dimensions: 'Maßen',
+        weight: 'Gewicht',
+        material: 'Material',
+        usp: 'Beschreibung der Funktionen / USP',
+        requirements: 'Anforderungen',
+        targetPrice: 'Zielpreis in USD',
+        quantity: 'Geplante Abnahmemenge',
+        moreInfo: 'Weitere Informationen',
+        firstName: 'Vorname',
+        lastName: 'Nachname',
+        company: 'Unternehmen',
+        email: 'E-Mail',
+        phone: 'Telefon'
+      };
+      for (const [k, v] of fd.entries()) {
+        if (k === 'terms') continue;
+        if (k === 'file') continue;
+        if (k === 'sample') { if (v) samples.push(v); continue; }
+        const s = (v == null ? '' : String(v)).trim();
+        if (!s) continue;
+        lines.push((label[k] || k) + ':\n' + s);
+      }
+      if (samples.length) lines.unshift('Produktmuster:\n' + samples.join(', '));
+      const subject = 'Sourcing-Anfrage: ' + (fd.get('product') || '').toString().slice(0, 60);
+      const body = lines.join('\n\n');
+      const href = 'mailto:sourcing@parijazz.de'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+      window.location.href = href;
+    };
+    document.addEventListener('submit', this._submit);
+  }
+
+  componentWillUnmount() {
+    if (this._obs) this._obs.disconnect();
+    if (this._counterObs) this._counterObs.disconnect();
+    if (this._click) document.removeEventListener('click', this._click);
+    if (this._submit) document.removeEventListener('submit', this._submit);
+  }
+
+  renderVals() {
+    return {};
+  }
+}
+</script>
+
+<!-- ============ CONTACT MODAL (vanilla) ============ -->
+<div id="pj-contact-modal" data-contact-overlay style="display:none; position:fixed; inset:0; background:rgba(10,22,40,0.85); z-index:2100; align-items:center; justify-content:center; padding:24px; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);">
+  <div role="dialog" aria-modal="true" style="background:#FFFFFF; border-radius:24px; width:100%; max-width:640px; max-height:92vh; overflow-y:auto; padding:48px 48px 40px; position:relative; box-shadow:0 40px 100px rgba(10,22,40,0.45); box-sizing:border-box;">
+    <button data-contact-close type="button" aria-label="Schließen" style="position:absolute; top:20px; right:20px; width:40px; height:40px; border-radius:999px; border:1.5px solid #EAD7A1; background:#F7F4EE; color:#1A1A1A; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">✕</button>
+    <h2 style="font-family:'Playfair Display',Georgia,serif; font-size:34px; font-weight:600; color:#0A1628; line-height:1.1; margin:0 0 32px;">Kontaktanfrage</h2>
+    <form id="pj-contact-form" data-mail-form-user="info" data-mail-form-domain="parijazz.de" method="post" enctype="text/plain" style="display:flex; flex-direction:column; gap:20px;">
+      <div>
+        <label style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Anrede</label>
+        <div style="display:flex; gap:24px;">
+          <label style="cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A;"><input type="radio" name="salutation" value="Herr" style="accent-color:#1946BD;"> Herr</label>
+          <label style="cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A;"><input type="radio" name="salutation" value="Frau" style="accent-color:#1946BD;"> Frau</label>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div><label for="pjc-first" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Vorname *</label><input id="pjc-first" name="firstName" type="text" required placeholder="Dein Vorname" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+        <div><label for="pjc-last" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Nachname *</label><input id="pjc-last" name="lastName" type="text" required placeholder="Dein Nachname" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+      </div>
+      <div><label for="pjc-comp" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Firmenname</label><input id="pjc-comp" name="company" type="text" placeholder="Gebe Deinen offiziellen Firmennamen ein" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+      <div><label for="pjc-email" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">E-Mail *</label><input id="pjc-email" name="email" type="email" required placeholder="beispiel@gmx.de" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box;"></div>
+      <div><label for="pjc-msg" style="display:block; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#0A1628; margin-bottom:8px;">Beschreibe Deine Anfrage *</label><textarea id="pjc-msg" name="message" required placeholder="Beschreibe kurz das Thema Deiner Anfrage" style="width:100%; padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px; color:#1A1A1A; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; box-sizing:border-box; min-height:120px; resize:vertical; line-height:1.55;"></textarea></div>
+      <button type="submit" style="display:block; width:100%; padding:17px 24px; background:#1946BD; color:#FFFFFF; font-family:'Inter',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; border:0; border-radius:8px; cursor:pointer; box-shadow:0 14px 32px -10px rgba(25,70,189,0.45), 0 1px 0 rgba(255,255,255,0.18) inset;">Anfrage einreichen</button>
+      <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; user-select:none; font-family:'Inter',sans-serif; font-size:13.5px; color:#475569; line-height:1.55;"><input type="checkbox" name="terms" required style="margin-top:4px; accent-color:#1946BD;"><span>Durch das Absenden dieses Formulars stimme ich <a href="#" style="color:#C9A96E; text-decoration:underline; text-decoration-color:rgba(201,169,110,0.5); text-underline-offset:3px;">den Nutzungsbedingungen zu</a><span style="color:#C9A96E;">*</span></span></label>
+    </form>
+  </div>
+</div>
+<script>
+(function() {
+  var modal = document.getElementById('pj-contact-modal');
+  if (!modal || modal.dataset.wired) return;
+  modal.dataset.wired = '1';
+  function openModal(){ modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  function closeModal(){ modal.style.display = 'none'; document.body.style.overflow = ''; }
+  document.addEventListener('click', function(ev) {
+    var t = ev.target.closest('[data-contact-trigger]');
+    if (t) { ev.preventDefault(); openModal(); return; }
+    if (ev.target.closest('[data-contact-close]') || ev.target === modal) { ev.preventDefault(); closeModal(); }
+  });
+  document.addEventListener('keydown', function(ev) { if (ev.key === 'Escape' && modal.style.display === 'flex') closeModal(); });
+  var f = document.getElementById('pj-contact-form');
+  if (f) {
+    var addr = f.dataset.mailFormUser + '@' + f.dataset.mailFormDomain;
+    f.setAttribute('action', 'mailto:' + addr);
+  }
+})();
+</script>
+
+</body>
+</html>

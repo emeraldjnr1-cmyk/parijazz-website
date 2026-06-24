@@ -1,0 +1,118 @@
+/* =========================================================
+   Pari Jazz Commerce — Responsive overrides
+   These rules layer on TOP of inline styles via !important.
+   Breakpoints: 1200px (laptop), 900px (tablet), 600px (phone)
+   ========================================================= */
+
+/* ---------- Universal: kill rigid min-width ---------- */
+@media (max-width: 1280px) {
+  main[data-screen-label] {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  body { overflow-x: hidden; }
+  img, svg, video { max-width: 100%; height: auto; }
+}
+
+/* ---------- LAPTOP (≤ 1200px) ---------- */
+@media (max-width: 1200px) {
+  /* Looser horizontal padding on sections */
+  section, [style*="padding: 80px 48px"], [style*="padding: 90px 48px"],
+  [style*="padding: 100px 48px"], [style*="padding: 120px 48px"],
+  [style*="padding: 140px 48px"], [style*="padding: 160px 48px"] {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+  /* 4-col grids -> 2 cols */
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Nav: shrink gaps */
+  nav > div {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    gap: 16px !important;
+  }
+  nav > div > div { gap: 20px !important; }
+  /* Disable the slight scale-up on the Growth highlight so it doesn't overflow */
+  [style*="transform: scale(1.04)"] { transform: none !important; }
+}
+
+/* ---------- TABLET (≤ 900px) ---------- */
+@media (max-width: 900px) {
+  section, [style*="padding: 80px 48px"], [style*="padding: 90px 48px"],
+  [style*="padding: 100px 48px"], [style*="padding: 120px 48px"],
+  [style*="padding: 140px 48px"], [style*="padding: 160px 48px"] {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  /* All grids -> single column, except the in-card 2-col which can stay 2 */
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Nav: collapse to wrap */
+  nav > div {
+    flex-wrap: wrap !important;
+    min-height: auto !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+  }
+  nav > div > div {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 14px !important;
+    row-gap: 8px !important;
+  }
+  nav a[href][style*="background: #1946BD"],
+  nav a[href][style*="background:#1946BD"] {
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+  }
+  /* Hero/title scale */
+  h1[style*="clamp"] { font-size: clamp(38px, 8vw, 64px) !important; }
+  h2[style*="clamp"] { font-size: clamp(30px, 6vw, 52px) !important; }
+}
+
+/* ---------- PHONE (≤ 600px) ---------- */
+@media (max-width: 600px) {
+  section, [style*="padding: 80px 48px"], [style*="padding: 90px 48px"],
+  [style*="padding: 100px 48px"], [style*="padding: 120px 48px"],
+  [style*="padding: 140px 48px"], [style*="padding: 160px 48px"] {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  /* Everything single column (including in-card 2-col) */
+  [style*="grid-template-columns: repeat(2, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Reduce the biggest paddings */
+  [style*="padding: 160px"] { padding-top: 80px !important; padding-bottom: 80px !important; }
+  [style*="padding: 140px"] { padding-top: 72px !important; padding-bottom: 72px !important; }
+  [style*="padding: 120px"] { padding-top: 64px !important; padding-bottom: 64px !important; }
+  [style*="padding: 100px"] { padding-top: 56px !important; padding-bottom: 56px !important; }
+  /* Nav logo height */
+  nav img[alt="Pari Jazz"] { height: 56px !important; }
+  /* Hero/title scale further */
+  h1[style*="clamp"] { font-size: clamp(32px, 9vw, 48px) !important; }
+  h2[style*="clamp"] { font-size: clamp(26px, 7vw, 40px) !important; }
+  h3[style*="font-size: 30px"], h3[style*="font-size:30px"] { font-size: 24px !important; }
+  /* Cards: tighter padding */
+  [style*="padding: 36px 34px"], [style*="padding: 38px 34px"],
+  [style*="padding: 40px 32px"], [style*="padding: 32px"] { padding: 24px !important; }
+  /* Modal: full bleed */
+  [data-modal-overlay] > div, [data-qr-overlay] > div {
+    max-height: 92vh !important;
+    padding: 28px 22px !important;
+  }
+  /* Final CTA button: full width */
+  a[href][style*="padding: 18px 32px"],
+  a[href][style*="padding:18px 32px"],
+  button[style*="padding: 18px 32px"] {
+    padding: 14px 22px !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+}
